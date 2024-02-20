@@ -1,9 +1,10 @@
 .main {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
-  padding: 6rem;
+  padding-top: 6rem;
+  padding-bottom: 6rem;
   min-height: 100vh;
 }
 
@@ -41,7 +42,7 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(25%, auto));
+  grid-template-columns: repeat(8, minmax(12.5%, auto));
   max-width: 100%;
   width: var(--max-width);
 }
