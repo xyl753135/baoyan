@@ -7,6 +7,7 @@ import LineAddFriendQR from "@/public/lineAddFriendQR.png"
 import { Video } from "@/components/Video"
 import { Centerpiece } from "@/components/Centerpiece";
 import { useEffect, useState } from "react";
+import useWindowSize from "@/utils/WindowResize"
 
 const Style: { [key: string]: React.CSSProperties } = {
   main: {
@@ -17,41 +18,51 @@ const Style: { [key: string]: React.CSSProperties } = {
   },
   videoContainer: {
     display: "flex",
+    flexDirection: "column",
     justifyContent: "center",
+    alignItems: "center",
   },
+  videoSlogan: {
+    fontSize: "2em",
+  },
+  qrcode: {
+    display: "flex",
+    border: "pink 2px solid"
+  }
 };
 
 export default function Home() {
-  const [screenHeight, setScreenHeight] = useState(834);
-  const [screenWidth, setScreenWidth] = useState(414);
+  const [screenWidth, screenHeight] = useWindowSize();
 
-  useEffect(() => {
-    setScreenWidth(window?.innerWidth);
-    setScreenHeight(window?.innerHeight);
-  });
+
+  
+
 
   return (
     <main style={Style.main}>
-      <Centerpiece h={screenHeight*0.5} w={screenHeight*0.5*0.32} altText={"寶嚴山寶嚴禪寺"} link={"/centerpiece.png"}></Centerpiece>
+      <Centerpiece h={400} w={400*0.32} altText={"寶嚴山寶嚴禪寺"} link={"/centerpiece.png"}></Centerpiece>
 
       <div style={Style.videoContainer}>
-        <Video h={(screenWidth*0.57).toFixed(0)} w={(screenWidth-32).toString()} showControls={true} notSupportedMessage={"Your browser does not support the video tag."}
-          link={"/meditationhall.mp4"} 
-          filetype={"video/mp4"}>
+        <Video 
+          h={"auto"} 
+          w={(0.609448 * screenWidth + 145.576).toString()} 
+          // w={"1280px"}
+          showControls={true} notSupportedMessage={"Your browser does not support the video tag."}
+          link={"/meditationhall.mp4"}
+          captions={{ lang: "zh-hant", src: "" }}>        
         </Video>
+        <h3 style={Style.videoSlogan}>聽風 聽海 聽自心</h3>
+        <h3 style={Style.videoSlogan}>觀山 觀海 觀自在</h3>
       </div>
       
-    <div>
-      WIP
-      <section>
-        https://line.me/R/ti/p/@185tteka?from=page&accountId=185tteka
-        <Image src={LineAddFriendQR} alt={"Scan to Add Friend on LINE"}></Image>
+
+      {/* <div style={Style.qrcode}>
+        <Image src={LineAddFriendQR} alt={"Scan QR Code (https://line.me/R/ti/p/@185tteka?from=page&accountId=185tteka) to Add Friend on LINE"}></Image>
         <p>
         Add LINE Friends via QR Code
         Open the Friends tab in your LINE app, tap the add friends icon in the top right, select "QR code," and then scan this QR code.
         </p>
-      </section>
-    </div>
+      </div> */}
 
 {/* <br></br>
 <p>
