@@ -3,8 +3,8 @@ import logoSource from "../public/logo.webp"
 
 const Style: { [key: string]: React.CSSProperties } = {
   container: {
-    // display: "flex",
-    // justifyContent: "space-between",
+    display: "flex",
+    alignItems: "center",
   },
 };
 
@@ -20,16 +20,14 @@ export const Logo = ({
   altText,
 }: Props) => {
   return (
-    <div style={Style.container}>
-        <a href="/" target="_self">
-            <Image src={logoSource} 
-                alt={altText} 
-                height={h} 
-                width={w} 
-                loading={"eager"}>
-            </Image>
-        </a>
-    </div>
+    <a style={Style.container} href="/" target="_self">
+        <Image src={logoSource} 
+            alt={altText} 
+            height={h} 
+            width={w} 
+            loading={"eager"}>
+        </Image>
+    </a>
   );
 
 };
