@@ -7,6 +7,7 @@ import { Footer } from "@/components/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://baoyan.org"),
   title: "寶嚴山寶嚴禪寺 Baoyan Chan Monastery",
   description: "這是一座禪宗道場，是僧團的安僧立命處，是眾人心之嚮往處，是三界浪子的歸心處。一座實踐百丈家風的禪宗叢林，一座兼具現代感與古樸氛韻的禪宗道場",
   applicationName: "Baoyan Chan Monastery",
@@ -21,24 +22,35 @@ export const metadata: Metadata = {
     url: "https://www.baoyan.org/",
     siteName: "寶嚴山寶嚴禪寺 Baoyan Chan Monastery",
     images: [{
-      url: "/logo.webp",
+      url: "/logo.svg",
     }],
     type: "website",
   },
-  viewport: "width=device-width, initial-scale=1.0",
 };
 
 const Style: { [key: string]: React.CSSProperties } = {
+  html: {
+    // height: "100vh",
+    // width: "100vw",
+  },
   body: {
     display: "flex",
     flexDirection: "column",
-    marginTop: "1rem",
-    marginBottom: "1rem",
-    marginLeft: "0.5rem",
-    marginRight: "0.5rem",
+    justifyContent: "space-between",
+    alignItems: "space-between",
+    // height: "100%",
+    width: "100%",
+    padding: "1em",
+    background: "linear-gradient(rgb(var(--background-end-rgb)), rgb(var(--background-start-rgb)))",
+    // border: "20px black solid"
     // flexBasis: "min-content",
     // width: "100vw",
   },
+  main: {
+    flexGrow: "1",
+    // flexBasis: "1",
+    // height: "100%",
+  }
 };
 
 export default function RootLayout({
@@ -46,13 +58,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
-    <html lang="zh-Hant">
+    <html lang="zh-Hant" style={Style.html}>
       <body style={Style.body}>
         <Navbar buttonDatas={[
           {
             label: "認識寶嚴", 
-            link: "https://www.baoyan.org/%E8%AA%8D%E8%AD%98%E5%AF%B6%E5%9A%B4",
+            link: "/about",
             key: "1",
           }, 
           {
@@ -71,7 +84,7 @@ export default function RootLayout({
             key: "4",
           }, 
           {
-            label: "法寶流通/下載", 
+            label: "法寶流通", 
             link: "https://www.baoyan.org/%E6%B3%95%E5%AF%B6%E6%B5%81%E9%80%9A",
             key: "5",
           },
@@ -87,7 +100,9 @@ export default function RootLayout({
           }
         ]}>
         </Navbar>
-        {children}
+        <main style={Style.main}>
+          {children}
+        </main>
         <Footer venueName={"寶嚴禪寺南區總部圓道禪院"} 
           address={"高雄市鼓山區美術東八街8號"} 
           telAreaCode={"07"} telNum={"522-4676"} 
