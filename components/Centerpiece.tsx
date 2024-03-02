@@ -23,7 +23,7 @@ const Style: { [key: string]: React.CSSProperties } = {
   image: {
     // border: "white 2px solid",
     filter: "blur(5px) opacity(0%)",
-    transform: "rotateY(90deg);",
+    transform: "rotateY(90deg)",
   },
   imageRevealed: {
     // border: "white 2px solid",
