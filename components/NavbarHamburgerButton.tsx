@@ -8,40 +8,42 @@ const Style: { [key: string]: React.CSSProperties } = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    flexGrow: "1",
+    minHeight: "50px",
+    minWidth: "300px",
+    flexGrow: "0",
     flexShrink: "1",
     cursor: "pointer",
     // borderRadius: "1rem",
-    transition: "1s"
+    transition: "all 200ms"
   },
   label: {
     color: "rgb(240, 240, 255)",
     fontFamily: "georgia",
     fontWeight: "bold",
     textDecoration: "none",
-    transition: "all 1s ease-out"
+    transition: "all 200ms ease-out"
   },
   hoverButtonLight: {
-    backgroundColor: "#4EB1BA",
-    // border: "1px solid white",
-    transition: "all 1s ease-out"
+    backgroundColor: "#4daafc",
+    border: "1px solid white",
+    transition: "all 200ms ease-out"
   },
   hoverButtonDark: {
     backgroundColor: "#214468",
     // border: "1px solid white",
-    transition: "all 1s ease-out"
+    transition: "all 200ms ease-out"
   },
   hoverLabelLight: {
     color: "black",
     fontSize: "1.5rem",
     fontWeight: "900",
-    transition: "all 0.5s"
+    transition: "all 200ms"
   },
   hoverLabelDark: {
     color: "white",
     fontSize: "1.5rem",
     fontWeight: "900",
-    transition: "all 0.5s"
+    transition: "all 200ms"
   },
   fontNormal: {
     fontSize: "1rem",
@@ -60,7 +62,7 @@ type Props = {
   hoverStyle?: "none" | "dark" | "light"
 }
 
-export const NavbarButton = ({
+export const NavbarHamburgerButton = ({
     label,
     link,
     hoverStyle = "none",
