@@ -4,7 +4,10 @@ import { useState } from "react";
 
 const Style: { [key: string]: React.CSSProperties } = {
   navButton: {
-    padding: "0.5rem",
+    paddingLeft: "0.3rem",
+    paddingRight: "0.3rem",
+    paddingTop: "0.5rem",
+    paddingBottom: "0.5rem",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
