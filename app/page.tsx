@@ -24,6 +24,8 @@ const Style: { [key: string]: React.CSSProperties } = {
   },
   videoSlogan: {
     fontSize: "2em",
+    color: "white",
+    margin: "0.5em",
   },
   qrcode: {
     display: "flex",
@@ -53,6 +55,17 @@ export default function Home() {
         </Video>
         <h3 style={Style.videoSlogan}>聽風 聽海 聽自心</h3>
         <h3 style={Style.videoSlogan}>觀山 觀海 觀自在</h3>
+        
+        <h3>楞嚴神咒</h3>
+        Visit https://pray.braindna.co/shurangama/
+        <iframe title="Pray"
+          width={(0.609448 * screenWidth + 145.576).toString()}
+          height="720"
+          src="https://pray.braindna.co/shurangama/">
+        </iframe>
+        <embed type="application" src="https://pray.braindna.co/shurangama/" 
+        width={(0.609448 * screenWidth + 145.576).toString()} 
+        height="720" />
       </div>
       
 
