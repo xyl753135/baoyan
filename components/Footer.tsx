@@ -54,19 +54,22 @@ const Style: { [key: string]: React.CSSProperties } = {
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
-    marginTop: "1rem",
+    marginTop: "2em",
   },
   leftColumn: {
     flexGrow: "1",
     display: "flex",
     flexDirection: "column",
     justifyContent: "left",
-  },
-  rightColumn: {
+    color: "white",
+},
+rightColumn: {
     flexGrow: "1",
     display: "flex",
     flexDirection: "column",
     justifyContent: "right",
+    color: "white",
+    // border: "white 2px solid"
   },
   hidden: {
     display: "none",
@@ -75,8 +78,19 @@ const Style: { [key: string]: React.CSSProperties } = {
     textDecoration: "underline",
     fontWeight: "bold",
   },
+  engagementRow: {
+    display: "flex",
+    justifyContent: "right",
+  },
+  copyright: {
+    display: "flex",
+    justifyContent: "right"
+  },
   shareButtonGroup: {
-    paddingRight: "1rem",
+    marginLeft: "0.5rem",
+    marginBottom: "0.5rem",
+    // border: "white 2px solid",
+    // height: "fit-content"
   }
 };
 
@@ -112,21 +126,21 @@ export const Footer = ({
       <p>Tel: ({telAreaCode}) {telNum} / Fax: ({faxAreaCode}) {faxNum}  /  Mobile: {mobile}</p>
     </div>
     <div style={Style.rightColumn}>
-      <div >
+      <div style={Style.engagementRow}>
         <LineShareButton url={"https://www.baoyan.org/"} title={"寶嚴禪寺 Baoyan Chan Monastery, 官網"} style={Style.shareButtonGroup}>
-          <LineIcon size={32} round={false} borderRadius={10} />
+          <LineIcon size={50} round={false} borderRadius={10} />
         </LineShareButton>
         <FacebookShareButton url={"https://www.baoyan.org/"} title={"寶嚴禪寺 Baoyan Chan Monastery，官網"} style={Style.shareButtonGroup}>
-          <FacebookIcon size={32} round={false} borderRadius={10} />
+          <FacebookIcon size={50} round={false} borderRadius={10} />
         </FacebookShareButton>
         <LinkedinShareButton url={"https://www.baoyan.org/"} title={"寶嚴禪寺 Baoyan Chan Monastery，官網"} style={Style.shareButtonGroup}>
-          <LinkedinIcon size={32} round={false} borderRadius={10} />
+          <LinkedinIcon size={50} round={false} borderRadius={10} />
         </LinkedinShareButton>
         <RedditShareButton url={"https://www.baoyan.org/"} title={"寶嚴禪寺 Baoyan Chan Monastery，官網"} style={Style.shareButtonGroup}>
-          <RedditIcon size={32} round={false} borderRadius={10} />
+          <RedditIcon size={50} round={false} borderRadius={10} />
         </RedditShareButton>
       </div>
-      <p><a href={hrefVal} target="_self">©{copyrightYear} by 寶嚴禪寺</a></p>
+      <a style={Style.copyright} href={hrefVal} target="_self">©{copyrightYear} by 寶嚴禪寺</a>
     </div>
   </div>);
 
