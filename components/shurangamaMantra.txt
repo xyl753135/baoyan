@@ -1,0 +1,183 @@
+
+    let MantraVM = function () {
+        let self = this;
+        this.isRepeat = false;
+        this.isFaster = false;
+        this.selectMantra = 'shurangama';
+        this.selectLanguage = 'chinese';
+        this.count = 0;
+        this.grandTotal = 0;
+        this.worldTotal = 0;
+
+        this.uiFaster = '';
+        this.uiRepeat = '';
+        this.uiChooseTheChanter = '';
+        this.uiCount = '';
+        this.uiGrandTotal = '';
+        this.uiWorldTotal = '';
+        this.uiShare = '';
+
+        this.selectOptionsTextMahayana = '';
+        this.selectOptionsTextTheravada = '';
+        this.selectOptionsTextTheravada2 = '';
+        this.selectOptionsTextVajrayana = '';
+
+        // 播放器
+        let mantraPlayer = new MantraPlayer();
+        this.mantraPlayer = mantraPlayer;
+
+        this.playOrStop = mantraPlayer.playOrStop;
+        this.setLoop = mantraPlayer.setLoop;
+        this.setAnimeElement = mantraPlayer.setAnimeElement;
+
+        // 計數器
+        mantraPlayer.setMantraCounterPostApiNameAndUrl('shurangama', '../API/count.php');
+        this.showMantraCount = function (data) {
+            self.count = data.count;
+            self.grandTotal = data.grandTotal;
+            self.worldTotal = data.worldTotal;
+        }
+        mantraPlayer.addMantraCounterListener(this.showMantraCount);
+
+        // mantra音檔參數（陣列: 0 = src, 1 = chantNum, 2 = mp3BeginGap, 3 = mp3EndGap）
+        let mantraAudio = {
+            faster: {
+                shurangama: ['./files/shurangama.mp3', 1, 0, -.1]
+            },
+            normal: {
+                shurangama: ['./files/shurangama.mp3', 1, 0, -.14]
+            }
+        };
+
+        this.setMantraAudio = function () {
+            let fasterOrNormal = (this.isFaster) ? 'faster' : 'normal';
+            let mantraName = this.selectMantra;
+            mantraPlayer.setAudio(
+                mantraAudio[fasterOrNormal][mantraName][0],
+                mantraAudio[fasterOrNormal][mantraName][1],
+                mantraAudio[fasterOrNormal][mantraName][2],
+                mantraAudio[fasterOrNormal][mantraName][3]
+            );
+        }
+
+        // mantra文字動畫參數
+        let mantraText = {
+            chinese: {
+                shurangama: -15000,
+            },
+            english: {
+                shurangama: -15000,
+            }
+        };
+
+        this.setMantraTextAnimeEndPoint = function () {
+            let language = this.selectLanguage;
+            let Mantra = this.selectMantra;
+            mantraPlayer.setMantraTextAnimeEndPoint(mantraText[language][Mantra]);
+        }
+
+        // Ui語言文字
+        let uiText = {
+            chinese: {
+                uiFaster: '加速',
+                uiRepeat: '循環',
+                uiChooseTheChanter: '選擇持誦者',
+                uiCount: '本次',
+                uiGrandTotal: '累計',
+                uiWorldTotal: '全球總計',
+                uiShare: '分享',
+                selectOptionsTextMahayana: '楞嚴神咒',
+                selectOptionsTextTheravada: '上座部',
+                selectOptionsTextTheravada2: '上座部',
+                selectOptionsTextVajrayana: '藏傳密宗'
+            },
+            english: {
+                uiFaster: 'Faster',
+                uiRepeat: 'Repeat',
+                uiChooseTheChanter: 'Choose the Chanter',
+                uiCount: 'Count',
+                uiGrandTotal: 'Grand Total',
+                uiWorldTotal: 'World Total',
+                uiShare: 'Share To',
+                selectOptionsTextMahayana: 'Shurangama',
+                selectOptionsTextTheravada: 'Theravada',
+                selectOptionsTextTheravada2: 'Theravada',
+                selectOptionsTextVajrayana: 'Vajrayana'
+            },
+            ukrainian: {
+                uiFaster: 'Швидше',
+                uiRepeat: 'Повторюйте',
+                uiChooseTheChanter: 'Виберіть декламатора',
+                uiCount: 'Рахувати',
+                uiGrandTotal: 'Загальна сума',
+                uiWorldTotal: 'Світовий тотал',
+                uiShare: 'Поділіться до',
+                selectOptionsTextMahayana: 'Mahayana',
+                selectOptionsTextTheravada: 'Theravada',
+                selectOptionsTextTheravada2: 'Theravada',
+                selectOptionsTextVajrayana: 'Vajrayana'
+            },
+            russian: {
+                uiFaster: 'Быстрее',
+                uiRepeat: 'Повторить',
+                uiChooseTheChanter: 'Выберите певца',
+                uiCount: 'Считать',
+                uiGrandTotal: 'Общая сумма',
+                uiWorldTotal: 'Всего в мире',
+                uiShare: 'Поделиться с',
+                selectOptionsTextMahayana: 'Mahayana',
+                selectOptionsTextTheravada: 'Theravada',
+                selectOptionsTextTheravada2: 'Theravada',
+                selectOptionsTextVajrayana: 'Vajrayana'
+            }
+        };
+
+        this.setUiTextLanguage = function () {
+            let language = this.selectLanguage;
+            Object.keys(uiText[language]).forEach(key => {
+                this[key] = uiText[language][key];
+            });
+        }
+
+        // 初始化
+        this.setMantraAudio();
+        this.setMantraTextAnimeEndPoint();
+        this.setUiTextLanguage();
+    }
+
+    let noSleep = new NoSleep();
+    document.addEventListener('click', function enableNoSleep() {
+        document.removeEventListener('click', enableNoSleep, false);
+        noSleep.enable();
+    }, false);
+
+    let mantraVM = new MantraVM();
+
+    let app = new Vue({
+        el: '#container',
+        data: mantraVM,
+        mounted: () => {
+            mantraVM.setAnimeElement();
+        },
+        methods: {
+            clickMantraWheelButton: () => {
+                mantraVM.playOrStop();
+            }
+        },
+        watch: {
+            selectMantra: () => {
+                mantraVM.setMantraAudio();
+                mantraVM.setMantraTextAnimeEndPoint();
+            },
+            selectLanguage: () => {
+                mantraVM.setMantraTextAnimeEndPoint();
+                mantraVM.setUiTextLanguage();
+            },
+            isFaster: (val, oldVal) => {
+                mantraVM.setMantraAudio();
+            },
+            isRepeat: (val, oldVal) => {
+                mantraVM.setLoop(val);
+            }
+        }
+    });

@@ -2,12 +2,15 @@
 
 import Image from "next/image";
 // import styles from "./page.module.css";
-import { Navbar } from "../components/Navbar";
 import LineAddFriendQR from "@/public/lineAddFriendQR.png"
+
 import { Video } from "@/components/Video"
 import { Centerpiece } from "@/components/Centerpiece";
+import { MantraWheel } from "@/components/MantraWheel"
+
 import { useEffect, useState } from "react";
 import useWindowSize from "@/utils/WindowResize"
+
 
 const Style: { [key: string]: React.CSSProperties } = {
   main: {
@@ -55,20 +58,21 @@ export default function Home() {
         </Video>
         <h3 style={Style.videoSlogan}>聽風 聽海 聽自心</h3>
         <h3 style={Style.videoSlogan}>觀山 觀海 觀自在</h3>
-        
+      </div>
+      
+      <div style={{display: "flex", flexDirection: "column", border: "black 2px solid", alignItems:"center"}}>
         <h3>楞嚴神咒</h3>
-        Visit https://pray.braindna.co/shurangama/
-        <iframe title="Pray"
+        <p>Visit https://pray.braindna.co/shurangama/</p>
+        {/* <iframe title="Pray"
           width={(0.609448 * screenWidth + 145.576).toString()}
           height="720"
           src="https://pray.braindna.co/shurangama/">
-        </iframe>
-        <embed type="application" src="https://pray.braindna.co/shurangama/" 
+        </iframe> */}
+        {/* <embed type="application" src="https://pray.braindna.co/shurangama/" 
         width={(0.609448 * screenWidth + 145.576).toString()} 
-        height="720" />
+        height="720" /> */}
+        <MantraWheel></MantraWheel>
       </div>
-      
-
       {/* <div style={Style.qrcode}>
         <Image src={LineAddFriendQR} alt={"Scan QR Code (https://line.me/R/ti/p/@185tteka?from=page&accountId=185tteka) to Add Friend on LINE"}></Image>
         <p>
