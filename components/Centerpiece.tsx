@@ -50,7 +50,7 @@ export const Centerpiece = ({
   });
   return (
     <div style={hovered ? Style.containerRevealed : Style.container}>
-        <Image style={hovered ? Style.imageRevealed : Style.image} src={link} alt={altText} width={w} height={h}></Image>
+        <Image priority={true} style={hovered ? Style.imageRevealed : Style.image} src={link} alt={altText} width={w} height={h}></Image>
     </div>
   );
 
