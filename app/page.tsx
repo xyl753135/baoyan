@@ -6,7 +6,7 @@ import LineAddFriendQR from "@/public/lineAddFriendQR.png"
 
 import { Video } from "@/components/Video"
 import { Centerpiece } from "@/components/Centerpiece";
-import { MantraWheel } from "@/components/MantraWheel"
+import { MantraPlayer } from "@/components/MantraPlayer/MantraPlayer"
 
 import { useEffect, useState } from "react";
 import useWindowSize from "@/utils/WindowResize"
@@ -62,7 +62,7 @@ export default function Home() {
       
       <div style={{display: "flex", flexDirection: "column", border: "black 2px solid", alignItems:"center"}}>
         <h3>楞嚴神咒</h3>
-        <p>Visit https://pray.braindna.co/shurangama/</p>
+        {/* <p>Visit https://pray.braindna.co/shurangama/</p> */}
         {/* <iframe title="Pray"
           width={(0.609448 * screenWidth + 145.576).toString()}
           height="720"
@@ -71,7 +71,7 @@ export default function Home() {
         {/* <embed type="application" src="https://pray.braindna.co/shurangama/" 
         width={(0.609448 * screenWidth + 145.576).toString()} 
         height="720" /> */}
-        <MantraWheel></MantraWheel>
+        <MantraPlayer allowPause={true}></MantraPlayer>
       </div>
       {/* <div style={Style.qrcode}>
         <Image src={LineAddFriendQR} alt={"Scan QR Code (https://line.me/R/ti/p/@185tteka?from=page&accountId=185tteka) to Add Friend on LINE"}></Image>
