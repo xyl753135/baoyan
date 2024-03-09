@@ -3,6 +3,7 @@ import Image, { StaticImageData } from "next/image";
 import { MutableRefObject, useRef, useState } from "react";
 
 import { MantraWheel } from "./MantraWheel";
+import { MantraWheelCanvas } from "./MantraWheelCanvas";
 
 import shurangama from "@/public/mantraWheel/mantra_text_shurangama.png"
 import lang from "@/public/language.png"
@@ -93,6 +94,7 @@ export const MantraPlayer = ({
       <div style={Style.row}>
         <div onClick={() => handleAudio()}>
           <MantraWheel rotating={playing} position={mantraProgress} overlaySrc={overlay}></MantraWheel>
+          <MantraWheelCanvas rotating={playing} position={mantraProgress} overlaySrc={overlay}></MantraWheelCanvas>
         </div>
         <div>
           <fieldset>
