@@ -1,12 +1,16 @@
 import Image, { StaticImageData } from "next/image";
 
-import { MutableRefObject, useRef, useState } from "react";
+import { MutableRefObject, useEffect, useRef, useState } from "react";
 
+// Components
+import { MantraUI } from "./MantraPlayerControls";
 import { MantraWheel } from "./MantraWheel";
 import { MantraWheelCanvas } from "./MantraWheelCanvas";
 
-import shurangama from "@/public/mantraWheel/mantra_text_shurangama.png"
-import lang from "@/public/language.png"
+// Assets
+import overlay_shurangama from "@/public/mantraWheel/images/mantra_text_shurangama.png"
+import overlay_shurangama_glow from "@/public/mantraWheel/images/mantra_text_shurangama_glow.png"
+
 
 const Style: { [key: string]: React.CSSProperties } = {
   container: {
@@ -33,15 +37,21 @@ export const MantraPlayer = ({
   allowPause = false,
 }: Props) => {
   // Audio assets
-  let shurangamaFull = useRef<HTMLAudioElement>(new Audio("/mantraWheel/shurangama.mp3"));
-  let shurangamaShort = useRef<HTMLAudioElement>(new Audio("/mantraWheel/shurangama.mp3"));  // Waiting on assets
-  let laughTest = useRef<HTMLAudioElement>(new Audio("/mantraWheel/testing_laughterSFX.mp3"));  // Waiting on assets
+  let shurangamaFull = useRef<HTMLAudioElement>();
+  let shurangamaShort = useRef<HTMLAudioElement>();  // Waiting on assets
+  useEffect(() => {
+    shurangamaFull.current = new Audio("/mantraWheel/audio/shurangama.mp3");
+    shurangamaShort.current = new Audio("/mantraWheel/audio/testing_laughterSFX.mp3");
+  }, [])
+
+  // console.log("rendering mantraPlayer");
 
   const [playing, setPlaying] = useState(false);
-  const [overlay, setOverlay] = useState<StaticImageData>(shurangama);
-  const [audioSrc, setAudioSrc] = useState<MutableRefObject<HTMLAudioElement>>(shurangamaFull);
-  const [mantraProgress, setMantraProgress] = useState<number>(0);
+  const [overlay, setOverlay] = useState<StaticImageData>(overlay_shurangama);
+  const [audioSrc, setAudioSrc] = useState<MutableRefObject<HTMLAudioElement | undefined>>(shurangamaFull);
+  const [overlayRotationDegree, setOverlayRotationDegree] = useState<number>(0);
 
+  const [intervalID, setIntervalID] = useState<null | NodeJS.Timeout>(null)
   
   /**
    * When user selects another option from the dropdown/select menu 選擇神咒/Pick your mantra,
@@ -52,12 +62,14 @@ export const MantraPlayer = ({
   const handleMantraDropdown = (mantraOption: string) => {
     console.log(`Triggered MantraPlayer.handleMantraDropdown(mantraOption:'${mantraOption}')`);
     // Stop audio when dropdown changes audio source
-    audioSrc.current.pause();
-    audioSrc.current.currentTime = 0;
+    audioSrc.current?.pause();
+    if (audioSrc.current != undefined) {
+      audioSrc.current.currentTime = 0;
+    }
     setPlaying(false);
     if (mantraOption == "shurangamaFull" || mantraOption == "shurangamaShort") {
       // Set mantra overlay img
-      setOverlay(shurangama);
+      setOverlay(overlay_shurangama);
       // Set audio
       if (mantraOption == "shurangamaFull") {
         setAudioSrc(shurangamaFull);
@@ -66,65 +78,85 @@ export const MantraPlayer = ({
       } else {
         // Expandible
       }
-    } else if (mantraOption == "testing") {
+    } else {
       // Expandible
-      alert("testing")
-      setAudioSrc(laughTest);
     }
   }
 
+  // const interval = setInterval(() => {
+  //   calcProgress();
+  // }, 500);
+
+  useEffect(() => {
+    if(intervalID != null && audioSrc.current?.currentTime == audioSrc.current?.duration) {
+      console.log("WHATTTTT")
+      setPlaying(false);
+      setOverlayRotationDegree(0);
+      clearInterval(intervalID);
+      setIntervalID(null);
+    }
+  })
+
   const handleAudio = () => {
-    audioSrc.current.pause();
+    audioSrc.current?.pause();
+    if (intervalID === null) {  // Prevent starting multiple intervals
+      setIntervalID(setInterval(() => {
+          if (audioSrc.current) {
+            // console.log("duration", audioSrc.current.duration);
+            // console.log("time", audioSrc.current.currentTime);
+            // const percent = (audioSrc.current.currentTime / audioSrc.current.duration * 100);
+            const degree = Math.round((audioSrc.current.currentTime / audioSrc.current.duration * 360  + Number.EPSILON) * 10000) / 10000;
+            // console.log("progress", `${percent}%`);
+            console.log("degree", `${degree}deg`);
+            setOverlayRotationDegree(degree);
+          } else {
+            console.error("calcProgress audioSrc.current is null/undefined");
+          }
+      }, 1000));
+    } else {
+      clearInterval(intervalID);
+      setIntervalID(null);
+    }
+
     if (playing === false) {
-      if (allowPause) {
-        audioSrc.current.play();
-      } else {
-        audioSrc.current.currentTime = 0;
-        audioSrc.current.play();
+      if (!allowPause) {
+        if (audioSrc.current != undefined) {
+          audioSrc.current.currentTime = 0;
+        }
       }
+      audioSrc.current?.play();
     }
     setPlaying(!playing)
   }
   const resetMantra = () => {
-    audioSrc.current.currentTime = 0;
+    if (audioSrc.current != undefined) {
+      audioSrc.current.pause();
+      audioSrc.current.currentTime = 0;
+      setPlaying(false);
+      setOverlayRotationDegree(0);
+      if(intervalID != null) {
+        clearInterval(intervalID);
+        setIntervalID(null);
+      }
+    }
   }
 
   return (
     <div style={Style.container}>
       <div style={Style.row}>
         <div onClick={() => handleAudio()}>
-          <MantraWheel rotating={playing} position={mantraProgress} overlaySrc={overlay}></MantraWheel>
-          <MantraWheelCanvas rotating={playing} position={mantraProgress} overlaySrc={overlay}></MantraWheelCanvas>
+          <MantraWheel degree={overlayRotationDegree} overlaySrc={overlay_shurangama_glow}></MantraWheel>
+          <MantraWheelCanvas degree={overlayRotationDegree} overlaySrc={overlay.src}></MantraWheelCanvas>
         </div>
         <div>
-          <fieldset>
-            <label>選擇神咒: </label>
-            <select onChange={(event) => handleMantraDropdown(event.currentTarget.value)}>
-              <option value="shurangamaFull">楞嚴神咒(正常版)</option>
-              <option value="shurangamaShort">楞嚴神咒(簡介版)</option>
-              <option value="testing">NegativeTesting</option>
-            </select>
-          </fieldset>
-          <fieldset>
-            <label>選擇語言: </label>
-            <select>
-              <option value="zhHANT">繁體中文</option>
-              <option value="zhHANS">簡體中文</option>
-              <option value="en">English</option>
-              <option value="de">Deutsche</option>
-            </select>
-          </fieldset>
-          <fieldset>
-            <label>統計: </label>
-            <span>本次: 0</span><br></br>
-            <span>累計: 0</span><br></br>
-            <span>全球總計: 0</span><br></br>
-          </fieldset>
+          <MantraUI handleMantraDropdown={handleMantraDropdown}></MantraUI>
           {allowPause ?
             <button onClick={resetMantra}>Reset</button>
             :
             <></>
           }
+          <br></br>
+          <button onClick={() => {if(audioSrc.current != null) {audioSrc.current.currentTime = 775}}}>Skip to almost end</button>
         </div>
       </div>
       <div style={Style.col}>
