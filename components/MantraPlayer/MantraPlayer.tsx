@@ -89,7 +89,7 @@ export const MantraPlayer = ({
 
   useEffect(() => {
     if(intervalID != null && audioSrc.current?.currentTime == audioSrc.current?.duration) {
-      console.log("WHATTTTT")
+      console.log("Playback complete, resetting overlay and audio")
       setPlaying(false);
       setOverlayRotationDegree(0);
       clearInterval(intervalID);
@@ -107,7 +107,7 @@ export const MantraPlayer = ({
             // const percent = (audioSrc.current.currentTime / audioSrc.current.duration * 100);
             const degree = Math.round((audioSrc.current.currentTime / audioSrc.current.duration * 360  + Number.EPSILON) * 10000) / 10000;
             // console.log("progress", `${percent}%`);
-            console.log("degree", `${degree}deg`);
+            // console.log("degree", `${degree}deg`);
             setOverlayRotationDegree(degree);
           } else {
             console.error("calcProgress audioSrc.current is null/undefined");

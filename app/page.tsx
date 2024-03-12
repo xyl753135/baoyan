@@ -7,6 +7,7 @@ import LineAddFriendQR from "@/public/lineAddFriendQR.png"
 import { Video } from "@/components/Video"
 import { Centerpiece } from "@/components/Centerpiece";
 import { MantraPlayer } from "@/components/MantraPlayer/MantraPlayer"
+import { GeolocationAPI } from "@/components/GeolocationAPI";
 
 import { useEffect, useState } from "react";
 import useWindowSize from "@/utils/WindowResize"
@@ -73,6 +74,9 @@ export default function Home() {
         height="720" /> */}
         <MantraPlayer allowPause={true}></MantraPlayer>
       </div>
+
+      <GeolocationAPI></GeolocationAPI>
+
       {/* <div style={Style.qrcode}>
         <Image src={LineAddFriendQR} alt={"Scan QR Code (https://line.me/R/ti/p/@185tteka?from=page&accountId=185tteka) to Add Friend on LINE"}></Image>
         <p>

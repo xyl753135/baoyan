@@ -1,6 +1,25 @@
 import { useEffect } from "react";
 
-function success(position:any) {
+const Style: { [key: string]: React.CSSProperties } = {
+  container: {
+    display: "flex",
+    alignItems: "center",
+  },
+};
+
+type Props = {
+  // h: number,
+  // w: number,
+  // altText: string,
+}
+
+export const GeolocationAPI = ({
+  // h,
+  // w,
+  // altText,
+}: Props) => {
+
+  function success(position:any) {
     // console.log(position);
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
@@ -24,3 +43,11 @@ function success(position:any) {
       console.log("Sorry, no position available.");
     }
   })
+
+  return (
+    <>
+        
+    </>
+  );
+
+};
