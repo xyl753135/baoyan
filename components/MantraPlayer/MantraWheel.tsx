@@ -4,6 +4,7 @@ import Image, { StaticImageData } from "next/image";
 
 // Image assets
 import bg from "@/public/mantraWheel/images/mantra_bg.png"
+import { useRef } from "react";
 
 const Style: { [key: string]: React.CSSProperties } = {
   button: {
@@ -12,6 +13,7 @@ const Style: { [key: string]: React.CSSProperties } = {
     position: "relative",
     width: "220px",
     height: "220px",
+    margin: "1em"
   },
   static: {
     position: "absolute",
@@ -30,6 +32,12 @@ export const MantraWheel = ({
   degree,
   overlaySrc,
 }: Props) => {
+
+  const prevDegree = useRef(degree);
+  let isRewind = prevDegree.current > degree;
+  prevDegree.current = degree;
+  // console.log("isRewind?", isRewind);
+  
   return (
     <button style={Style.button}>
       {/* Background, Wheel */}
@@ -43,7 +51,7 @@ export const MantraWheel = ({
       </Image>
       {/* Overlay, Mantra text */}
       <Image
-        style={ degree == 0 ?
+        style={ isRewind ?
           // Rewind animation
           {
             position: "absolute",
@@ -51,7 +59,7 @@ export const MantraWheel = ({
             left: "0",
             zIndex: "2",
             rotate: `${degree}deg`,
-            transition: "all 3000ms ease-out",
+            transition: "all 0ms linear",
           } :
           // Rotate animation
           {
@@ -60,7 +68,7 @@ export const MantraWheel = ({
             left: "0",
             zIndex: "2",
             rotate: `${degree}deg`,
-            transition: "all 300ms linear",
+            transition: "all 500ms linear",
           }
         }
         src={overlaySrc}
