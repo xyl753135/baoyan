@@ -100,7 +100,7 @@ export const MantraPlayer = ({
     if (audioSrc.current?.currentTime) {
       if (lyricsContent.current.lyrics[0].time < audioSrc.current?.currentTime) {
         setDisplayedLyric(lyricsContent.current.lyrics[0].text);
-        lyricsContent.current.lyrics.shift();
+        lyricsContent.current.lyrics.shift(); // bugged on rewind (since prev lyrics have already been shifted (removed))
       }
     }
   });
@@ -153,7 +153,7 @@ export const MantraPlayer = ({
         } else {
           console.error("calcProgress audioSrc.current is null/undefined");
         }
-      }, 500));
+      }, 1000));
     } else {
       clearInterval(intervalID);
       setIntervalID(null);
@@ -217,11 +217,11 @@ export const MantraPlayer = ({
         <div>
           跳到:
           <GenericButton label={"開經偈"} handleClick={() => { skipToSection(0) }} hoverStyle={"light"}></GenericButton>
-          <GenericButton label={"第一會"} handleClick={() => { skipToSection(100) }} hoverStyle={"light"}></GenericButton>
-          <GenericButton label={"第二會"} handleClick={() => { skipToSection(200) }} hoverStyle={"light"}></GenericButton>
-          <GenericButton label={"第三會"} handleClick={() => { skipToSection(300) }} hoverStyle={"light"}></GenericButton>
-          <GenericButton label={"第四會"} handleClick={() => { skipToSection(400) }} hoverStyle={"light"}></GenericButton>
-          <GenericButton label={"第五會"} handleClick={() => { skipToSection(500) }} hoverStyle={"light"}></GenericButton>
+          <GenericButton label={"第一會"} handleClick={() => { skipToSection(189) }} hoverStyle={"light"}></GenericButton>
+          <GenericButton label={"第二會"} handleClick={() => { skipToSection(412) }} hoverStyle={"light"}></GenericButton>
+          <GenericButton label={"第三會"} handleClick={() => { skipToSection(455) }} hoverStyle={"light"}></GenericButton>
+          <GenericButton label={"第四會"} handleClick={() => { skipToSection(583) }} hoverStyle={"light"}></GenericButton>
+          <GenericButton label={"第五會"} handleClick={() => { skipToSection(664) }} hoverStyle={"light"}></GenericButton>
         </div>
       </div>
 
