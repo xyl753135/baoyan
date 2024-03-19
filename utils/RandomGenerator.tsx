@@ -5,5 +5,14 @@
  * @returns 
  */
 export function getRandomInteger(min: number, max: number) {
-    return Math.floor(Math.random() * (max - min) ) + min;
+    // Validate input
+    try {
+        if (max < min) {
+            throw new Error("Invalid inputs provided: min can't be greater than max");
+        }
+        return Math.floor(Math.random() * (max - min) ) + min;
+    } catch (error) {
+        console.error(error);
+        return 0;
+    }
 }
