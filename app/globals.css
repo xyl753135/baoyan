@@ -51,7 +51,7 @@
 @media (max-width: 700px) {
   :root {
     --navbarFullDisplay: none;
-    --navbarHamburgerDisplay: "flex";
+    --navbarHamburgerDisplay: flex;
   }
   /* .content {
     padding: 4rem;
@@ -131,17 +131,29 @@
 
 
 
+ol {
+  margin-left: 1.4em;
+}
 
+label {
+  vertical-align: middle;
+}
 
+input[type=checkbox] {
+  margin-left: 4px;
+  margin-right: 4px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  /* line-height: normal; */
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  }
 
 a {
   color: inherit;
   /* font-weight: bolder; */
   text-decoration: none;
 }
-
-
-
-
 
 

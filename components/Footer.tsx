@@ -94,11 +94,12 @@ const Style: { [key: string]: React.CSSProperties } = {
   },
   desktop: {
     flexGrow: "1",
+    flexBasis: "100vw",
     display: "var(--navbarFullDisplay)",  // flex over 700px, none under 700px
     flexDirection: "row",
   },
   mobile: {
-    flexGrow: "0",
+    flexGrow: "1",
     display: "var(--navbarHamburgerDisplay)",  // none over 700px, flex under 700px
     flexDirection: "column",
   },
