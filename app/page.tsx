@@ -6,7 +6,7 @@ import LineAddFriendQR from "@/public/lineAddFriendQR.png"
 
 import { Video } from "@/components/Video"
 import { Centerpiece } from "@/components/Centerpiece";
-import { MantraPlayer } from "@/components/MantraPlayer/MantraPlayer"
+import { MantraApp } from "@/components/MantraApp/MantraApp"
 import { GeolocationAPI } from "@/components/GeolocationAPI";
 
 import { useEffect, useState } from "react";
@@ -41,14 +41,14 @@ export default function Home() {
   const [screenWidth, screenHeight] = useWindowSize();
 
 
-  
+
 
 
   return (
     <main style={Style.main}>
-      <Centerpiece h={400} w={400*0.32} altText={"寶嚴山寶嚴禪寺"} link={"/centerpiece.png"}></Centerpiece>
+      {/* <Centerpiece h={400} w={400*0.32} altText={"寶嚴山寶嚴禪寺"} link={"/centerpiece.png"}></Centerpiece> */}
 
-      <div style={Style.videoContainer}>
+      {/* <div style={Style.videoContainer}>
         <Video 
           h={"auto"} 
           w={(0.609448 * screenWidth + 145.576).toString()} 
@@ -59,23 +59,14 @@ export default function Home() {
         </Video>
         <h3 style={Style.videoSlogan}>聽風 聽海 聽自心</h3>
         <h3 style={Style.videoSlogan}>觀山 觀海 觀自在</h3>
-      </div>
-      
-      <div style={{display: "flex", flexDirection: "column", border: "black 2px solid", alignItems:"center"}}>
-        <h3>楞嚴神咒</h3>
-        {/* <p>Visit https://pray.braindna.co/shurangama/</p> */}
-        {/* <iframe title="Pray"
-          width={(0.609448 * screenWidth + 145.576).toString()}
-          height="720"
-          src="https://pray.braindna.co/shurangama/">
-        </iframe> */}
-        {/* <embed type="application" src="https://pray.braindna.co/shurangama/" 
-        width={(0.609448 * screenWidth + 145.576).toString()} 
-        height="720" /> */}
-        <MantraPlayer allowPause={true}></MantraPlayer>
-      </div>
+      </div> */}
 
-      <GeolocationAPI></GeolocationAPI>
+
+<MantraApp ></MantraApp>
+
+
+      
+      {/* <GeolocationAPI></GeolocationAPI> */}
 
       {/* <div style={Style.qrcode}>
         <Image src={LineAddFriendQR} alt={"Scan QR Code (https://line.me/R/ti/p/@185tteka?from=page&accountId=185tteka) to Add Friend on LINE"}></Image>
@@ -85,7 +76,7 @@ export default function Home() {
         </p>
       </div> */}
 
-{/* <br></br>
+      {/* <br></br>
 <p>
 WIP...
       觀山 觀海 觀自在
@@ -106,8 +97,8 @@ Read More
 
 
 </p> */}
-      
-{/* <div className={styles.description}>
+
+      {/* <div className={styles.description}>
         <p>
           Get started by editing&nbsp;
           <code className={styles.code}>app/page.tsx</code>
