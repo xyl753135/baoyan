@@ -5,9 +5,7 @@ import Image from "next/image";
 import { ExpandingCard } from "@/components/ExpandingCard";
 
 import meditationLobby from "@/public/meditationLobby.webp";
-import taipeiVenue1 from "@/public/taipeiVenue1.jpg";
-import taipeiVenue2 from "@/public/taipeiVenue2.jpg";
-import taipeiVenue3 from "@/public/taipeiVenue3.webp";
+import taipeiVenue1 from "@/public/about/taiwan/tpc/taipeiVenue1.jpg";
 import useWindowSize from "@/utils/WindowResize";
 
 const Style: { [key: string]: React.CSSProperties } = {
