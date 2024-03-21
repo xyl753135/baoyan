@@ -99,12 +99,6 @@ export const MantraPlayer = ({
     }
 
     if (playing === false) {
-      // if pausing is not allowed, reset audio time/progress to 0 before playing
-      if (!allowPause) {
-        if (audioSrc != undefined) {
-          audioSrc.currentTime = 0;
-        }
-      }
       audioSrc?.play();
     }
     setPlaying(!playing)
