@@ -10,8 +10,8 @@
   --navbarHamburgerDisplay: none;
   --navbarHamburgerContainerWidth: 65px;
   --navbarHamburgerContainerHeight: 75px;
-  --navbarHamburgerLRPadding: 15px;
-  --navbarHamburgerTBPadding: 25px;
+  --navbarHamburgerLRPadding: 17px;
+  --navbarHamburgerTBPadding: 28px;
   --navbarHamburgerBarGap: 5px;
   --navbarHamburgerBarWidth: calc(var(--navbarHamburgerContainerWidth) - (var(--navbarHamburgerLRPadding) * 2));
   --navbarHamburgerBarDiagonal: calc((var(--navbarHamburgerBarWidth) * 1));

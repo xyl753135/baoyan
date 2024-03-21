@@ -21,8 +21,8 @@ const Style: { [key: string]: React.CSSProperties } = {
   },
   line: {
     backgroundColor: "white",
-    border: "1px solid black", 
-    boxShadow: "0 0 0 1px white",
+    // border: "1px solid black", 
+    // boxShadow: "0 0 0 1px white",
     width: "var(--navbarHamburgerBarWidth)",
     height: "var(--navbarHamburgerBarHeight)",
     // borderRadius: "10px",
