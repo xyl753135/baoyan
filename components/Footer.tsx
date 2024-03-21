@@ -157,17 +157,17 @@ export const Footer = ({
     </div>
 
     <div style={Style.mobile}>
-      <div style={Style.engagementRow}>
+      <div style={{ display: "flex", justifyContent: "left" }}>
         <LineShareButton url={"https://www.baoyan.org/"} title={"寶嚴禪寺 Baoyan Chan Monastery, 官網"} style={Style.shareButtonGroup}>
           <LineIcon size={50} round={false} borderRadius={10} />
         </LineShareButton>
-        <FacebookShareButton url={"https://www.baoyan.org/"} title={"寶嚴禪寺 Baoyan Chan Monastery，官網"} style={Style.shareButtonGroup}>
+        <FacebookShareButton url={"https://www.baoyan.org/"} title={"寶嚴禪寺 Baoyan Chan Monastery, 官網"} style={Style.shareButtonGroup}>
           <FacebookIcon size={50} round={false} borderRadius={10} />
         </FacebookShareButton>
-        <LinkedinShareButton url={"https://www.baoyan.org/"} title={"寶嚴禪寺 Baoyan Chan Monastery，官網"} style={Style.shareButtonGroup}>
+        <LinkedinShareButton url={"https://www.baoyan.org/"} title={"寶嚴禪寺 Baoyan Chan Monastery, 官網"} style={Style.shareButtonGroup}>
           <LinkedinIcon size={50} round={false} borderRadius={10} />
         </LinkedinShareButton>
-        <RedditShareButton url={"https://www.baoyan.org/"} title={"寶嚴禪寺 Baoyan Chan Monastery，官網"} style={Style.shareButtonGroup}>
+        <RedditShareButton url={"https://www.baoyan.org/"} title={"寶嚴禪寺 Baoyan Chan Monastery, 官網"} style={Style.shareButtonGroup}>
           <RedditIcon size={50} round={false} borderRadius={10} />
         </RedditShareButton>
       </div>
