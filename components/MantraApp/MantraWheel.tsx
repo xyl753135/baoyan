@@ -9,6 +9,7 @@ import { useRef } from "react";
 const Style: { [key: string]: React.CSSProperties } = {
   button: {
     background: "none",
+    borderRadius: "50%",
     border: "none",
     position: "relative",
     width: "220px",
@@ -26,17 +27,14 @@ const Style: { [key: string]: React.CSSProperties } = {
 type Props = {
   degree: number,
   overlaySrc: string | StaticImageData,
+  isRewind: boolean,
 }
 
 export const MantraWheel = ({
   degree,
   overlaySrc,
+  isRewind
 }: Props) => {
-
-  const prevDegree = useRef(degree);
-  let isRewind = prevDegree.current > degree;
-  prevDegree.current = degree;
-  // console.log("isRewind?", isRewind);
   
   return (
     <button style={Style.button}>
@@ -59,7 +57,7 @@ export const MantraWheel = ({
             left: "0",
             zIndex: "2",
             rotate: `${degree}deg`,
-            transition: "all 0ms linear",
+            transition: "0s",
           } :
           // Rotate animation
           {
