@@ -86,7 +86,7 @@ export const MantraApp = ({
     const [lrcPath, setLrcPath] = useState<string>("./mantraWheel/lyrics/shurangama.lrc");
 
     // useRef
-    const sfx = useRef<HTMLAudioElement>();
+    const sfx = useRef<HTMLAudioElement>(new Audio());
     const subtitles = useRef<LRCContent>({ 
         metadata: { 
             artist: "", 
@@ -198,21 +198,20 @@ export const MantraApp = ({
                         <legend style={{ 
                             paddingLeft: "0.5em", 
                             paddingRight: "0.5em",
-                            textDecoration: "underline",
                             fontWeight: "bolder",
                         }}>
-                            持咒設定:
+                            持咒設定
                         </legend>
                         <form action={handleSubmit} style={{ ...Style.col, ...{ justifyContent: "center" } }}>
                             <div style={{ minWidth: "260px" }}>
                                 <label htmlFor="sfxChoice">選擇神咒:</label>
                                 <select id="sfxChoice" name="sfxChoice">
                                     <option defaultChecked value="/mantraWheel/audio/shurangama.mp3">楞嚴神咒(完整版)</option>
-                                    <option value="/mantraWheel/audio/shurangama_p1.mp3">楞嚴神咒(第一會)</option>
+                                    {/* <option value="/mantraWheel/audio/shurangama_p1.mp3">楞嚴神咒(第一會)</option>
                                     <option value="/mantraWheel/audio/shurangama_p2.mp3">楞嚴神咒(第二會)</option>
                                     <option value="/mantraWheel/audio/shurangama_p3.mp3">楞嚴神咒(第三會)</option>
                                     <option value="/mantraWheel/audio/shurangama_p4.mp3">楞嚴神咒(第四會)</option>
-                                    <option value="/mantraWheel/audio/shurangama_p5.mp3">楞嚴神咒(第五會)</option>
+                                    <option value="/mantraWheel/audio/shurangama_p5.mp3">楞嚴神咒(第五會)</option> */}
                                     {/* <option value="shurangamaShort">楞嚴神咒(簡介版)</option> */}
                                 </select>
                             </div>
@@ -241,38 +240,28 @@ export const MantraApp = ({
                     style={{ display: showLoading ? "inline" : "none" }}></Image>
                 
                 <div style={{ display: showPlayer ? "inline" : "none" , flexDirection: "row" }}>
-                    <div style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>
-                        {/* <MantraPlayer showSkip={showSkip} showSubtitles={showSubtitles} 
-                        sfx={
-                            // sfx.current? sfx.current : new Audio(sfxPath)
-                            sfx.current
-                        } subtitles={subtitles.current}></MantraPlayer> */}
-                        <Image width={220} height={220}
-                            src={"/mantraWheel/images/mantra_bg.png"}
-                            alt={"准備中，請稍後。。。"}></Image>
-                    </div>
-                    <div style={{ display: showSubtitles ? "block" : "none", textAlign: "center" }}>
-                        {subtitles.current?.metadata.title}
-                        {/* hidddddaasdasddddddddddddddddddss<br></br> */}
-                        {/* <div> */}
-                        {/* 爾時世尊  從肉髻中  涌百寶光  光中涌出 */}
-                        {/* </div> */}
+                    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                        <div style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>
+                            <MantraPlayer 
+                                showSkip={showSkip} 
+                                showSubtitles={showSubtitles} 
+                                sfx={ sfx.current } 
+                                subtitles={subtitles.current}
+                                wheelSize={320}></MantraPlayer>
+                        </div>
                     </div>
                 </div>
-                
-                
             </div>
             <div style={{ ...Style.col, ...{ alignItems: "center" } }}>
                 <fieldset style={{...Style.config, ...{paddingBottom: "0.8em"}}}>
                     <legend style={{ 
                             paddingLeft: "0.5em", 
                             paddingRight: "0.5em",
-                            textDecoration: "underline",
                             fontWeight: "bolder",
-                        }}>統計:</legend>
-                    <p>本次: 0</p>
+                        }}>統計</legend>
+                    <p>本次: 1</p>
                     <p>累計: 0</p>
-                    <p>全球總計: 0</p>
+                    <p>全球總計: 12345679</p>
                 </fieldset>
             </div>
         </div>
