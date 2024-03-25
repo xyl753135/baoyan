@@ -56,6 +56,8 @@ const Style: { [key: string]: React.CSSProperties } = {
         // minWidth: "100px",
         flexShrink: "1",
 
+        fontSize: "20px",
+
         cursor: "pointer",
         borderRadius: "5px",
         background: "transparent",
@@ -87,16 +89,16 @@ export const MantraApp = ({
 
     // useRef
     const sfx = useRef<HTMLAudioElement>(new Audio());
-    const subtitles = useRef<LRCContent>({ 
-        metadata: { 
-            artist: "", 
-            album: "", 
-            title: "", 
-            length: "" 
-        }, 
-        lyrics: [{ time: 0, text: ""}] 
+    const subtitles = useRef<LRCContent>({
+        metadata: {
+            artist: "",
+            album: "",
+            title: "",
+            length: ""
+        },
+        lyrics: [{ time: 0, text: "" }]
     });
-    
+
     useEffect(() => {
         sfx.current = new Audio(sfxPath);
     }, [sfxPath]);
@@ -123,9 +125,9 @@ export const MantraApp = ({
                 setShowLoading(false);
                 setShowPlayer(true);
                 setSfxPath(sfxChoice);
-                
+
                 // Show skip buttons for full mantras
-                if(sfxChoice == "/mantraWheel/audio/shurangama.mp3") {
+                if (sfxChoice == "/mantraWheel/audio/shurangama.mp3") {
                     setShowSkip(true);
                 }
 
@@ -133,18 +135,18 @@ export const MantraApp = ({
                 if (subtitlesChoice == "on") {
                     setShowSubtitles(true);
                     if (sfxChoice == "/mantraWheel/audio/shurangama.mp3") {
-                        setLrcPath("./mantraWheel/lyrics/shurangama.lrc"); 
+                        setLrcPath("./mantraWheel/lyrics/shurangama.lrc");
                     } else if (sfxChoice == "/mantraWheel/audio/shurangama_p1.mp3") {
-                        setLrcPath("./mantraWheel/lyrics/shurangama_p1.lrc"); 
+                        setLrcPath("./mantraWheel/lyrics/shurangama_p1.lrc");
                     } else if (sfxChoice == "/mantraWheel/audio/shurangama_p2.mp3") {
-                        setLrcPath("./mantraWheel/lyrics/shurangama_p2.lrc"); 
+                        setLrcPath("./mantraWheel/lyrics/shurangama_p2.lrc");
                     } else if (sfxChoice == "/mantraWheel/audio/shurangama_p3.mp3") {
-                        setLrcPath("./mantraWheel/lyrics/shurangama_p3.lrc"); 
-                    }  else if (sfxChoice == "/mantraWheel/audio/shurangama_p4.mp3") {
-                        setLrcPath("./mantraWheel/lyrics/shurangama_p4.lrc"); 
-                    }  else if (sfxChoice == "/mantraWheel/audio/shurangama_p5.mp3") {
-                        setLrcPath("./mantraWheel/lyrics/shurangama_p5.lrc"); 
-                    } 
+                        setLrcPath("./mantraWheel/lyrics/shurangama_p3.lrc");
+                    } else if (sfxChoice == "/mantraWheel/audio/shurangama_p4.mp3") {
+                        setLrcPath("./mantraWheel/lyrics/shurangama_p4.lrc");
+                    } else if (sfxChoice == "/mantraWheel/audio/shurangama_p5.mp3") {
+                        setLrcPath("./mantraWheel/lyrics/shurangama_p5.lrc");
+                    }
                 }
             }, getRandomInteger(500, 3000)); // setTimeout uses delay in miliseconds
         } catch (error) {
@@ -160,11 +162,11 @@ export const MantraApp = ({
 
     return (
         <div style={Style.container}>
-            <h3 style={{ marginTop: "1em", marginBottom: "0.5em", textAlign: "center" }}>陀羅尼持咒 APP</h3>
+            <h3 style={{ marginTop: "1em", marginBottom: "0.5em", textAlign: "center", fontSize: "30px" }}>陀羅尼持咒 APP</h3>
             <div style={Style.col}>
                 <section >
                     <div style={{ display: "flex", justifyContent: "right", alignItems: "center", marginRight: showManual ? "13px" : "16px" }}>
-                        <p style={{ cursor: "pointer", verticalAlign: "middle" }} onClick={toggleManual}>使用手冊</p>
+                        <p style={{ cursor: "pointer", verticalAlign: "middle", fontSize: "20px" }} onClick={toggleManual}>使用手冊</p>
                         <Image width={showManual ? 25 : 22} height={25}
                             src={showManual ? "/icons/icon_manual_open.png" : "/icons/icon_manual.png"}
                             alt={"使用手冊"}
@@ -178,87 +180,109 @@ export const MantraApp = ({
                         {/* </div> */}
 
                     </div>
-                    <div style={{ display: showManual ? "flex" : "none", flexDirection: "column", alignItems: "center" }}>
-                        <h4 style={{ textDecoration: "underline", marginBottom: "0.2em" }}>操作指示</h4>
-                        <ol>
-                            <li>設定 APP:</li>
-                            <ol>
-                                <li>從下拉式選單裏面，選擇神咒</li>
-                                <li>選擇是否顯示字幕</li>
-                                <li>點擊 [確認] 按鈕</li>
-                            </ol>
-                            <li>開始[▶], 點擊轉經輪</li>
-                            <li>暫停[◼], 再次點擊轉經輪</li>
-                        </ol>
-                    </div>
-
+                    {
+                        showManual ?
+                            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                                <br></br>
+                                <h4 style={{ marginBottom: "0.2em", fontSize: "24px" }}>操作指示</h4>
+                                <ol>
+                                    <li style={{ fontSize: "20px" }}>設定 APP:</li>
+                                    <ol>
+                                        <li style={{ fontSize: "20px" }}>從下拉式選單裏面，選擇神咒</li>
+                                        <li style={{ fontSize: "20px" }}>選擇是否顯示字幕</li>
+                                        <li style={{ fontSize: "20px" }}>點擊 [確認] 按鈕</li>
+                                    </ol>
+                                    <li style={{ fontSize: "20px" }}>開始[▶], 點擊轉經輪</li>
+                                    <li style={{ fontSize: "20px" }}>暫停[◼], 再次點擊轉經輪</li>
+                                </ol>
+                                <br></br>
+                            </div>
+                            :
+                            <></>
+                    }
                 </section>
-                <section style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>
-                    <fieldset style={Style.config}>
-                        <legend style={{ 
-                            paddingLeft: "0.5em", 
-                            paddingRight: "0.5em",
-                            fontWeight: "bolder",
-                        }}>
-                            持咒設定
-                        </legend>
-                        <form action={handleSubmit} style={{ ...Style.col, ...{ justifyContent: "center" } }}>
-                            <div style={{ minWidth: "260px" }}>
-                                <label htmlFor="sfxChoice">選擇神咒:</label>
-                                <select id="sfxChoice" name="sfxChoice">
-                                    <option defaultChecked value="/mantraWheel/audio/shurangama.mp3">楞嚴神咒(完整版)</option>
-                                    {/* <option value="/mantraWheel/audio/shurangama_p1.mp3">楞嚴神咒(第一會)</option>
+                {
+                    showPlayer ?
+                        <></>
+                        :
+                        <section style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>
+                            <fieldset style={Style.config}>
+                                <legend style={{
+                                    paddingLeft: "0.5em",
+                                    paddingRight: "0.5em",
+                                    fontWeight: "bolder",
+                                    fontSize: "24px"
+                                }}>
+                                    持咒設定
+                                </legend>
+                                <form action={handleSubmit} style={{ ...Style.col, ...{ justifyContent: "center" } }}>
+                                    <div style={{ marginBottom: "0.7em" }}>
+                                        <label htmlFor="sfxChoice" style={{ fontSize: "20px" }}>選擇神咒:</label>
+                                        <select id="sfxChoice" name="sfxChoice" style={{ fontSize: "20px", verticalAlign: "middle" }}>
+                                            <option defaultChecked value="/mantraWheel/audio/shurangama.mp3">楞嚴神咒(完整版)</option>
+                                            {/* <option value="/mantraWheel/audio/shurangama_p1.mp3">楞嚴神咒(第一會)</option>
                                     <option value="/mantraWheel/audio/shurangama_p2.mp3">楞嚴神咒(第二會)</option>
                                     <option value="/mantraWheel/audio/shurangama_p3.mp3">楞嚴神咒(第三會)</option>
                                     <option value="/mantraWheel/audio/shurangama_p4.mp3">楞嚴神咒(第四會)</option>
                                     <option value="/mantraWheel/audio/shurangama_p5.mp3">楞嚴神咒(第五會)</option> */}
-                                    {/* <option value="shurangamaShort">楞嚴神咒(簡介版)</option> */}
-                                </select>
-                            </div>
+                                            {/* <option value="shurangamaShort">楞嚴神咒(簡介版)</option> */}
+                                        </select>
+                                    </div>
 
-                            <div>
-                                <label htmlFor="showSubtitles">顯示陪伴字幕:</label>
-                                <input type="checkbox" id="showSubtitles" name="showSubtitles"></input>
-                            </div>
+                                    <div>
+                                        <label htmlFor="showSubtitles" style={{ fontSize: "20px" }}>顯示陪伴字幕:</label>
+                                        <input type="checkbox" id="showSubtitles" name="showSubtitles" style={{ verticalAlign: "middle", width: "24px", height: "24px" }}></input>
+                                    </div>
 
-                            <button type="submit" style={Style.submit}>
-                                <Image width={25} height={25} src={"/icons/icon_confirm_nobg.png"} alt={"確認 icon"} style={{ marginRight: "0.2rem", filter: "invert(1)" }}></Image>
-                                確認
-                            </button>
-                        </form>
-                    </fieldset>
-                </section>
+                                    <button type="submit" style={Style.submit}>
+                                        <Image width={25} height={25} src={"/icons/icon_confirm_nobg.png"} alt={"確認 icon"} style={{ marginRight: "0.2rem", filter: "invert(1)" }}></Image>
+                                        確認
+                                    </button>
+                                </form>
+                            </fieldset>
+                        </section>
+                }
             </div>
             <div style={{ ...Style.col, ...{ alignItems: "center" } }}>
-                <Image width={320} height={241}
-                    src={"/placeholders/app_placeholder.png"}
-                    alt={"未設定的持咒 APP"}
-                    style={{ display: showPlaceholder ? "inline" : "none" }}></Image>
-                <Image width={320} height={241}
-                    src={"/placeholders/gif_loading.gif"}
-                    alt={"准備中，請稍後。。。"}
-                    style={{ display: showLoading ? "inline" : "none" }}></Image>
-                
-                <div style={{ display: showPlayer ? "inline" : "none" , flexDirection: "row" }}>
-                    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-                        <div style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>
-                            <MantraPlayer 
-                                showSkip={showSkip} 
-                                showSubtitles={showSubtitles} 
-                                sfx={ sfx.current } 
+                {
+                    showPlaceholder ?
+                        <Image width={320} height={241}
+                            src={"/placeholders/app_placeholder.png"}
+                            alt={"未設定的持咒 APP"}
+                            style={{ display: "inline" }}></Image>
+                        :
+                        <></>
+                }
+                {
+                    showLoading ?
+                        <Image width={320} height={241}
+                            src={"/placeholders/gif_loading.gif"}
+                            alt={"准備中，請稍後。。。"}
+                            style={{ display: "inline" }}></Image>
+                        :
+                        <></>
+                }
+                {
+                    showPlayer ?
+                        <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", paddingTop: "0.5em", paddingBottom: "0.5em" }}>
+                            <MantraPlayer
+                                showSkip={showSkip}
+                                showSubtitles={showSubtitles}
+                                sfx={sfx.current}
                                 subtitles={subtitles.current}
                                 wheelSize={320}></MantraPlayer>
                         </div>
-                    </div>
-                </div>
+                        :
+                        <></>
+                }
             </div>
             <div style={{ ...Style.col, ...{ alignItems: "center" } }}>
-                <fieldset style={{...Style.config, ...{paddingBottom: "0.8em"}}}>
-                    <legend style={{ 
-                            paddingLeft: "0.5em", 
-                            paddingRight: "0.5em",
-                            fontWeight: "bolder",
-                        }}>統計</legend>
+                <fieldset style={{ ...Style.config, ...{ paddingBottom: "0.8em" } }}>
+                    <legend style={{
+                        paddingLeft: "0.5em",
+                        paddingRight: "0.5em",
+                        fontWeight: "bolder",
+                    }}>統計</legend>
                     <p>本次: 1</p>
                     <p>累計: 0</p>
                     <p>全球總計: 12345679</p>

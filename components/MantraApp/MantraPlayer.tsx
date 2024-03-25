@@ -42,7 +42,7 @@ export const MantraPlayer = ({
 }: Props) => {
 
   // useStates
-  const [playing, setPlaying] = useState(false);
+  // const [playing, setPlaying] = useState(false);
   const [degree, setDegree] = useState<number>(0);
   const [subtitle, setSubtitle] = useState<string>();
   const [intervalID, setIntervalID] = useState<null | NodeJS.Timeout>(null)
@@ -52,7 +52,7 @@ export const MantraPlayer = ({
   useEffect(() => {
     if (intervalID != null && sfx.currentTime == sfx.duration) {
       console.log("Playback complete, resetting overlay and audio")
-      setPlaying(false);
+      // setPlaying(false);
       setDegree(0);
       clearInterval(intervalID);
       setIntervalID(null);
@@ -66,7 +66,6 @@ export const MantraPlayer = ({
 
 
   const handleWheelClick = () => {
-    sfx.pause();
     if (intervalID === null) {  // Prevent starting multiple intervals
       setIntervalID(setInterval(() => {
         setDegree(convertTimeToDegree(sfx.currentTime, sfx.duration));
@@ -75,25 +74,35 @@ export const MantraPlayer = ({
           setSubtitle(subtitles.lyrics[index.current].text);
           index.current = index.current + 1;
         }
-
+        
       }, 1000));
+      sfx.play();
     } else {
       clearInterval(intervalID);
       setIntervalID(null);
+      sfx.pause();
     }
 
-    if (playing === false) {
-      sfx.play();
-    }
-    setPlaying(!playing)
+    // if (playing === false) {
+    // }
+    // setPlaying(!playing)
   }
 
-  const skipToSection = (time: number) => {
-    if (sfx != undefined) {
+  const skipToSection = (time: number, newIndex: number) => {
+    sfx.currentTime = time;
+    index.current = newIndex;
+
+    if (intervalID === null) {  // Prevent starting multiple intervals
+      setIntervalID(setInterval(() => {
+        setDegree(convertTimeToDegree(sfx.currentTime, sfx.duration));
+        
+        if (subtitles.lyrics[index.current].time < sfx.currentTime) {
+          setSubtitle(subtitles.lyrics[index.current].text);
+          index.current = index.current + 1;
+        }
+        
+      }, 1000));
       sfx.play();
-      sfx.currentTime = time;
-      setPlaying(true);
-      setDegree(sfx.currentTime / sfx.duration * 360);
     }
   }
 
@@ -110,21 +119,57 @@ export const MantraPlayer = ({
         showSkip ?
           <>
             <div style={{ display: "flex", flexDirection: "row" }}>
-              <GenericButton label={"開經偈"} handleClick={() => { skipToSection(0) }}></GenericButton>
-              <GenericButton label={"第一會"} handleClick={() => { skipToSection(189) }}></GenericButton>
-              <GenericButton label={"第二會"} handleClick={() => { skipToSection(412) }}></GenericButton>
+              <GenericButton label={"開經偈"} handleClick={() => { skipToSection(0, 0); } } 
+                border={"white 2px solid"} 
+                borderRadius={"5px"} 
+                background={"saddlebrown"} 
+                minWidth={""} 
+                minHeight={""} 
+                labelFontSize={"18px"}></GenericButton>
+              <GenericButton label={"第一會"} handleClick={() => { skipToSection(189, 21); } } 
+                border={"white 2px solid"} 
+                borderRadius={"5px"} 
+                background={"saddlebrown"} 
+                minWidth={""} 
+                minHeight={""} 
+                labelFontSize={"18px"}></GenericButton>
+              <GenericButton label={"第二會"} handleClick={() => { skipToSection(412, 134); } } 
+                border={"white 2px solid"} 
+                borderRadius={"5px"} 
+                background={"saddlebrown"} 
+                minWidth={""} 
+                minHeight={""} 
+                labelFontSize={"18px"}></GenericButton>
             </div>
             <div style={{ display: "flex", flexDirection: "row" }}>
-              <GenericButton label={"第三會"} handleClick={() => { skipToSection(455) }}></GenericButton>
-              <GenericButton label={"第四會"} handleClick={() => { skipToSection(583) }}></GenericButton>
-              <GenericButton label={"第五會"} handleClick={() => { skipToSection(664) }}></GenericButton>
+              <GenericButton label={"第三會"} handleClick={() => { skipToSection(455, 159); } } 
+                border={"white 2px solid"} 
+                borderRadius={"5px"} 
+                background={"saddlebrown"} 
+                minWidth={""} 
+                minHeight={""} 
+                labelFontSize={"18px"}></GenericButton>
+              <GenericButton label={"第四會"} handleClick={() => { skipToSection(583, 222); } } 
+                border={"white 2px solid"} 
+                borderRadius={"5px"} 
+                background={"saddlebrown"} 
+                minWidth={""} 
+                minHeight={""} 
+                labelFontSize={"18px"}></GenericButton>
+              <GenericButton label={"第五會"} handleClick={() => { skipToSection(664, 263); } } 
+                border={"white 2px solid"} 
+                borderRadius={"5px"} 
+                background={"saddlebrown"} 
+                minWidth={""} 
+                minHeight={""} 
+                labelFontSize={"18px"}></GenericButton>
             </div>
           </>
           :
           <></>
       }
       {/* Mantra Wheel */}
-      <div style={{position: "relative"}} onClick={() => handleWheelClick()}>
+      <div style={{position: "relative", marginTop: "0.5em"}} onClick={() => handleWheelClick()}>
         {/* Overlay */}
         <MantraWheel degree={degree} overlaySrc={overlay_shurangama_glow} isRewind={false} wheelSize={wheelSize}></MantraWheel>
         {/* Background, Wheel */}
