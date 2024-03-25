@@ -5,8 +5,8 @@ import { useState } from "react";
 const Style: { [key: string]: React.CSSProperties } = {
   button: {
     margin: "0.2em",
-    paddingLeft: "1em",
-    paddingRight: "1em",
+    paddingLeft: "0.5em",
+    paddingRight: "0.5em",
     paddingTop: "0.5rem",
     paddingBottom: "0.5rem",
     display: "flex",
@@ -27,54 +27,55 @@ const Style: { [key: string]: React.CSSProperties } = {
     textDecoration: "none",
     transition: "all 200ms ease-out"
   },
-  lightBtn: {
-    backgroundColor: "transparent",
-    border: "1px solid white",
-  },
-  darkBtn: {
-    backgroundColor: "#214468",
-    border: "1px solid white",
-  },
-  lightLabel: {
-    color: "white",
-  },
-  darkLabel: {
-    color: "white",
-  },
-  fontNormal: {
-    fontSize: "1rem",
-  },
 };
 
 type Props = {
   label: string,
   handleClick: Function,
-  hoverStyle?: "none" | "dark" | "light"
+  border: string,
+  borderRadius: string,
+  background: string,
+  minWidth: string,
+  minHeight: string,
+  labelFontSize: string,
+
 }
 
 export const GenericButton = ({
     label,
     handleClick,
-    hoverStyle = "none",
+    border,
+    borderRadius,
+    background,
+    minWidth,
+    minHeight,
+    labelFontSize,
 }: Props) => {
-    const [hovered, setHovered] = useState<Boolean>(false);
+    // const [hovered, setHovered] = useState<Boolean>(false);
     
 
   return (
     <button 
       style={{
         ...Style.button, 
-        ...(hovered ? 
-          Style.lightBtn : 
-          Style.darkBtn),
+        border: border,
+        borderRadius:borderRadius,
+        background:background,
+        minWidth:minWidth,
+        minHeight:minHeight
       }}
       onClick={() => handleClick()}
-      onMouseOver={() => setHovered(true)}
-      onMouseOut={() => setHovered(false)}>
+      // onMouseOver={() => setHovered(true)}
+      // onMouseOut={() => setHovered(false)}
+      >
       <label style={{
         ...Style.label, 
-        ...hovered ? Style.lightLabel : Style.darkLabel,
-        ...Style.fontNormal,
+        // ...hovered ? {
+        //   // fontWeight: "900"
+        // } : {
+        //   // fontWeight: "normal"
+        // },
+        fontSize: labelFontSize
         }}>{label}</label>
     </button>);
 };
