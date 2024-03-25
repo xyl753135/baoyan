@@ -88,7 +88,7 @@ export const MantraApp = ({
     const [lrcPath, setLrcPath] = useState<string>("./mantraWheel/lyrics/shurangama.lrc");
 
     // useRef
-    const sfx = useRef<HTMLAudioElement>(new Audio());
+    const sfx = useRef<HTMLAudioElement>();
     const subtitles = useRef<LRCContent>({
         metadata: {
             artist: "",
@@ -268,7 +268,7 @@ export const MantraApp = ({
                             <MantraPlayer
                                 showSkip={showSkip}
                                 showSubtitles={showSubtitles}
-                                sfx={sfx.current}
+                                sfx={sfx.current != undefined ? sfx.current : new Audio()}
                                 subtitles={subtitles.current}
                                 wheelSize={320}></MantraPlayer>
                         </div>
