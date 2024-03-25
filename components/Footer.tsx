@@ -133,7 +133,7 @@ export const Footer = ({
   return (<div style={Style.container}>
     <div style={Style.desktop}>
       <div style={Style.leftColumn}>
-        <p>{venueName} - {address}</p>
+        {/* <p>{venueName} - {address}</p> */}
         <p>Email: <a href={hrefVal} target="_self" style={Style.link}>{orgEmail}</a></p>
         <p>Tel: ({telAreaCode}) {telNum} / Fax: ({faxAreaCode}) {faxNum}  /  Mobile: {mobile}</p>
       </div>
@@ -172,7 +172,7 @@ export const Footer = ({
         </RedditShareButton>
       </div>
       <div>
-        <p>{venueName} - {address}</p>
+        {/* <p>{venueName} - {address}</p> */}
         <p>Email: <a href={hrefVal} target="_self" style={Style.link}>{orgEmail}</a></p>
         <p>Fax: ({faxAreaCode}) {faxNum}</p>
         <p>Tel: ({telAreaCode}) {telNum}</p>
