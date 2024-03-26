@@ -53,7 +53,7 @@ function parseLRC(line: string, metadata: Metadata, lyrics: Lyric[]) {
   } else if (line.substring(1, 3) == "ti") {
     metadata.title = line.substring(4, line.length - 1);
   } else if (line.substring(1, 7) == "length") {
-    metadata.length = line.substring(4, line.length - 1);
+    metadata.length = line.substring(9, line.length - 1);
   } else {
     // Regex pattern for matching each lyrics line
     try{
@@ -103,11 +103,11 @@ export function parseLRCFile(filepath: string) {
  * Given a string, return the time (string) as seconds (number)
  * @param time // Expected format [hr:mm:ss.ms] or [mm:ss.ms]
  */
-function convertTimeToSeconds(time: string) {
+export function convertTimeToSeconds(time: string) {
   const numOfSemiColons = time.split(":").length - 1;
   if (numOfSemiColons == 2) {
     // Expected format [hr:mm:ss.ms]
-    console.log("convertTimeToSeconds unimplemented hours format");
+    alert("convertTimeToSeconds unimplemented hours format");
     return 0;
   } else if (numOfSemiColons == 1) {
     // Expected format [mm:ss.ms]

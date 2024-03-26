@@ -1,16 +1,16 @@
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 
-import { MutableRefObject, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // Components
 import { getRandomInteger } from "@/utils/RandomGenerator";
 
 // Assets
-import { GenericButton } from "../GenericButton";
 import { parseLRCFile } from "@/utils/LyricsParser";
 import { MantraPlayer } from "./MantraPlayer";
 
-import { Lyric, Metadata, LRCContent } from "@/types/LRC"
+
+import { LRCContent } from "@/types/LRC"
 
 const Style: { [key: string]: React.CSSProperties } = {
     container: {
@@ -64,6 +64,10 @@ const Style: { [key: string]: React.CSSProperties } = {
         border: "white solid 1px",
         // boxShadow: "none",
         transition: "all 200ms ease-out"
+    },
+    statisticsItem: {
+        fontSize: "20px",
+        paddingLeft: "0.5em"
     }
 };
 
@@ -86,6 +90,7 @@ export const MantraApp = ({
     const [showSubtitles, setShowSubtitles] = useState<boolean>(false);
     const [sfxPath, setSfxPath] = useState<string>("/mantraWheel/audio/shurangama.mp3");
     const [lrcPath, setLrcPath] = useState<string>("./mantraWheel/lyrics/shurangama.lrc");
+    const [localCount, setLocalCount] = useState<number>(0);
 
     // useRef
     const sfx = useRef<HTMLAudioElement>();
@@ -115,11 +120,10 @@ export const MantraApp = ({
         // Get form data
         const sfxChoice = formData.get("sfxChoice");            // value of selected option
         const subtitlesChoice = formData.get("showSubtitles");    // null | 'on'
-        // alert(`You submitted sfx: '${sfxChoice}', showSubtitles: '${showSubtitles}' ${typeof showSubtitles}`);
         // Show loading...
         setShowPlaceholder(false);
         setShowLoading(true);
-        // After random delay between 0.5 to 3 seconds, show app
+        // After random delay between 0.5 to 2 seconds, show app
         try {
             setTimeout(() => {
                 setShowLoading(false);
@@ -136,37 +140,35 @@ export const MantraApp = ({
                     setShowSubtitles(true);
                     if (sfxChoice == "/mantraWheel/audio/shurangama.mp3") {
                         setLrcPath("./mantraWheel/lyrics/shurangama.lrc");
-                    } else if (sfxChoice == "/mantraWheel/audio/shurangama_p1.mp3") {
-                        setLrcPath("./mantraWheel/lyrics/shurangama_p1.lrc");
-                    } else if (sfxChoice == "/mantraWheel/audio/shurangama_p2.mp3") {
-                        setLrcPath("./mantraWheel/lyrics/shurangama_p2.lrc");
-                    } else if (sfxChoice == "/mantraWheel/audio/shurangama_p3.mp3") {
-                        setLrcPath("./mantraWheel/lyrics/shurangama_p3.lrc");
-                    } else if (sfxChoice == "/mantraWheel/audio/shurangama_p4.mp3") {
-                        setLrcPath("./mantraWheel/lyrics/shurangama_p4.lrc");
-                    } else if (sfxChoice == "/mantraWheel/audio/shurangama_p5.mp3") {
-                        setLrcPath("./mantraWheel/lyrics/shurangama_p5.lrc");
-                    }
+                    } 
+                    // else if (sfxChoice == "/mantraWheel/audio/shurangama_p1.mp3") {
+                    //     setLrcPath("./mantraWheel/lyrics/shurangama_p1.lrc");
+                    // } else if (sfxChoice == "/mantraWheel/audio/shurangama_p2.mp3") {
+                    //     setLrcPath("./mantraWheel/lyrics/shurangama_p2.lrc");
+                    // } else if (sfxChoice == "/mantraWheel/audio/shurangama_p3.mp3") {
+                    //     setLrcPath("./mantraWheel/lyrics/shurangama_p3.lrc");
+                    // } else if (sfxChoice == "/mantraWheel/audio/shurangama_p4.mp3") {
+                    //     setLrcPath("./mantraWheel/lyrics/shurangama_p4.lrc");
+                    // } else if (sfxChoice == "/mantraWheel/audio/shurangama_p5.mp3") {
+                    //     setLrcPath("./mantraWheel/lyrics/shurangama_p5.lrc");
+                    // }
                 }
-            }, getRandomInteger(500, 3000)); // setTimeout uses delay in miliseconds
+            }, getRandomInteger(500, 2000)); // setTimeout uses delay in miliseconds
         } catch (error) {
             setShowPlaceholder(true);
             alert(error);
         }
     }
 
-    const toggleManual = () => {
-        setShowManual(!showManual);
-    }
-
-
     return (
         <div style={Style.container}>
             <h3 style={{ marginTop: "1em", marginBottom: "0.5em", textAlign: "center", fontSize: "30px" }}>陀羅尼持咒 APP</h3>
+            {/* Manual, Config sections */}
             <div style={Style.col}>
+                {/* Manual section */}
                 <section >
                     <div style={{ display: "flex", justifyContent: "right", alignItems: "center", marginRight: showManual ? "13px" : "16px" }}>
-                        <p style={{ cursor: "pointer", verticalAlign: "middle", fontSize: "20px" }} onClick={toggleManual}>使用手冊</p>
+                        <p style={{ cursor: "pointer", verticalAlign: "middle", fontSize: "20px" }} onClick={() => { setShowManual(!showManual); }}>使用手冊</p>
                         <Image width={showManual ? 25 : 22} height={25}
                             src={showManual ? "/icons/icon_manual_open.png" : "/icons/icon_manual.png"}
                             alt={"使用手冊"}
@@ -176,7 +178,7 @@ export const MantraApp = ({
                                 // marginRight: "0.2rem",
                                 filter: "invert(1)"
                             }}
-                            onClick={toggleManual}></Image>
+                            onClick={() => { setShowManual(!showManual); }}></Image>
                         {/* </div> */}
 
                     </div>
@@ -201,6 +203,8 @@ export const MantraApp = ({
                             <></>
                     }
                 </section>
+
+                {/* Config section */}
                 {
                     showPlayer ?
                         <></>
@@ -243,6 +247,7 @@ export const MantraApp = ({
                         </section>
                 }
             </div>
+            {/* Placeholder, Loading, App sections */}
             <div style={{ ...Style.col, ...{ alignItems: "center" } }}>
                 {
                     showPlaceholder ?
@@ -270,24 +275,34 @@ export const MantraApp = ({
                                 showSubtitles={showSubtitles}
                                 sfx={sfx.current != undefined ? sfx.current : new Audio()}
                                 subtitles={subtitles.current}
-                                wheelSize={320}></MantraPlayer>
+                                wheelSize={320}
+                                localCount={localCount}
+                                setLocalCount={setLocalCount}></MantraPlayer>
                         </div>
                         :
                         <></>
                 }
             </div>
-            <div style={{ ...Style.col, ...{ alignItems: "center" } }}>
-                <fieldset style={{ ...Style.config, ...{ paddingBottom: "0.8em" } }}>
-                    <legend style={{
-                        paddingLeft: "0.5em",
-                        paddingRight: "0.5em",
-                        fontWeight: "bolder",
-                    }}>統計</legend>
-                    <p>本次: 1</p>
-                    <p>累計: 0</p>
-                    <p>全球總計: 12345679</p>
-                </fieldset>
-            </div>
+            {/* Statistics */}
+            {
+                showPlayer ?
+                <div style={{ ...Style.col, ...{ alignItems: "center" } }}>
+                    <fieldset style={{ ...Style.config, ...{ paddingBottom: "0.8em" } }}>
+                        <legend style={{
+                            paddingLeft: "0.5em",
+                            paddingRight: "0.5em",
+                            fontWeight: "bolder",
+                            fontSize: "24px"
+                        }}>統計</legend>
+                        <p style={Style.statisticsItem}>本次: {localCount}</p>
+                        <p style={Style.statisticsItem}>累計: 0</p>
+                        <p style={Style.statisticsItem}>全球總計: 12345679</p>
+                    </fieldset>
+                </div>
+                :
+                <></>
+            }
+            
         </div>
     );
 };

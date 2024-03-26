@@ -2,10 +2,6 @@
 
 import Image, { StaticImageData } from "next/image";
 
-// Image assets
-import bg from "@/public/mantraWheel/images/mantra_bg.png"
-import { useRef } from "react";
-
 const Style: { [key: string]: React.CSSProperties } = {
 };
 
@@ -64,7 +60,7 @@ export const MantraWheel = ({
             left: "0",
             zIndex: "2",
             rotate: `${degree}deg`,
-            transition: "all 500ms linear",
+            transition: "all 900ms linear",
           }
         }
         src={overlaySrc}

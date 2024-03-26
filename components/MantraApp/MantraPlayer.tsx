@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { MutableRefObject, useEffect, useRef, useState } from "react";
 import Image from 'next/image'
 // Components
 import { MantraWheel } from "./MantraWheel";
@@ -8,11 +8,11 @@ import overlay_shurangama_glow from "@/public/mantraWheel/images/mantra_text_shu
 import { GenericButton } from "../GenericButton";
 
 import { LRCContent } from "@/types/LRC"
+import { convertTimeToSeconds } from "@/utils/LyricsParser"
 
 function convertTimeToDegree(currentTime : number, totalTime : number) {
   return Math.round((currentTime / totalTime * 360 + Number.EPSILON) * 10000) / 10000;
 }
-
 
 const Style: { [key: string]: React.CSSProperties } = {
   row: {
@@ -31,6 +31,8 @@ type Props = {
   sfx: HTMLAudioElement,
   subtitles: LRCContent,
   wheelSize: number,
+  localCount: number
+  setLocalCount: Function
 }
 
 export const MantraPlayer = ({
@@ -38,7 +40,9 @@ export const MantraPlayer = ({
   showSubtitles,
   sfx,
   subtitles,
-  wheelSize
+  wheelSize,
+  localCount,
+  setLocalCount
 }: Props) => {
 
   // useStates
@@ -56,25 +60,40 @@ export const MantraPlayer = ({
       setDegree(0);
       clearInterval(intervalID);
       setIntervalID(null);
+      setLocalCount(localCount + 1);
+      index.current = 0;
     }
   });
 
-
-
-
-
-
+  useEffect(() => {
+    // validate sfx and lrc match
+    console.log("Loading Subtitles for ", subtitles.metadata);
+    try {
+        // check if sfx duration matches metadata length
+        // in sss.mmmmmm (6 units for miliseconds)
+        const sfxDuration = sfx.duration;  
+        // metadata.length is in MM:ss
+        const subtitlesDuration = convertTimeToSeconds(subtitles.metadata.length); 
+        if (~~sfxDuration != subtitlesDuration) {
+          throw new Error("Warning: LRC file metadata length and SFX duration are mismatched, errors may occur during use.");
+        }
+    } catch (error) {
+        alert(error);
+    }
+  }, []);
 
   const handleWheelClick = () => {
     if (intervalID === null) {  // Prevent starting multiple intervals
       setIntervalID(setInterval(() => {
         setDegree(convertTimeToDegree(sfx.currentTime, sfx.duration));
         
-        if (subtitles.lyrics[index.current].time < sfx.currentTime) {
-          setSubtitle(subtitles.lyrics[index.current].text);
-          index.current = index.current + 1;
+        if (subtitles.lyrics[index.current] != undefined) {
+          if (subtitles.lyrics[index.current].time < sfx.currentTime) {
+            setSubtitle(subtitles.lyrics[index.current].text);
+            index.current = index.current + 1;
+          }
         }
-        
+
       }, 1000));
       sfx.play();
     } else {
@@ -96,11 +115,13 @@ export const MantraPlayer = ({
       setIntervalID(setInterval(() => {
         setDegree(convertTimeToDegree(sfx.currentTime, sfx.duration));
         
-        if (subtitles.lyrics[index.current].time < sfx.currentTime) {
-          setSubtitle(subtitles.lyrics[index.current].text);
-          index.current = index.current + 1;
+        if (subtitles.lyrics[index.current] != undefined) {
+          if (subtitles.lyrics[index.current].time < sfx.currentTime) {
+            setSubtitle(subtitles.lyrics[index.current].text);
+            index.current = index.current + 1;
+          }
         }
-        
+
       }, 1000));
       sfx.play();
     }
