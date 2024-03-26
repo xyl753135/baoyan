@@ -25,6 +25,7 @@ const Style: { [key: string]: React.CSSProperties } = {
     fontFamily: "georgia",
     fontWeight: "bold",
     textDecoration: "none",
+    cursor: "pointer",
     transition: "all 200ms ease-out"
   },
 };
