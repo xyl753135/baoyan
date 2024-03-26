@@ -30,14 +30,11 @@ export const metadata: Metadata = {
 
 const Style: { [key: string]: React.CSSProperties } = {
   html: {
-    // height: "100vh",
-    // width: "100vw",
+    width: "100%",
   },
   body: {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between",
-    alignItems: "space-between",
     // height: "100%",
     width: "100%",
     padding: "1em",

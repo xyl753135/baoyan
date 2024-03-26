@@ -42,10 +42,6 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  
-}
-
 
 /* Mobile */
 @media (max-width: 700px) {
@@ -129,6 +125,25 @@
   
 }
 
+h1 {
+  font-size: 28px;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h3 {
+  font-size: 20px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
 
 
 ol {
