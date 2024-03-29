@@ -74,7 +74,7 @@ export const MantraPlayer = ({
         const sfxDuration = sfx.duration;  
         // metadata.length is in MM:ss
         const subtitlesDuration = convertTimeToSeconds(subtitles.metadata.length); 
-        if (~~sfxDuration != subtitlesDuration) {
+        if (Math.floor(sfxDuration) != Math.floor(subtitlesDuration)) {
           throw new Error("Warning: LRC file metadata length and SFX duration are mismatched, errors may occur during use.");
         }
     } catch (error) {

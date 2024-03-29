@@ -251,19 +251,21 @@ export const MantraApp = ({
             <div style={{ ...Style.col, ...{ alignItems: "center" } }}>
                 {
                     showPlaceholder ?
-                        <Image width={320} height={241}
-                            src={"/placeholders/app_placeholder.png"}
-                            alt={"未設定的持咒 APP"}
-                            style={{ display: "inline" }}></Image>
+                        // <Image width={320} height={241}
+                        //     src={"/placeholders/app_placeholder.png"}
+                        //     alt={"未設定的持咒 APP"}
+                        //     style={{ display: "inline" }}></Image>
+                        <></>
                         :
                         <></>
                 }
                 {
                     showLoading ?
-                        <Image width={320} height={241}
-                            src={"/placeholders/gif_loading.gif"}
-                            alt={"准備中，請稍後。。。"}
-                            style={{ display: "inline" }}></Image>
+                        // <Image width={320} height={241}
+                        //     src={"/placeholders/gif_loading.gif"}
+                        //     alt={"准備中，請稍後。。。"}
+                        //     style={{ display: "inline" }}></Image>
+                        <></>
                         :
                         <></>
                 }
