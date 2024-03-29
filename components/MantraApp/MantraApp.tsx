@@ -89,7 +89,7 @@ export function MantraApp() {
     const sfx = useRef<HTMLAudioElement | undefined>();
     const subtitles = useRef<LRCContent>(parseLRCFile(lrcPath));
 
-    const base_url = window.location.origin == "http://localhost:3001" ? "http://localhost:3001" : "https://baoyan.vercel.app"
+    
 
     useEffect(() => {
         sfx.current = new Audio(sfxPath);
@@ -97,6 +97,7 @@ export function MantraApp() {
             const path = String(sfxPath);
             const mantra = path.substring(path.lastIndexOf("/")+1, path.indexOf("."));
             console.log("mantra", mantra);
+            const base_url = window.location.origin == "http://localhost:3001" ? "http://localhost:3001" : "https://baoyan.vercel.app";
             const resp = await fetch(`${base_url}/api/counters/read-counter?app=mantraapp&name=${mantra}`, { cache: 'no-store' })
             if (resp.status == 200 && resp.statusText == "OK") {
                 const json = await resp.json();
@@ -130,6 +131,7 @@ export function MantraApp() {
                 const path = String(sfxPath);
                 const mantra = path.substring(path.lastIndexOf("/")+1, path.indexOf("."));
                 console.log(mantra);
+                const base_url = window.location.origin == "http://localhost:3001" ? "http://localhost:3001" : "https://baoyan.vercel.app"
                 const resp = await fetch(`${base_url}/api/counters/read-counter?app=mantraapp&name=${mantra}`, { cache: 'no-store' })
                 if (resp.status == 200 && resp.statusText == "OK") {
                     const json = await resp.json();
