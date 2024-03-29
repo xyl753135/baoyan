@@ -67,7 +67,8 @@ export const MantraWheel = ({
         alt={"Shurangama mantra"}
         height={wheelSize}
         width={wheelSize}
-        loading={"eager"}>
+        loading={"eager"}
+        priority>
       </Image>
     </button>
   );

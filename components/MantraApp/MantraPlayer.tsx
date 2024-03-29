@@ -32,7 +32,9 @@ type Props = {
   subtitles: LRCContent,
   wheelSize: number,
   localCount: number
-  setLocalCount: Function
+  setLocalCount: Function,
+  globalCount: number
+  setGlobalCount: Function,
 }
 
 export const MantraPlayer = ({
@@ -42,7 +44,9 @@ export const MantraPlayer = ({
   subtitles,
   wheelSize,
   localCount,
-  setLocalCount
+  setLocalCount,
+  globalCount,
+  setGlobalCount
 }: Props) => {
 
   // useStates
@@ -62,24 +66,46 @@ export const MantraPlayer = ({
       setIntervalID(null);
       setLocalCount(localCount + 1);
       index.current = 0;
+
+      // Update global count
+      const name = sfx.src.substring(sfx.src.lastIndexOf("/")+1, sfx.src.indexOf("."));
+      console.log("name", name);
+      const base_url = String(window.location.origin);
+      console.log("base_url", base_url);
+      (async () => {
+        try {
+          const newCount = Number(globalCount + 1);
+          const resp = await fetch(`${base_url}/api/counters/update-counter?app=mantraapp&name=${name}&count=${newCount}`, { cache: 'no-store' })
+          if (resp.status == 200 && resp.statusText == "OK") {
+            const json = await resp.json();
+            console.log("fetch returned counters: ", json.result.rows);
+            console.log("update ui to display new global count:", json.result.rows[0].count);  
+            setGlobalCount(json.result.rows[0].count);
+          } else {
+              console.error(resp.status, resp.statusText)
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      })();
     }
   });
 
   useEffect(() => {
     // validate sfx and lrc match
     console.log("Loading Subtitles for ", subtitles.metadata);
-    try {
-        // check if sfx duration matches metadata length
-        // in sss.mmmmmm (6 units for miliseconds)
-        const sfxDuration = sfx.duration;  
-        // metadata.length is in MM:ss
-        const subtitlesDuration = convertTimeToSeconds(subtitles.metadata.length); 
-        if (Math.floor(sfxDuration) != Math.floor(subtitlesDuration)) {
-          throw new Error("Warning: LRC file metadata length and SFX duration are mismatched, errors may occur during use.");
-        }
-    } catch (error) {
-        alert(error);
-    }
+    // try {
+    //     // check if sfx duration matches metadata length
+    //     // in sss.mmmmmm (6 units for miliseconds)
+    //     const sfxDuration = sfx.duration;  
+    //     // metadata.length is in MM:ss
+    //     const subtitlesDuration = convertTimeToSeconds(subtitles.metadata.length); 
+    //     if (Math.floor(sfxDuration) != Math.floor(subtitlesDuration)) {
+    //       console.error("Warning: LRC file metadata length and SFX duration are mismatched, errors may occur during use.");
+    //     }
+    // } catch (error) {
+    //     alert(error);
+    // }
   }, []);
 
   const handleWheelClick = () => {
