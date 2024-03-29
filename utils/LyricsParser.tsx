@@ -91,7 +91,7 @@ export function parseLRCFile(filepath: string) {
     .then(fileContents => {
       // console.log("text", lrcContents.split('\r\n'));
       // Split file content into separate individual lines based on line-break CLFR
-      let lines = fileContents.split('\r\n');
+      let lines = fileContents.split(/\r?\n/);  // regex for both \r\n and \n
       for (let index = 0; index < lines.length; index++) {
         parseLRC(lines[index], contents.metadata, contents.lyrics);
       }
