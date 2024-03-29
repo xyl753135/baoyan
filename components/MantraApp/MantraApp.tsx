@@ -86,7 +86,7 @@ export function MantraApp() {
     const [globalCount, setGlobalCount] = useState<number>(0);
 
     // useRef
-    const sfx = useRef<HTMLAudioElement>();
+    const sfx = useRef<HTMLAudioElement | undefined>();
     const subtitles = useRef<LRCContent>(parseLRCFile(lrcPath));
 
     useEffect(() => {
@@ -99,7 +99,7 @@ export function MantraApp() {
             if (resp.status == 200 && resp.statusText == "OK") {
                 const json = await resp.json();
                 console.log("fetch returned counters: ", json.counters.rows)
-                setGlobalCount(json.counters.rows[0].count);
+                setGlobalCount(Number(json.counters.rows[0].count));
             } else {
                 console.error(resp.status, resp.statusText)
             }
@@ -132,7 +132,7 @@ export function MantraApp() {
                 if (resp.status == 200 && resp.statusText == "OK") {
                     const json = await resp.json();
                     console.log("fetch returned counters: ", json.counters.rows)
-                    setGlobalCount(json.counters.rows[0].count);
+                    setGlobalCount(Number(json.counters.rows[0].count));
                 } else {
                     console.error(resp.status, resp.statusText)
                 }
@@ -252,7 +252,7 @@ export function MantraApp() {
                         <MantraPlayer
                             showSkip={showSkip}
                             showSubtitles={showSubtitles}
-                            sfx={sfx.current != undefined ? sfx.current : new Audio()}
+                            sfx={sfx}
                             subtitles={subtitles.current}
                             wheelSize={320}
                             localCount={localCount}

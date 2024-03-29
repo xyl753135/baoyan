@@ -28,7 +28,7 @@ const Style: { [key: string]: React.CSSProperties } = {
 type Props = {
   showSkip: boolean,
   showSubtitles: boolean,
-  sfx: HTMLAudioElement,
+  sfx: MutableRefObject<HTMLAudioElement | undefined>,
   subtitles: LRCContent,
   wheelSize: number,
   localCount: number
@@ -48,6 +48,7 @@ export const MantraPlayer = ({
   globalCount,
   setGlobalCount
 }: Props) => {
+  const currentSFX = sfx.current == undefined? new Audio() : sfx.current;
 
   // useStates
   // const [playing, setPlaying] = useState(false);
@@ -58,7 +59,7 @@ export const MantraPlayer = ({
   const index = useRef<number>(0)
 
   useEffect(() => {
-    if (intervalID != null && sfx.currentTime == sfx.duration) {
+    if (intervalID != null && currentSFX.currentTime == currentSFX.duration) {
       console.log("Playback complete, resetting overlay and audio")
       // setPlaying(false);
       setDegree(0);
@@ -68,19 +69,18 @@ export const MantraPlayer = ({
       index.current = 0;
 
       // Update global count
-      const name = sfx.src.substring(sfx.src.lastIndexOf("/")+1, sfx.src.indexOf("."));
+      const name = currentSFX.src.substring(currentSFX.src.lastIndexOf("/")+1, currentSFX.src.indexOf("."));
       console.log("name", name);
       const base_url = String(window.location.origin);
       console.log("base_url", base_url);
       (async () => {
         try {
-          const newCount = Number(globalCount + 1);
-          const resp = await fetch(`${base_url}/api/counters/update-counter?app=mantraapp&name=${name}&count=${newCount}`, { cache: 'no-store' })
+          const resp = await fetch(`${base_url}/api/counters/update-counter?app=mantraapp&name=${name}&count=${globalCount + 1}`, { cache: 'no-store' })
           if (resp.status == 200 && resp.statusText == "OK") {
             const json = await resp.json();
             console.log("fetch returned counters: ", json.result.rows);
             console.log("update ui to display new global count:", json.result.rows[0].count);  
-            setGlobalCount(json.result.rows[0].count);
+            setGlobalCount(Number(json.result.rows[0].count));
           } else {
               console.error(resp.status, resp.statusText)
           }
@@ -111,21 +111,21 @@ export const MantraPlayer = ({
   const handleWheelClick = () => {
     if (intervalID === null) {  // Prevent starting multiple intervals
       setIntervalID(setInterval(() => {
-        setDegree(convertTimeToDegree(sfx.currentTime, sfx.duration));
+        setDegree(convertTimeToDegree(currentSFX.currentTime, currentSFX.duration));
         
         if (subtitles.lyrics[index.current] != undefined) {
-          if (subtitles.lyrics[index.current].time < sfx.currentTime) {
+          if (subtitles.lyrics[index.current].time < currentSFX.currentTime) {
             setSubtitle(subtitles.lyrics[index.current].text);
             index.current = index.current + 1;
           }
         }
 
       }, 1000));
-      sfx.play();
+      currentSFX.play();
     } else {
       clearInterval(intervalID);
       setIntervalID(null);
-      sfx.pause();
+      currentSFX.pause();
     }
 
     // if (playing === false) {
@@ -134,22 +134,22 @@ export const MantraPlayer = ({
   }
 
   const skipToSection = (time: number, newIndex: number) => {
-    sfx.currentTime = time;
+    currentSFX.currentTime = time;
     index.current = newIndex;
 
     if (intervalID === null) {  // Prevent starting multiple intervals
       setIntervalID(setInterval(() => {
-        setDegree(convertTimeToDegree(sfx.currentTime, sfx.duration));
+        setDegree(convertTimeToDegree(currentSFX.currentTime, currentSFX.duration));
         
         if (subtitles.lyrics[index.current] != undefined) {
-          if (subtitles.lyrics[index.current].time < sfx.currentTime) {
+          if (subtitles.lyrics[index.current].time < currentSFX.currentTime) {
             setSubtitle(subtitles.lyrics[index.current].text);
             index.current = index.current + 1;
           }
         }
 
       }, 1000));
-      sfx.play();
+      currentSFX.play();
     }
   }
 
