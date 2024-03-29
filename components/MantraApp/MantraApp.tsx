@@ -249,16 +249,22 @@ export function MantraApp() {
                 {/* App sections */}
                 <section style={{ ...Style.col, ...{ alignItems: "center" } }}>
                     <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", paddingTop: "0.5em", paddingBottom: "0.5em" }}>
-                        <MantraPlayer
-                            showSkip={showSkip}
-                            showSubtitles={showSubtitles}
-                            sfx={sfx}
-                            subtitles={subtitles.current}
-                            wheelSize={320}
-                            localCount={localCount}
-                            setLocalCount={setLocalCount}
-                            globalCount={globalCount}
-                            setGlobalCount={setGlobalCount}></MantraPlayer>
+                        {
+                            sfx.current != undefined ?
+                            <MantraPlayer
+                                showSkip={showSkip}
+                                showSubtitles={showSubtitles}
+                                audio={sfx.current}
+                                subtitles={subtitles.current}
+                                wheelSize={320}
+                                localCount={localCount}
+                                setLocalCount={setLocalCount}
+                                globalCount={globalCount}
+                                setGlobalCount={setGlobalCount}></MantraPlayer>
+                            :
+                            <></>
+                        }
+                        
                     </div>
                 </section>
 

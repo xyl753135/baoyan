@@ -28,7 +28,7 @@ const Style: { [key: string]: React.CSSProperties } = {
 type Props = {
   showSkip: boolean,
   showSubtitles: boolean,
-  sfx: MutableRefObject<HTMLAudioElement | undefined>,
+  audio: HTMLAudioElement,
   subtitles: LRCContent,
   wheelSize: number,
   localCount: number
@@ -40,7 +40,7 @@ type Props = {
 export const MantraPlayer = ({
   showSkip,
   showSubtitles,
-  sfx,
+  audio,
   subtitles,
   wheelSize,
   localCount,
@@ -48,8 +48,6 @@ export const MantraPlayer = ({
   globalCount,
   setGlobalCount
 }: Props) => {
-  const currentSFX = sfx.current == undefined? new Audio() : sfx.current;
-
   // useStates
   // const [playing, setPlaying] = useState(false);
   const [degree, setDegree] = useState<number>(0);
@@ -59,7 +57,7 @@ export const MantraPlayer = ({
   const index = useRef<number>(0)
 
   useEffect(() => {
-    if (intervalID != null && currentSFX.currentTime == currentSFX.duration) {
+    if (intervalID != null && audio.currentTime == audio.duration) {
       console.log("Playback complete, resetting overlay and audio")
       // setPlaying(false);
       setDegree(0);
@@ -69,7 +67,7 @@ export const MantraPlayer = ({
       index.current = 0;
 
       // Update global count
-      const name = currentSFX.src.substring(currentSFX.src.lastIndexOf("/")+1, currentSFX.src.indexOf("."));
+      const name = audio.src.substring(audio.src.lastIndexOf("/")+1, audio.src.indexOf("."));
       console.log("name", name);
       const base_url = String(window.location.origin);
       console.log("base_url", base_url);
@@ -111,21 +109,21 @@ export const MantraPlayer = ({
   const handleWheelClick = () => {
     if (intervalID === null) {  // Prevent starting multiple intervals
       setIntervalID(setInterval(() => {
-        setDegree(convertTimeToDegree(currentSFX.currentTime, currentSFX.duration));
+        setDegree(convertTimeToDegree(audio.currentTime, audio.duration));
         
         if (subtitles.lyrics[index.current] != undefined) {
-          if (subtitles.lyrics[index.current].time < currentSFX.currentTime) {
+          if (subtitles.lyrics[index.current].time < audio.currentTime) {
             setSubtitle(subtitles.lyrics[index.current].text);
             index.current = index.current + 1;
           }
         }
 
       }, 1000));
-      currentSFX.play();
+      audio.play();
     } else {
       clearInterval(intervalID);
       setIntervalID(null);
-      currentSFX.pause();
+      audio.pause();
     }
 
     // if (playing === false) {
@@ -134,22 +132,22 @@ export const MantraPlayer = ({
   }
 
   const skipToSection = (time: number, newIndex: number) => {
-    currentSFX.currentTime = time;
+    audio.currentTime = time;
     index.current = newIndex;
 
     if (intervalID === null) {  // Prevent starting multiple intervals
       setIntervalID(setInterval(() => {
-        setDegree(convertTimeToDegree(currentSFX.currentTime, currentSFX.duration));
+        setDegree(convertTimeToDegree(audio.currentTime, audio.duration));
         
         if (subtitles.lyrics[index.current] != undefined) {
-          if (subtitles.lyrics[index.current].time < currentSFX.currentTime) {
+          if (subtitles.lyrics[index.current].time < audio.currentTime) {
             setSubtitle(subtitles.lyrics[index.current].text);
             index.current = index.current + 1;
           }
         }
 
       }, 1000));
-      currentSFX.play();
+      audio.play();
     }
   }
 
