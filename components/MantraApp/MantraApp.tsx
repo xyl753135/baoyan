@@ -1,5 +1,5 @@
 import Image from "next/image";
-
+import { sql } from '@vercel/postgres';
 import { useEffect, useRef, useState } from "react";
 
 // Components
@@ -71,15 +71,7 @@ const Style: { [key: string]: React.CSSProperties } = {
     }
 };
 
-type Props = {
-    //   allowPause: boolean,
-}
-
-
-
-export const MantraApp = ({
-    //   allowPause = false,
-}: Props) => {
+export function MantraApp() {
 
     // useState
     const [showManual, setShowManual] = useState<boolean>(false);
@@ -91,6 +83,7 @@ export const MantraApp = ({
     const [sfxPath, setSfxPath] = useState<string>("/mantraWheel/audio/shurangama.mp3");
     const [lrcPath, setLrcPath] = useState<string>("./mantraWheel/lyrics/shurangama.lrc");
     const [localCount, setLocalCount] = useState<number>(0);
+    const [globalCount, setGlobalCount] = useState<number>(0);
 
     // useRef
     const sfx = useRef<HTMLAudioElement>();
@@ -112,7 +105,7 @@ export const MantraApp = ({
         subtitles.current = parseLRCFile(lrcPath);
     }, [lrcPath]);
 
-    function handleSubmit(formData: { get: (arg0: string) => any; }) {
+    async function handleSubmit(formData: { get: (arg0: string) => any; }) {
         // Reset
         setShowPlayer(false);
         setShowSkip(false);
@@ -125,35 +118,30 @@ export const MantraApp = ({
         setShowLoading(true);
         // After random delay between 0.5 to 2 seconds, show app
         try {
-            setTimeout(() => {
-                setShowLoading(false);
+            setShowLoading(false);
                 setShowPlayer(true);
                 setSfxPath(sfxChoice);
 
                 // Show skip buttons for full mantras
                 if (sfxChoice == "/mantraWheel/audio/shurangama.mp3") {
                     setShowSkip(true);
-                }
-
-                // handle subtitles
-                if (subtitlesChoice == "on") {
-                    setShowSubtitles(true);
-                    if (sfxChoice == "/mantraWheel/audio/shurangama.mp3") {
+                    // handle subtitles
+                    if (subtitlesChoice == "on") {
                         setLrcPath("./mantraWheel/lyrics/shurangama.lrc");
-                    } 
-                    // else if (sfxChoice == "/mantraWheel/audio/shurangama_p1.mp3") {
-                    //     setLrcPath("./mantraWheel/lyrics/shurangama_p1.lrc");
-                    // } else if (sfxChoice == "/mantraWheel/audio/shurangama_p2.mp3") {
-                    //     setLrcPath("./mantraWheel/lyrics/shurangama_p2.lrc");
-                    // } else if (sfxChoice == "/mantraWheel/audio/shurangama_p3.mp3") {
-                    //     setLrcPath("./mantraWheel/lyrics/shurangama_p3.lrc");
-                    // } else if (sfxChoice == "/mantraWheel/audio/shurangama_p4.mp3") {
-                    //     setLrcPath("./mantraWheel/lyrics/shurangama_p4.lrc");
-                    // } else if (sfxChoice == "/mantraWheel/audio/shurangama_p5.mp3") {
-                    //     setLrcPath("./mantraWheel/lyrics/shurangama_p5.lrc");
-                    // }
+                    }
+                    const path = String(sfxChoice);
+                    const mantra = path.substring(path.lastIndexOf("/")+1, path.indexOf("."));
+                    console.log(mantra);
+                    const resp = await fetch(`${window.location.origin}/api/counters/read-counter?app=mantraapp&name=${mantra}`, { cache: 'no-store' })
+                    
+                    if (resp.status == 200 && resp.statusText == "OK") {
+                        const json = await resp.json();
+                        console.log("fetch returned counters: ", json.counters.rows)
+                        setGlobalCount(json.counters.rows[0].count);
+                    } else {
+                        console.error(resp.status, resp.statusText)
+                    }
                 }
-            }, getRandomInteger(500, 2000)); // setTimeout uses delay in miliseconds
         } catch (error) {
             setShowPlaceholder(true);
             alert(error);
@@ -298,7 +286,7 @@ export const MantraApp = ({
                         }}>統計</legend>
                         <p style={Style.statisticsItem}>本次: {localCount}</p>
                         <p style={Style.statisticsItem}>累計: 0</p>
-                        <p style={Style.statisticsItem}>全球總計: 12345679</p>
+                        <p style={Style.statisticsItem}>全球總計: {globalCount}</p>
                     </fieldset>
                 </div>
                 :
