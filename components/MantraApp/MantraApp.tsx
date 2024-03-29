@@ -109,16 +109,18 @@ export function MantraApp() {
         sfx.current = new Audio(sfxPath);
         (async () => {
             const path = String(sfxPath);
-            const mantra = path.substring(path.lastIndexOf("/")+1, path.indexOf("."));
-            console.log("mantra", mantra);
+            const name = path.substring(path.lastIndexOf("/")+1, path.indexOf("."));
             const domain = window.location.origin == "http://localhost:3001" ? "http://localhost:3001" : "https://baoyan.vercel.app";
-            const resp = await fetch(`${domain}/api/counters/read-counter?app=mantraapp&name=${mantra}`, { cache: 'no-store' })
-            if (resp.status == 200 && resp.statusText == "OK") {
+            console.log("MantraApp useEffect calling ", `${domain}/api/counters/read-counter?app=mantraapp&name=${name}`);
+            const resp = await fetch(`${domain}/api/counters/read-counter?app=mantraapp&name=${name}`, { cache: 'no-store' })
+            if (resp.status == 200) {
                 const json = await resp.json();
                 console.log("fetch returned counters: ", json.counters.rows)
                 setGlobalCount(Number(json.counters.rows[0].count));
             } else {
-                console.error(resp.status, resp.statusText)
+                console.error("status", resp.status, "statusText", resp.statusText)
+                const json = await resp.json();
+                console.log("fetch returned counters: ", json.counters.rows)
             }
         })();
     }, []);
@@ -143,16 +145,18 @@ export function MantraApp() {
                 }
 
                 const path = String(sfxPath);
-                const mantra = path.substring(path.lastIndexOf("/")+1, path.indexOf("."));
-                console.log(mantra);
+                const name = path.substring(path.lastIndexOf("/")+1, path.indexOf("."));
                 const domain = window.location.origin == "http://localhost:3001" ? "http://localhost:3001" : "https://baoyan.vercel.app"
-                const resp = await fetch(`${domain}/api/counters/read-counter?app=mantraapp&name=${mantra}`, { cache: 'no-store' })
-                if (resp.status == 200 && resp.statusText == "OK") {
+                console.log("MantraApp handleSubmit calling ", `${domain}/api/counters/read-counter?app=mantraapp&name=${name}`);
+                const resp = await fetch(`${domain}/api/counters/read-counter?app=mantraapp&name=${name}`, { cache: 'no-store' })
+                if (resp.status == 200) {
                     const json = await resp.json();
                     console.log("fetch returned counters: ", json.counters.rows)
                     setGlobalCount(Number(json.counters.rows[0].count));
                 } else {
-                    console.error(resp.status, resp.statusText)
+                    console.error("status", resp.status, "statusText", resp.statusText);
+                    const json = await resp.json();
+                    console.log("fetch returned counters: ", json.counters.rows)
                 }
             }           
         } catch (error) {

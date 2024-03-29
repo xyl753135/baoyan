@@ -57,8 +57,6 @@ export const MantraPlayer = ({
   // useRef
   const index = useRef<number>(0);
 
-  const base_url = window.location.origin == "http://localhost:3001" ? "http://localhost:3001" : "https://baoyan.vercel.app"
-
   useEffect(() => {
     if (intervalID != null && audio.currentTime == audio.duration) {
       console.log("Playback complete, resetting overlay and audio")
@@ -70,20 +68,25 @@ export const MantraPlayer = ({
       index.current = 0;
 
       // Update global count
+
       const name = audio.src.substring(audio.src.lastIndexOf("/")+1, audio.src.indexOf("."));
+      const domain = window.location.origin == "http://localhost:3001" ? "http://localhost:3001" : "https://baoyan.vercel.app";
+      console.log("MantraPlayer useEffect calling ", `${domain}/api/counters/update-counter?app=mantraapp&name=${name}&count=${globalCount + 1}`);
       (async () => {
         try {
-          const resp = await fetch(`${base_url}/api/counters/update-counter?app=mantraapp&name=${name}&count=${globalCount + 1}`, { cache: 'no-store' })
-          if (resp.status == 200 && resp.statusText == "OK") {
+          const resp = await fetch(`${domain}/api/counters/update-counter?app=mantraapp&name=${name}&count=${globalCount + 1}`, { cache: 'no-store' })
+          if (resp.status == 200) {
             const json = await resp.json();
-            console.log("fetch returned counters: ", json.result.rows);
+            console.log("fetch returned result: ", json.result.rows);
             console.log("update ui to display new global count:", json.result.rows[0].count);  
             setGlobalCount(Number(json.result.rows[0].count));
           } else {
-              console.error(resp.status, resp.statusText)
+            console.error("status", resp.status, "statusText", resp.statusText);
+              const json = await resp.json();
+              console.log("fetch returned counters: ", json.result.rows)
           }
         } catch (error) {
-          console.error(error);
+          console.error("MantraPlayer useEffect threw error:", error);
         }
       })();
     }
@@ -91,7 +94,7 @@ export const MantraPlayer = ({
 
   useEffect(() => {
     // validate sfx and lrc match
-    console.log("Loading Subtitles for ", subtitles.metadata);
+    console.log("Loaded LRC file contents: ", subtitles);
     // try {
     //     // check if sfx duration matches metadata length
     //     // in sss.mmmmmm (6 units for miliseconds)
