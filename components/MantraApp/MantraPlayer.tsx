@@ -54,7 +54,10 @@ export const MantraPlayer = ({
   const [subtitle, setSubtitle] = useState<string>();
   const [intervalID, setIntervalID] = useState<null | NodeJS.Timeout>(null)
 
-  const index = useRef<number>(0)
+  // useRef
+  const index = useRef<number>(0);
+
+  const base_url = window.location.origin == "http://localhost:3001" ? "http://localhost:3001" : "https://baoyan.vercel.app"
 
   useEffect(() => {
     if (intervalID != null && audio.currentTime == audio.duration) {
@@ -68,9 +71,6 @@ export const MantraPlayer = ({
 
       // Update global count
       const name = audio.src.substring(audio.src.lastIndexOf("/")+1, audio.src.indexOf("."));
-      console.log("name", name);
-      const base_url = String(window.location.origin);
-      console.log("base_url", base_url);
       (async () => {
         try {
           const resp = await fetch(`${base_url}/api/counters/update-counter?app=mantraapp&name=${name}&count=${globalCount + 1}`, { cache: 'no-store' })
