@@ -1,17 +1,15 @@
 import Image from "next/image";
-import { sql } from '@vercel/postgres';
 import { useEffect, useRef, useState } from "react";
 
 // Components
-import { getRandomInteger } from "@/utils/RandomGenerator";
+import { MantraPlayer } from "./MantraPlayer";
+import { MantraCounter } from "./MantraCounter";
 
 // Assets
 import { parseLRCFile } from "@/utils/LyricsParser";
-import { MantraPlayer } from "./MantraPlayer";
 
 
 import { LRCContent } from "@/types/LRC"
-import { MantraCounter } from "./MantraCounter";
 
 const Style: { [key: string]: React.CSSProperties } = {
     container: {
@@ -87,7 +85,23 @@ export function MantraApp() {
 
     // useRef
     const sfx = useRef<HTMLAudioElement | undefined>();
-    const subtitles = useRef<LRCContent>(parseLRCFile(lrcPath));
+    const subtitles = useRef<LRCContent>({
+        metadata: {
+            artist: "",
+            album: "",
+            title: "",
+            length: ""
+        },
+        lyrics: [{ time: 0, text: "" }]
+    });
+
+    useEffect(() => {
+        sfx.current = new Audio(sfxPath);
+    }, [sfxPath]);
+
+    useEffect(() => {
+        subtitles.current = parseLRCFile(lrcPath);
+    }, [lrcPath]);
 
     
 
@@ -97,8 +111,8 @@ export function MantraApp() {
             const path = String(sfxPath);
             const mantra = path.substring(path.lastIndexOf("/")+1, path.indexOf("."));
             console.log("mantra", mantra);
-            const base_url = window.location.origin == "http://localhost:3001" ? "http://localhost:3001" : "https://baoyan.vercel.app";
-            const resp = await fetch(`${base_url}/api/counters/read-counter?app=mantraapp&name=${mantra}`, { cache: 'no-store' })
+            const domain = window.location.origin == "http://localhost:3001" ? "http://localhost:3001" : "https://baoyan.vercel.app";
+            const resp = await fetch(`${domain}/api/counters/read-counter?app=mantraapp&name=${mantra}`, { cache: 'no-store' })
             if (resp.status == 200 && resp.statusText == "OK") {
                 const json = await resp.json();
                 console.log("fetch returned counters: ", json.counters.rows)
@@ -125,14 +139,14 @@ export function MantraApp() {
                 // handle subtitles
                 if (subtitlesChoice == "on") {
                     setShowSubtitles(true);
-                    setLrcPath("./mantraWheel/lyrics/shurangama.lrc");
+                    setLrcPath("/mantraWheel/lyrics/shurangama.lrc");
                 }
 
                 const path = String(sfxPath);
                 const mantra = path.substring(path.lastIndexOf("/")+1, path.indexOf("."));
                 console.log(mantra);
-                const base_url = window.location.origin == "http://localhost:3001" ? "http://localhost:3001" : "https://baoyan.vercel.app"
-                const resp = await fetch(`${base_url}/api/counters/read-counter?app=mantraapp&name=${mantra}`, { cache: 'no-store' })
+                const domain = window.location.origin == "http://localhost:3001" ? "http://localhost:3001" : "https://baoyan.vercel.app"
+                const resp = await fetch(`${domain}/api/counters/read-counter?app=mantraapp&name=${mantra}`, { cache: 'no-store' })
                 if (resp.status == 200 && resp.statusText == "OK") {
                     const json = await resp.json();
                     console.log("fetch returned counters: ", json.counters.rows)
