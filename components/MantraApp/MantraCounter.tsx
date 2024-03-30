@@ -41,7 +41,7 @@ export function MantraCounter({
                   fontSize: "24px"
               }}>統計</legend>
               <p style={Style.statisticsItem}>本次: {localCount}</p>
-              <p style={Style.statisticsItem}>累計: 0</p>
+              <p style={Style.statisticsItem}>會員累計: 0</p>
               <p style={Style.statisticsItem}>全球總計: {globalCount}</p>
           </fieldset>
       </section>
