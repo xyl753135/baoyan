@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -56,6 +58,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
+  
+
   return (
     <html lang="zh-Hant" style={Style.html}>
       <body style={Style.body}>
@@ -70,31 +74,6 @@ export default function RootLayout({
             link: "/news", 
             key: "2",
           },
-          {
-            label: "年度課程", 
-            link: "https://www.baoyan.org/2024%E8%AA%B2%E7%A8%8B%E8%A1%A8",
-            key: "3",
-          }, 
-          {
-            label: "法務及活動", 
-            link: "https://www.baoyan.org/2024%E6%B3%95%E5%8B%99%E5%8F%8A%E6%B4%BB%E5%8B%95",
-            key: "4",
-          }, 
-          {
-            label: "法寶流通", 
-            link: "https://www.baoyan.org/%E6%B3%95%E5%AF%B6%E6%B5%81%E9%80%9A",
-            key: "5",
-          },
-          {
-            label: "捐款護持", 
-            link: "",
-            key: "6",
-          },
-          {
-            label: "我的課程", 
-            link: "https://www.baoyan.org/%E6%B7%B1%E5%85%A5%E7%B6%93%E8%97%8F",
-            key: "7",
-          }
         ]}>
         </Navbar>
         <main style={Style.main}>
