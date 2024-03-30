@@ -21,7 +21,7 @@ export default function Home() {
     const [pwError, setPwError] = useState<string>("");
 
     // 
-    const size = useWindowSize();
+    // const size = useWindowSize();
 
     function handleSubmit(formData: { get: (arg0: string) => any; }) {
         const emailInput = formData.get("emailInput");
@@ -38,7 +38,7 @@ export default function Home() {
             // alert("Password can't be empty")
             setPwError("* 這為必填欄位");
         }
-        alert(`You submitted emailInput: '${emailInput}', pwInput: '${pwInput}'`);
+        console.log(`${loginOrSignUp} submitted emailInput: '${emailInput}', pwInput: '${pwInput}'`);
     }
 
     return (

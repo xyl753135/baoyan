@@ -11,40 +11,41 @@ const Style: { [key: string]: React.CSSProperties } = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    flexGrow: "1",
+    flexGrow: "0",
+    minWidth: "120px",
     flexShrink: "1",
     cursor: "pointer",
     // borderRadius: "1rem",
-    transition: "1s"
+    transition: "all 200ms ease"
   },
   label: {
     color: "rgb(240, 240, 255)",
     fontFamily: "georgia",
     fontWeight: "bold",
     textDecoration: "none",
-    transition: "all 1s ease-out"
+    transition: "all 200ms ease"
   },
   hoverButtonLight: {
     backgroundColor: "#4EB1BA",
     // border: "1px solid white",
-    transition: "all 1s ease-out"
+    transition: "all 200ms ease"
   },
   hoverButtonDark: {
     backgroundColor: "#214468",
     // border: "1px solid white",
-    transition: "all 1s ease-out"
+    transition: "all 200ms ease"
   },
   hoverLabelLight: {
     color: "black",
     fontSize: "1.5rem",
     fontWeight: "900",
-    transition: "all 0.5s"
+    transition: "all 200ms east"
   },
   hoverLabelDark: {
     color: "white",
     fontSize: "1.5rem",
     fontWeight: "900",
-    transition: "all 0.5s"
+    transition: "all 200ms east"
   },
   fontNormal: {
     fontSize: "1rem",

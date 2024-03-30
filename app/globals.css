@@ -14,7 +14,7 @@
   --navbarHamburgerTBPadding: 28px;
   --navbarHamburgerBarGap: 5px;
   --navbarHamburgerBarWidth: calc(var(--navbarHamburgerContainerWidth) - (var(--navbarHamburgerLRPadding) * 2));
-  --navbarHamburgerBarDiagonal: calc((var(--navbarHamburgerBarWidth) * 1));
+  --navbarHamburgerBarDiagonal: calc((var(--navbarHamburgerBarWidth) * 0.98));
   --navbarHamburgerBarHeight: calc((55px - (var(--navbarHamburgerBarGap) * 2)) / 3);
   --navbarHamburgerAnimation: 200ms ease-in-out;
 }

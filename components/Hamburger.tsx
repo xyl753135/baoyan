@@ -40,7 +40,7 @@ const Style: { [key: string]: React.CSSProperties } = {
   },
   topLine: {
     backgroundColor: "white",
-    border: "1px solid black", 
+    border: "none", 
     boxShadow: "0 0 0 1px white",
     rotate: "45deg",
     width: "var(--navbarHamburgerBarDiagonal)",
@@ -54,7 +54,7 @@ const Style: { [key: string]: React.CSSProperties } = {
   },
   bottomLine: {
     backgroundColor: "white",
-    border: "1px solid black", 
+    border: "none", 
     boxShadow: "0 0 0 1px white",
     rotate: "-45deg",
     width: "var(--navbarHamburgerBarDiagonal)",
