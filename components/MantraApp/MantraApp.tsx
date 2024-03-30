@@ -110,9 +110,9 @@ export function MantraApp() {
         (async () => {
             const path = String(sfxPath);
             const name = path.substring(path.lastIndexOf("/")+1, path.indexOf("."));
-            const domain = window.location.origin == "http://localhost:3001" ? "http://localhost:3001" : "https://baoyan.vercel.app";
-            console.log("MantraApp useEffect calling ", `${domain}/api/counters/read-counter?app=mantraapp&name=${name}`);
-            const resp = await fetch(`${domain}/api/counters/read-counter?app=mantraapp&name=${name}`, { cache: 'no-store' })
+            console.log("MantraApp useEffect calling ", `/api/counters/read-counter?app=mantraapp&name=${name}`);
+            const resp = await fetch(`/api/counters/read-counter?app=mantraapp&name=${name}`, { 
+                method: 'GET' })
             if (resp.status == 200) {
                 const json = await resp.json();
                 console.log("fetch returned counters: ", json.counters.rows)
@@ -146,9 +146,10 @@ export function MantraApp() {
 
                 const path = String(sfxPath);
                 const name = path.substring(path.lastIndexOf("/")+1, path.indexOf("."));
-                const domain = window.location.origin == "http://localhost:3001" ? "http://localhost:3001" : "https://baoyan.vercel.app"
-                console.log("MantraApp handleSubmit calling ", `${domain}/api/counters/read-counter?app=mantraapp&name=${name}`);
-                const resp = await fetch(`${domain}/api/counters/read-counter?app=mantraapp&name=${name}`, { cache: 'no-store' })
+                console.log("MantraApp handleSubmit calling ", `/api/counters/read-counter?app=mantraapp&name=${name}`);
+                const resp = await fetch(`/api/counters/read-counter?app=mantraapp&name=${name}`, { 
+                    method: 'GET' 
+                });
                 if (resp.status == 200) {
                     const json = await resp.json();
                     console.log("fetch returned counters: ", json.counters.rows)

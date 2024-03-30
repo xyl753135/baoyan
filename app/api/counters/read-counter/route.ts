@@ -12,7 +12,7 @@ export async function GET(request: Request) {
     } catch (error) {
         return NextResponse.json(
             {
-                result: {}
+                counters: {}
             }, 
             {
                 status: 500, 

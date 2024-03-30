@@ -70,11 +70,12 @@ export const MantraPlayer = ({
       // Update global count
 
       const name = audio.src.substring(audio.src.lastIndexOf("/")+1, audio.src.indexOf("."));
-      const domain = window.location.origin == "http://localhost:3001" ? "http://localhost:3001" : "https://baoyan.vercel.app";
-      console.log("MantraPlayer useEffect calling ", `${domain}/api/counters/update-counter?app=mantraapp&name=${name}&count=${globalCount + 1}`);
+      console.log("MantraPlayer useEffect calling ", `/api/counters/update-counter?app=mantraapp&name=${name}&count=${globalCount + 1}`);
       (async () => {
         try {
-          const resp = await fetch(`${domain}/api/counters/update-counter?app=mantraapp&name=${name}&count=${globalCount + 1}`, { cache: 'no-store' })
+          const resp = await fetch(`/api/counters/update-counter?app=mantraapp&name=${name}&count=${globalCount + 1}`, {
+            method: "GET",
+            cache: 'no-store' })
           if (resp.status == 200) {
             const json = await resp.json();
             console.log("fetch returned result: ", json.result.rows);
