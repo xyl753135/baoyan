@@ -70,19 +70,19 @@ export function validatePassword(pw: string) {
     }
     if (pw.length < 8) {
         result.isValid = false;
-        result.message = "* 密碼不得短於8個字符";
+        result.message = "* 密碼不得少於8個字符";
     }
     if (!(/[A-Z]/.test(pw))) {
         result.isValid = false;
-        result.message = "* 密碼需至少一個英文大寫字符";
+        result.message = "* 密碼不得至少一個英文大寫";
     }
     if (!(/[a-z]/.test(pw))) {
         result.isValid = false;
-        result.message = "* 密碼需至少一個英文小寫字符";
+        result.message = "* 密碼不得至少一個英文小寫";
     }
     if (!(/[0-9]/.test(pw))) {
         result.isValid = false;
-        result.message = "* 密碼需至少一個數字";
+        result.message = "* 密碼不得至少一個數字";
     }
 
     return result;
