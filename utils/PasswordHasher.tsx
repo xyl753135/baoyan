@@ -23,16 +23,16 @@ export async function hashPassword(plaintext: string) {
     return new Promise((resolve, reject) => {
         bcrypt.genSalt(saltRounds, function (err, salt) {
             if (err) {
-                console.log("genSalt err:", err);
+                console.log("hashPassword err:", err);
                 reject(String(err));
             } else {
-                console.log("genSalt salt:", salt);
+                console.log("hashPassword salt:", salt);
                 bcrypt.hash(plaintext, salt, function (err, hash) {
                     if (err) {
-                        console.log("hashPassword err:", err);
+                        console.log("bcrypt.hash err:", err);
                         reject(String(err));
                     } else {
-                        console.log("hashPassword hash:", hash);
+                        console.log("bcrypt.hash hash:", hash);
                         resolve(hash); // This will return the hashed password
                     }
                 });
@@ -41,10 +41,6 @@ export async function hashPassword(plaintext: string) {
     });
 }
 
-
-
-
-
 /**
  * To check a password, compare password's hash and password in plain text.
  * @param plaintextPassword 
@@ -52,10 +48,15 @@ export async function hashPassword(plaintext: string) {
  * @returns 
  */
 export async function comparePasswordToHash(plaintextPassword: string, hash: string) {
-    let isSame: boolean = false;
-    // Load hash from your password DB.
-    bcrypt.compare(plaintextPassword, hash, function (err, result) {
-        isSame = result;
+    return new Promise((resolve, reject) => {
+        bcrypt.compare(plaintextPassword, hash, function (err, isSame) {
+            if (err) {
+                console.log("bcrypt.compare err:", err);
+                reject(String(err));
+            } else {
+                console.log("bcrypt.compare isSame:", isSame);
+                resolve(isSame); // This will return the comparison result
+            }
+        });
     });
-    return isSame;
 }
