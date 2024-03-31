@@ -74,7 +74,7 @@ export function validatePassword(pw: string) {
     }
     if (!(/[A-Z]/.test(pw))) {
         result.isValid = false;
-        result.message = "* 密碼不得至少一個英文大寫";
+        result.message = "* 密碼要至少一個英文大寫";
     }
     if (!(/[a-z]/.test(pw))) {
         result.isValid = false;

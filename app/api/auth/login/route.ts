@@ -19,27 +19,36 @@ export async function POST(request: Request) {
         WHERE username = ${usernameInput}
         LIMIT 1;`;
     console.log("result.rows", result.rows);
-    let success = false;
+    let foundMatch = false;
     // Username found
     if (result.rows.length > 0) {
       console.log("select'd pw", result.rows[0].pw);
       // Compare hash to pw
       await comparePasswordToHash(pwInput, result.rows[0].pw).then((isSame) => {
-        success = Boolean(isSame);
+        foundMatch = Boolean(isSame);
       });
     } else {
       // Username not found
     }
+    console.log("isSame", foundMatch);
+
+    // Update last_login timestamp
+    if (foundMatch) {
+      const result =
+        await sql`UPDATE users
+          SET last_login = (to_timestamp(${Date.now()} / 1000.0))
+          WHERE username = ${usernameInput}`;
+    }
+
     
     // Return result (credentials found or not-found)
-    console.log("isSame", success);
     return NextResponse.json(
       { 
           result
       }, 
       { 
-          status: success == false ? 401 : 200,
-          statusText: success == false ? "Invalid credentials" : "OK"
+          status: foundMatch == false ? 401 : 200,
+          statusText: foundMatch == false ? "Invalid credentials" : "OK"
       }
     );
 
