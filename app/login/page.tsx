@@ -82,6 +82,13 @@ export default function Home() {
                     redirect('/profile');
                 } else {
                     console.error("/api/auth/signup failed:", response);
+                    if (response.status == 409) {
+                        setAuthError(response.statusText);
+                    } else if (response.status == 500) {
+                        setAuthError(response.statusText);
+                    } else {
+                        setAuthError(response.statusText);
+                    }
                 }
             }
         }
@@ -123,7 +130,7 @@ export default function Home() {
                                 maxLength={254}
                                 size={9} />
                                 <p style={{textAlign:"right", color: "rgb(255, 180, 68)"}}>{emailError}</p> */}
-                            <input type="text" placeholder="輸入使用者名稱"
+                            <input type="text" placeholder="輸入用戶名"
                                 name="usernameInput" id="usernameInput"
                                 style={{ padding: "0.3em", fontSize: "24px", fontWeight: "bold"}}
                                 maxLength={254}
@@ -223,7 +230,9 @@ export default function Home() {
                                 注冊
                             </button>
                         </div>
-
+                        <div style={{marginTop: "1em", fontSize:"20px", color: "rgb(255, 180, 68)", textAlign: "center"}}>
+                            {authError}
+                        </div>
                         <div style={{marginTop: "50px", fontSize:"24px"}}>
                             <span onClick={() => setLoginOrSignUp("login")}>前往登入 -&gt;</span>
                         </div>

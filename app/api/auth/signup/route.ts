@@ -45,16 +45,32 @@ export async function POST(request: Request) {
     );
   } catch (error) {
     console.error(error);
-    // Return result (server error)
-    return NextResponse.json(
-      { 
-          result: {} ,
-          error: String(error)
-      }, 
-      { 
-          status: 500,
-          statusText: "The server encountered an unexpected condition preventing it from fulfilling the request."
+    if (error instanceof Error) {
+      if (error.message.includes('duplicate key value violates unique constraint')) {
+        // Handle duplicate key error
+        return NextResponse.json(
+          { 
+              result: {} ,
+              error: "Duplicate username, please choose another one."
+          }, 
+          { 
+              status: 409, // Conflict status code
+              statusText: "此用戶名已被佔用, 請選擇其他用戶名" // Username taken
+          }
+        );
+      } else {
+        // Handle other errors
+        return NextResponse.json(
+          { 
+              result: {} ,
+              error: String(error)
+          }, 
+          { 
+              status: 500,
+              statusText: "The server encountered an unexpected condition preventing it from fulfilling the request."
+          }
+        );
       }
-    );
+    }
   }
 }
