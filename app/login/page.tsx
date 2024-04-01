@@ -172,22 +172,30 @@ export default function Home() {
                                 marginLeft: "0px", marginRight: "5px", marginTop: "5px", marginBottom: "5px"}}
                                 onClick={() => setShowPw(!showPw)}
                             ></input>
-                            <label htmlFor="showPw" style={{ fontSize:"24px"}}>顯示密碼</label>
+                            <label htmlFor="showPw" style={{ 
+                                fontSize:"24px", 
+                                color: "white"}}>顯示密碼</label>
                         </div>
                         {/* Form submit & Forgot password*/}
                         <div style={{display: "flex", justifyContent: "space-between"}}>
-                            <a style={{ fontSize:"18px", paddingTop: "14px"}}
+                            <a style={{ 
+                                fontSize:"18px", 
+                                paddingTop: "14px",
+                                color: "white"}}
                                 target="_self"
                                 onClick={handleReset}>忘記密碼?</a>
                             <button type="submit" style={{ 
                                 width: "80px", 
                                 fontSize:"24px", 
-                                display: "flex", alignItems: "center", justifyContent: "space-around",
+                                display: "flex", 
+                                alignItems: "center", 
+                                justifyContent: "space-around",
                                 fontWeight: "bold",
                                 background: "saddlebrown",
                                 border: "white 1px solid",
                                 borderRadius: "5px",
-                                padding: "2px"
+                                padding: "2px",
+                                color: "white"
                                 }}>
                                 {/* <Image width={25} height={25} src={"/icons/icon_confirm_nobg.png"} alt={"Submit"} style={{ filter : "invert(1)" }}></Image> */}
                                 登入
@@ -198,7 +206,10 @@ export default function Home() {
                             {authError}
                         </div>
                         {/* Go to Sign up */}
-                        <div style={{marginTop: "50px", fontSize:"24px", display: "flex", alignItems:"center"}} onClick={() => setLoginOrSignUp("signUp")}>
+                        <div style={{
+                            marginTop: "50px", fontSize:"24px", 
+                            display: "flex", alignItems:"center",
+                            color: "white"}} onClick={() => setLoginOrSignUp("signUp")}>
                                 前往註冊
                                 <Image style={{filter:"invert(1)"}} src={"/icons/login3.png"} alt={"Login icon"} width={25} height={25}></Image>
                         </div>
@@ -220,7 +231,10 @@ export default function Home() {
                                 name="usernameInput" id="usernameInput"
                                 value={username}
                                 onChange={(event) => setUsername(event.target.value)}
-                                style={{ padding: "0.3em", fontSize: "24px", fontWeight: "bold"}}
+                                style={{ 
+                                    padding: "0.3em", 
+                                    fontSize: "24px", 
+                                    fontWeight: "bold"}}
                                 // If there are characters in username that do not appear in the regex list, then shorten max length to 70.
                                 // Chinese takes up more bytes and can cause truncation issues
                                 maxLength={/[^a-zA-Z0-9!@#$%^&*)(}{`=_/?.><+~-]+/giu.test(username)? 70 : 250}
@@ -231,7 +245,11 @@ export default function Home() {
                         <div>
                             <input type={showPw ? "text" : "password"} placeholder="輸入您的密碼" 
                                 id="pwInput" name="pwInput" 
-                                style={{ padding: "0.3em", marginTop: "5px", fontSize: "24px", fontWeight: "bold"}}
+                                style={{ 
+                                    padding: "0.3em", 
+                                    marginTop: "5px", 
+                                    fontSize: "24px", 
+                                    fontWeight: "bold"}}
                                 maxLength={64}
                                 size={9}></input>
                                 <p style={{textAlign:"right", color: "rgb(255, 180, 68)"}}>{pwError}</p>
@@ -243,7 +261,9 @@ export default function Home() {
                                 marginLeft: "0px", marginRight: "5px", marginTop: "5px", marginBottom: "5px"}}
                                 onClick={() => setShowPw(!showPw)}
                             ></input>
-                            <label htmlFor="showPw" style={{ fontSize:"24px"}}>顯示密碼</label>
+                            <label htmlFor="showPw" style={{ 
+                                fontSize:"24px",
+                                color:"white"}}>顯示密碼</label>
                         </div>
                         {/* Form submit */}
                         <div style={{display: "flex", justifyContent: "right"}}>
@@ -255,7 +275,8 @@ export default function Home() {
                                 background: "saddlebrown",
                                 border: "white 1px solid",
                                 borderRadius: "5px",
-                                padding: "2px"
+                                padding: "2px",
+                                color: "white"
                                 }}>
                                 註冊
                             </button>
@@ -265,7 +286,7 @@ export default function Home() {
                             {authError}
                         </div>
                         {/* Go to login */}
-                        <div style={{marginTop: "50px", fontSize:"24px", display: "flex", alignItems:"center"}} onClick={() => setLoginOrSignUp("login")}>
+                        <div style={{marginTop: "50px", fontSize:"24px", display: "flex", alignItems:"center", color: "white"}} onClick={() => setLoginOrSignUp("login")}>
                                 前往登入 
                                 <Image style={{filter:"invert(1)"}} src={"/icons/login2.png"} alt={"Login icon"} width={25} height={25}></Image>
                         </div>
