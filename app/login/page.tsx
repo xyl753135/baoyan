@@ -1,7 +1,7 @@
 'use client'
 
 import Image from "next/image";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { validateUsername, validatePassword } from "@/utils/Validator";
@@ -60,12 +60,16 @@ export default function Home() {
                 const response = await fetch('/api/auth/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ usernameInput, pwInput }),
+                    body: JSON.stringify({ usernameInput, pwInput }), // TODO JWT sign it
                 });
                 if (response.ok) {
                     console.log("/api/auth/login success");
                     // TODO
-                    redirect('/profile');
+                    // What's the difference between this?
+                    const router = useRouter();
+                    router.push('/profile');
+                    // And this?
+                    // redirect('/profile');
                 } else {
                     console.error("/api/auth/login failed:", response);
                     if (response.status == 401) { // unauthorized， invalid creds
@@ -86,7 +90,8 @@ export default function Home() {
                 if (response.ok) {
                     console.log("/api/auth/signup success");
                     // TODO
-                    redirect('/profile');
+                    const router = useRouter();
+                    router.push('/profile');
                 } else {
                     console.error("/api/auth/signup failed:", response);
                     if (response.status == 409) { // Username taken
@@ -225,6 +230,7 @@ export default function Home() {
                         display: "flex", flexDirection: "column", 
                         justifyContent: "center", 
                         alignItems: "space-around" }}>
+                        <h3>請自行建立帳戶名稱, 建立後就不可變更</h3>
                         {/* Input username */}
                         <div>
                             <input type="text" placeholder="輸入用戶名"
