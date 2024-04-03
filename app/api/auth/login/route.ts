@@ -1,6 +1,8 @@
 import { sql } from '@vercel/postgres';
 import { NextResponse } from 'next/server';
 import { comparePasswordToHash } from "@/utils/PasswordHasher";
+import { encrypt } from '@/utils/AuthHelper';
+import { cookies } from "next/headers";
  
 export async function POST(request: Request) {
   try {
@@ -13,42 +15,49 @@ export async function POST(request: Request) {
     }
 
     // Select table users, column *
-    const result =
+    const query =
       await sql`SELECT * 
         FROM users
         WHERE username = ${usernameInput}
         LIMIT 1;`;
-    console.log("result.rows", result.rows);
+    console.log("query.rows", query.rows);
     let foundMatch = false;
     // Username found
-    if (result.rows.length > 0) {
-      console.log("select'd pw", result.rows[0].pw);
+    if (query.rows.length > 0) {
+      console.log("select'd pw", query.rows[0].pw);
       // Compare hash to pw
-      await comparePasswordToHash(pwInput, result.rows[0].pw).then((isSame) => {
+      await comparePasswordToHash(pwInput, query.rows[0].pw).then((isSame) => {
         foundMatch = Boolean(isSame);
       });
     } else {
       // Username not found
     }
     console.log("isSame", foundMatch);
-
-    // Update last_login timestamp
+    
+    let updateResult = {};
     if (foundMatch) {
-      const result =
+      // Update last_login timestamp
+      updateResult =
         await sql`UPDATE users
           SET last_login = (to_timestamp(${Date.now()} / 1000.0))
           WHERE username = ${usernameInput}`;
-    }
+      console.log("updateResult", updateResult);
 
+      // Create the session
+      const expires = new Date(Date.now() + 10 * 1000);
+      const session = await encrypt({ user: query.rows[0], expires });
+      // Save the session in a cookie
+      cookies().set("session", session, { expires, httpOnly: true });
+    }
     
     // Return result (credentials found or not-found)
     return NextResponse.json(
       { 
-          result
+        updateResult
       }, 
       { 
-          status: foundMatch == false ? 401 : 200,
-          statusText: foundMatch == false ? "Invalid credentials" : "OK"
+        status: foundMatch == false ? 401 : 200,
+        statusText: foundMatch == false ? "Invalid credentials" : "OK"
       }
     );
 
