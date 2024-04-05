@@ -51,10 +51,10 @@ export async function comparePasswordToHash(plaintextPassword: string, hash: str
     return new Promise((resolve, reject) => {
         bcrypt.compare(plaintextPassword, hash, function (err, isSame) {
             if (err) {
-                console.log("bcrypt.compare err:", err);
+                // console.log("bcrypt.compare err:", err);
                 reject(String(err));
             } else {
-                console.log("bcrypt.compare isSame:", isSame);
+                // console.log("bcrypt.compare isSame:", isSame);
                 resolve(isSame); // This will return the comparison result
             }
         });

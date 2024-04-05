@@ -20,11 +20,11 @@ export async function POST(request: Request) {
         FROM users
         WHERE username = ${usernameInput}
         LIMIT 1;`;
-    console.log("query.rows", query.rows);
+    // console.log("query.rows", query.rows);
     let foundMatch = false;
     // Username found
     if (query.rows.length > 0) {
-      console.log("select'd pw", query.rows[0].pw);
+      // console.log("select'd pw", query.rows[0].pw);
       // Compare hash to pw
       await comparePasswordToHash(pwInput, query.rows[0].pw).then((isSame) => {
         foundMatch = Boolean(isSame);
@@ -32,7 +32,7 @@ export async function POST(request: Request) {
     } else {
       // Username not found
     }
-    console.log("isSame", foundMatch);
+    // console.log("isSame", foundMatch);
     
     let updateResult = {};
     if (foundMatch) {
@@ -41,10 +41,11 @@ export async function POST(request: Request) {
         await sql`UPDATE users
           SET last_login = (to_timestamp(${Date.now()} / 1000.0))
           WHERE username = ${usernameInput}`;
-      console.log("updateResult", updateResult);
+      // console.log("updateResult", updateResult);
 
       // Create the session
-      const expires = new Date(Date.now() + 10 * 1000);
+      const expires = new Date(Date.now() + 60 * 60 * 1000); // 60 mins (in theory)
+      console.log("expires", expires);
       const session = await encrypt({ user: query.rows[0], expires });
       // Save the session in a cookie
       cookies().set("session", session, { expires, httpOnly: true });

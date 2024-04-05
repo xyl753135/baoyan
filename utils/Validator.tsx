@@ -4,6 +4,22 @@ type result = {
 }
 
 /**
+ * Given a variable, check if null, empty, or undefined
+ */
+export function isNullUndefinedOrEmpty(any: any) {
+    if (any == null) {
+        return true;
+    } else if (any == undefined) {
+        return true;
+    } else if (typeof any == "string") {
+        if (any.trim() == ""  || any == "null" || any == "undefined") {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
  * Given a string, check if it is a valid email
  * Return an object with two keys: isValid (bool), message (string)
  * If valid, then isValid is true and message is not empty ("").

@@ -5,9 +5,8 @@ import { useEffect, useRef, useState } from "react";
 import { MantraPlayer } from "./MantraPlayer";
 import { MantraCounter } from "./MantraCounter";
 
-// Assets
+// Utils
 import { parseLRCFile } from "@/utils/LyricsParser";
-
 
 import { LRCContent } from "@/types/LRC"
 import { MantraTransferOfMerit } from "./MantraTransferOfMerit";
@@ -80,7 +79,7 @@ export function MantraApp() {
     const [showConfig, setShowConfig] = useState<boolean>(false);
     const [showSubtitles, setShowSubtitles] = useState<boolean>(true);
     const [sfxPath, setSfxPath] = useState<string>("/mantraWheel/audio/shurangama.mp3");
-    const [lrcPath, setLrcPath] = useState<string>("./mantraWheel/lyrics/shurangama.lrc");
+    const [lrcPath, setLrcPath] = useState<string>("/mantraWheel/lyrics/shurangama.lrc");
     const [localCount, setLocalCount] = useState<number>(0);
     const [globalCount, setGlobalCount] = useState<number>(0);
 

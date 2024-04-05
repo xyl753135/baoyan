@@ -1,10 +1,13 @@
-async function requestPermission() {
+export async function requestPermission() {
     Notification.requestPermission().then(permission => {
-        // 'granted', 'denied', 'default'
+        // permissions can be: 'granted', 'denied', 'default'
+        // If user presses the 'x' to close the prompt, assume it means they said no.
         if(permission === 'default') {
-            permission = 'denied';
+            console.log(`User closed the permissions prompt for Local Notifications`);
+        } else {
+            console.log(`User ${permission} permissions for Local Notifications`);
         }
-        console.log(`User ${permission} permissions for Local Notifications`);
+        
     })
 }
 
@@ -16,6 +19,7 @@ export async function createNotification(
 
     // Get user permission
     if(force) {
+        // This doesn't seem to reprompt user after a denial, with Chrome
         if (Notification.permission === 'default' || Notification.permission === 'denied') {
             await requestPermission();
         }

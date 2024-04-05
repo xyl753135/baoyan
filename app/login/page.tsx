@@ -1,10 +1,10 @@
 'use client'
 
 import Image from "next/image";
-import { redirect, useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { validateUsername, validatePassword } from "@/utils/Validator";
+import { redirect } from "next/navigation"
 
 const Style: { [key: string]: React.CSSProperties } = {
     main: {
@@ -64,12 +64,7 @@ export default function Home() {
                 });
                 if (response.ok) {
                     console.log("/api/auth/login success");
-                    // TODO
-                    // What's the difference between this?
-                    const router = useRouter();
-                    router.push('/profile');
-                    // And this?
-                    // redirect('/profile');
+                    redirect("/profile");
                 } else {
                     console.error("/api/auth/login failed:", response);
                     if (response.status == 401) { // unauthorized， invalid creds
@@ -89,13 +84,11 @@ export default function Home() {
                 });
                 if (response.ok) {
                     console.log("/api/auth/signup success");
-                    // TODO
-                    const router = useRouter();
-                    router.push('/profile');
+                    redirect("/profile");
                 } else {
                     console.error("/api/auth/signup failed:", response);
                     if (response.status == 409) { // Username taken
-                        setAuthError("此用戶名被註冊");
+                        setAuthError("此用戶名已被註冊");
                     } else if (response.status == 400) { // Params missing
                         setAuthError("不可少必要參數");
                     } else if (response.status == 500) { // Internal Server Error
@@ -214,7 +207,10 @@ export default function Home() {
                         <div style={{
                             marginTop: "50px", fontSize:"24px", 
                             display: "flex", alignItems:"center",
-                            color: "white"}} onClick={() => setLoginOrSignUp("signUp")}>
+                            color: "white"}} onClick={() => {
+                                setLoginOrSignUp("signUp");
+                                setAuthError("");
+                            }}>
                                 前往註冊
                                 <Image style={{filter:"invert(1)"}} src={"/icons/login3.png"} alt={"Login icon"} width={25} height={25}></Image>
                         </div>
@@ -230,7 +226,9 @@ export default function Home() {
                         display: "flex", flexDirection: "column", 
                         justifyContent: "center", 
                         alignItems: "space-around" }}>
-                        <h3>請自行建立帳戶名稱, 建立後就不可變更</h3>
+                        <h3>請自行建立帳戶名稱,</h3>
+                        <h3>建立後就不可變更.</h3>
+                        <br></br>
                         {/* Input username */}
                         <div>
                             <input type="text" placeholder="輸入用戶名"
@@ -292,7 +290,13 @@ export default function Home() {
                             {authError}
                         </div>
                         {/* Go to login */}
-                        <div style={{marginTop: "50px", fontSize:"24px", display: "flex", alignItems:"center", color: "white"}} onClick={() => setLoginOrSignUp("login")}>
+                        <div style={{
+                                marginTop: "50px", fontSize:"24px", display: "flex", 
+                                alignItems:"center", color: "white"}} 
+                            onClick={() => {
+                                setLoginOrSignUp("login");
+                                setAuthError("");
+                            }}>
                                 前往登入 
                                 <Image style={{filter:"invert(1)"}} src={"/icons/login2.png"} alt={"Login icon"} width={25} height={25}></Image>
                         </div>
