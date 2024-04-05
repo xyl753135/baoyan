@@ -10,6 +10,7 @@ import { parseLRCFile } from "@/utils/LyricsParser";
 
 
 import { LRCContent } from "@/types/LRC"
+import { MantraTransferOfMerit } from "./MantraTransferOfMerit";
 
 const Style: { [key: string]: React.CSSProperties } = {
     container: {
@@ -167,7 +168,12 @@ export function MantraApp() {
 
     return (
         <div style={Style.container}>
-            <h3 style={{ marginTop: "1em", marginBottom: "0.5em", textAlign: "center", fontSize: "30px" }}>陀羅尼持咒</h3>
+            <h3 style={{ 
+                marginTop: "1em", marginBottom: "0.5em", 
+                textAlign: "center", 
+                fontSize: "30px" }}>
+                大佛頂首楞嚴神咒
+            </h3>
             {/* Manual, Config sections */}
             <div style={Style.col}>
                 {/* Manual section */}
@@ -290,9 +296,10 @@ export function MantraApp() {
                         
                     </div>
                 </section>
-
+                {/* 回向 Transferance of Merit */}
+                <MantraTransferOfMerit></MantraTransferOfMerit>
                 {/* Statistics */}
-                <MantraCounter localCount={localCount} globalCount={globalCount}></MantraCounter>
+                <MantraCounter localCount={localCount} showMemberCount={false} memberCount={0} globalCount={globalCount}></MantraCounter>
             </div>
         </div>
     );

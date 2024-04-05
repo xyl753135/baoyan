@@ -168,7 +168,7 @@ export const MantraPlayer = ({
         showSkip ?
           <>
             <div style={{ display: "flex", flexDirection: "row" }}>
-              <GenericButton label={"完整版"} handleClick={() => { skipToSection(0, 0); } } 
+              <GenericButton label={"完整版"} handleClick={() => { skipToSection(13, 13); } } 
                 border={"white 2px solid"} 
                 borderRadius={"5px"} 
                 background={"saddlebrown"} 
