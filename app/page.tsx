@@ -10,14 +10,14 @@ import { MantraApp } from "@/components/MantraApp/MantraApp"
 import { GeolocationAPI } from "@/components/GeolocationAPI";
 
 import { useEffect, useState } from "react";
-import useWindowSize from "@/utils/WindowResize"
 
 
 const Style: { [key: string]: React.CSSProperties } = {
   main: {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
+    // justifyContent: "center",
+    alignItems: "center",
     // width: "100%",
   },
   videoContainer: {
@@ -38,14 +38,11 @@ const Style: { [key: string]: React.CSSProperties } = {
 };
 
 export default function Home() {
-  const [screenWidth, screenHeight] = useWindowSize();
-
-
-
-
 
   return (
     <main style={Style.main}>
+        <Image src={"/placeholders/wip.png"} alt={"Work in Progress"} width={300} height={300}></Image>
+        <h1>以下部分為施工中</h1>
       {/* <Centerpiece h={400} w={400*0.32} altText={"寶嚴山寶嚴禪寺"} link={"/centerpiece.png"}></Centerpiece> */}
 
       {/* <div style={Style.videoContainer}>
@@ -62,10 +59,10 @@ export default function Home() {
       </div> */}
 
 
-<MantraApp ></MantraApp>
+      {/* <MantraApp ></MantraApp> */}
 
 
-      
+
       {/* <GeolocationAPI></GeolocationAPI> */}
 
       {/* <div style={Style.qrcode}>
