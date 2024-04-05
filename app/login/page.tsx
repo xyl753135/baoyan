@@ -11,8 +11,8 @@ const Style: { [key: string]: React.CSSProperties } = {
         display: "flex",
         flexDirection: "column",
         height: "70vh",
-        minHeight: "350px"
-        // alignItems: "center",
+        minHeight: "350px",
+        alignItems: "center",
     },
 };
 
@@ -114,7 +114,7 @@ export default function Home() {
                 display: "flex",
                 justifyContent: "space-around", 
                 flexGrow: "1",
-                flexBasis: "100%",
+                flexBasis: "90%",
                 maxWidth: "800px",
                 minWidth: "350px",
                 
@@ -125,7 +125,7 @@ export default function Home() {
                 <div style={{ 
                     display: "flex",
                     marginTop: "1em",
-                    marginLeft: "2em",
+                    marginRight: "2em",
                     justifyContent: "space-around", 
                     alignItems: "center",}}>
                     <Image width={100} height={330} src={"/centerpiece.png"} alt={"寳嚴"} style={{ }}></Image>
