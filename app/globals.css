@@ -9,6 +9,7 @@
   --navbarFullDisplay: flex;
   --navbarHamburgerDisplay: none;
   --profileColumnsLayout: row;
+  --applicationsMantraShurVisibility: block;
   --navbarHamburgerContainerWidth: 65px;
   --navbarHamburgerContainerHeight: 75px;
   --navbarHamburgerLRPadding: 17px;
@@ -51,6 +52,7 @@
     --navbarFullDisplay: none;
     --navbarHamburgerDisplay: flex;
     --profileColumnsLayout: column;
+    --applicationsMantraShurVisibility: none;
   }
   /* .content {
     padding: 4rem;

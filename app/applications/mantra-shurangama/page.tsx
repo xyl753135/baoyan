@@ -16,10 +16,16 @@ export default function Home() {
   return (
     <main style={Style.main}>
       <MantraApp ></MantraApp>
-      <Centerpiece 
-        h={400} w={400*0.32} 
-        altText={"寶嚴山寶嚴禪寺"} 
-        link={"/centerpiece.png"}></Centerpiece>
+      <div style={{
+        display: "var(--applicationsMantraShurVisibility)"
+      }}>
+        <Centerpiece 
+          h={400} w={400*0.32} 
+          altText={"寶嚴山寶嚴禪寺"} 
+          link={"/centerpiece.png"}>
+        </Centerpiece>
+      </div>
+      
     </main>
   );
 }
