@@ -43,8 +43,8 @@ const Style: { [key: string]: React.CSSProperties } = {
 };
 
 type Props = {
-    h: number,
-    w: number,
+    h: number | string,
+    w: number | string,
     buttonDatas: Array<Array<{ 
       imgPath:string, 
       btnLabel:string, 

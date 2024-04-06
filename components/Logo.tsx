@@ -25,7 +25,8 @@ export const Logo = ({
             alt={altText} 
             height={h} 
             width={w} 
-            loading={"eager"}>
+            loading={"eager"}
+            priority>
         </Image>
     </a>
   );

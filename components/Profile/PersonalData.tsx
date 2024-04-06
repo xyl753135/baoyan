@@ -21,11 +21,15 @@ type Props = {
         country: string,
         locale: string,
         dob: string,
-    }
+    },
+    w:string,
+    h:string
 }
 
 export const PersonalData = ({
-    userData
+    userData,
+    w,
+    h
 }: Props) => {
     const [name, setName] = useState(userData.name);
     const [bname, setBname] = useState(userData.bname);
@@ -79,8 +83,8 @@ export const PersonalData = ({
                 flexDirection: "column",
                 // justifyContent: "space-around",
                 alignItems: "center",
-                height: "800px",
-                width: "350px",
+                height: h,
+                width: w,
                 paddingLeft: "0.5em",
                 paddingRight: "0.5em",
                 // border: "#233142 2px solid",
@@ -90,7 +94,7 @@ export const PersonalData = ({
                 style={{
                     borderRadius: "50%",
                     background: "#f95959",
-                    border: "#e3e3e3 3px solid",
+                    border: "black 1px solid",
                     filter: "invert(1)",
                     margin: "2em"
                 }}></Image>

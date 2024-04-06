@@ -8,6 +8,7 @@
 :root {
   --navbarFullDisplay: flex;
   --navbarHamburgerDisplay: none;
+  --profileColumnsLayout: row;
   --navbarHamburgerContainerWidth: 65px;
   --navbarHamburgerContainerHeight: 75px;
   --navbarHamburgerLRPadding: 17px;
@@ -17,6 +18,7 @@
   --navbarHamburgerBarDiagonal: calc((var(--navbarHamburgerBarWidth) * 0.98));
   --navbarHamburgerBarHeight: calc((55px - (var(--navbarHamburgerBarGap) * 2)) / 3);
   --navbarHamburgerAnimation: 200ms ease-in-out;
+
 }
 
 @media (prefers-color-scheme: light) {
@@ -48,6 +50,7 @@
   :root {
     --navbarFullDisplay: none;
     --navbarHamburgerDisplay: flex;
+    --profileColumnsLayout: column;
   }
   /* .content {
     padding: 4rem;

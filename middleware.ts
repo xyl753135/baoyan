@@ -1,21 +1,31 @@
 import { NextRequest } from 'next/server'
-import { updateSession } from "@/utils/AuthHelper";
+import { extendSession } from "@/utils/AuthHelper";
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
     console.log("middleware triggered!");
     
     // Get session value
-    const session = request.cookies.get("session")?.value;
-
-    // If user is trying to go to /profile, check if they have a session.
     if (request.nextUrl.pathname.startsWith('/profile')) {
+        
         // User doesn't have a session. Take them to login instead of profile.
         // Otherwise, renew session.expires value
-        const res = updateSession(request, '/login');
+        const res = extendSession(request, 60); // If user doesnt have session or fail to parse, fallback to 
         console.log("Middleware updated session")
         return res;
     }
+
+    // const session = request.cookies.get("session")?.value;
+    // if (session == undefined) {
+    //     if (request.nextUrl.pathname.startsWith('/profile')) {
+    //         return Response.redirect(new URL("/login", request.url));
+    //     }
+    // } else {
+        
+    // }
+
+    // If user is trying to go to /profile, check if they have a session.
+    
 }
 
 // This will filter Middleware so it runs on specific paths

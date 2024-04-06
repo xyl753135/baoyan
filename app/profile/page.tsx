@@ -12,19 +12,11 @@ const Style: { [key: string]: React.CSSProperties } = {
     container: {
         marginTop: "1em",
         display: "flex",
-        flexDirection: "column",
+        // @ts-expect-error: This is valid and still works
+        flexDirection: "var(--profileColumnsLayout)",
         // flexBasis: "600px",
-        flexGrow: "1",
-    },
-
-    leftCol: {
-        display: "flex",
-        flexDirection: "column",
-        // justifyContent: "space-around",
-        // alignItems: "space-between",
-        // border: "black 2px dashed",
-        width: "350px",
-        height: "800px"
+        // flexGrow: "1",
+        justifyContent: "space-around"
     },
     inputGroup: {
         display: "flex"
@@ -43,90 +35,84 @@ export default async function Page() {
     const YYYYMMDD = convertISO8601DateToYYYYMMDD(userData.dob);
     
     return <main style={Style.container}>
-        <div style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-around"
-        }}>
-            <PersonalData userData={{
-                username: userData.username,
-                name: userData.name,
-                bname: isNullUndefinedOrEmpty(userData.bname)? "" : userData.bname,
-                line: userData.line,
-                whatsapp: userData.whatsapp,
-                email: userData.email,
-                phone: userData.phone,
-                country: userData.country,
-                locale: userData.locale,
-                dob: YYYYMMDD
-            }}></PersonalData>
-            <Dashboard h={800} w={350}
-                buttonDatas={[
-                    [
-                        {
-                            imgPath: "/icons/dashboard/mantrawheel.png",
-                            btnLabel: "大佛頂首楞嚴神咒",
-                            redirectPath: "/applications/mantra-shurangama",
-                            filter: "invert(1)"
-                        },
-                        {
-                            imgPath: "/placeholders/wip.png",
-                            btnLabel: "施工中。。。",
-                            redirectPath: "/",
-                            filter: ""
-                        },
-                    ],
-                    [
-                        {
-                            imgPath: "/placeholders/wip.png",
-                            btnLabel: "施工中。",
-                            redirectPath: "/",
-                            filter: ""
-                        },
-                        {
-                            imgPath: "/placeholders/wip.png",
-                            btnLabel: "施工中。",
-                            redirectPath: "/",
-                            filter: ""
-                        },
-                        {
-                            imgPath: "/placeholders/wip.png",
-                            btnLabel: "施工中。",
-                            redirectPath: "/",
-                            filter: ""
-                        },
-                    ],
-                    [
-                        {
-                            imgPath: "/placeholders/wip.png",
-                            btnLabel: "施工中。。。",
-                            redirectPath: "/",
-                            filter: ""
-                        },
-                    ],
-                    [
-                        {
-                            imgPath: "/placeholders/wip.png",
-                            btnLabel: "施工中。",
-                            redirectPath: "/",
-                            filter: ""
-                        },
-                        {
-                            imgPath: "/placeholders/wip.png",
-                            btnLabel: "施工中。",
-                            redirectPath: "/",
-                            filter: ""
-                        },
-                        {
-                            imgPath: "/placeholders/wip.png",
-                            btnLabel: "施工中。",
-                            redirectPath: "/",
-                            filter: ""
-                        },
-                    ],
-                ]}>
-            </Dashboard>
-        </div>
+        <PersonalData userData={{
+            username: userData.username,
+            name: userData.name,
+            bname: isNullUndefinedOrEmpty(userData.bname) ? "" : userData.bname,
+            line: userData.line,
+            whatsapp: userData.whatsapp,
+            email: userData.email,
+            phone: userData.phone,
+            country: userData.country,
+            locale: userData.locale,
+            dob: YYYYMMDD
+        }} w={"100%"} h={"800"}></PersonalData>
+        <Dashboard h={800} w={"100%"}
+            buttonDatas={[
+                [
+                    {
+                        imgPath: "/icons/dashboard/mantrawheel.png",
+                        btnLabel: "大佛頂首楞嚴神咒",
+                        redirectPath: "/applications/mantra-shurangama",
+                        filter: "invert(1)"
+                    },
+                    {
+                        imgPath: "/placeholders/wip.png",
+                        btnLabel: "施工中。",
+                        redirectPath: "/",
+                        filter: ""
+                    },
+                ],
+                [
+                    {
+                        imgPath: "/icons/dashboard/transferofmerit.png",
+                        btnLabel: "回向",
+                        redirectPath: "/applications/transfer-of-merit",
+                        filter: "invert(1)"
+                    },
+                    {
+                        imgPath: "/placeholders/wip.png",
+                        btnLabel: "施工中。",
+                        redirectPath: "/",
+                        filter: ""
+                    },
+                    {
+                        imgPath: "/placeholders/wip.png",
+                        btnLabel: "施工中。",
+                        redirectPath: "/",
+                        filter: ""
+                    },
+                ],
+                [
+                    {
+                        imgPath: "/placeholders/wip.png",
+                        btnLabel: "施工中。。。",
+                        redirectPath: "/",
+                        filter: ""
+                    },
+                ],
+                [
+                    {
+                        imgPath: "/placeholders/wip.png",
+                        btnLabel: "施工中。",
+                        redirectPath: "/",
+                        filter: ""
+                    },
+                    {
+                        imgPath: "/placeholders/wip.png",
+                        btnLabel: "施工中。",
+                        redirectPath: "/",
+                        filter: ""
+                    },
+                    {
+                        imgPath: "/placeholders/wip.png",
+                        btnLabel: "施工中。",
+                        redirectPath: "/",
+                        filter: ""
+                    },
+                ],
+            ]}>
+        </Dashboard>
 
 
 

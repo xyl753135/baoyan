@@ -24,7 +24,7 @@ export async function encrypt(payload: any) {
     return await new SignJWT(payload)
         .setProtectedHeader({ alg: "HS256" })
         .setIssuedAt()
-        .setExpirationTime("10 sec from now")
+        .setExpirationTime("1 hr from now")
         .sign(key);
 }
 
@@ -34,24 +34,41 @@ export async function getSession() {
         return null;
     }
 
-    let parsed = await decrypt(session); // could be null if expired
-
-    return parsed;
+    let parsed = null;
+    try {
+        parsed = await decrypt(session);
+        return parsed;
+    } catch (error) {
+        console.error("AuthHelper.extendSession failed to decrypt sesson, assume parse = null");
+        return null;
+    }
 }
 
-export async function updateSession(request: NextRequest, fallbackUrl: string) {
+export async function extendSession(
+    request: NextRequest, 
+    extendMins: number) {
+    // Check if session exists
     const session = request.cookies.get("session")?.value;
     if (!session) {
-        console.log("No session found, returning to fallback URL")
-        return Response.redirect(new URL(fallbackUrl, request.url));
+        // Redirect to fallback url
+        console.log("No session found, returning to fallback URL /login")
+        return Response.redirect(new URL("/login", request.url));
     }
     
-    // Refresh the session so it doesn't expire
-    const parsed = await decrypt(session);
-    if (parsed == null) {
-        Response.redirect(new URL("/login", request.url));
+    // Parse session
+    let parsed = null;
+    try {
+        parsed = await decrypt(session);
+    } catch (error) {
+        // Delete invalid session
+        request.cookies.delete("session");
+        // Redirect to fallback url
+        console.error("AuthHelper.extendSession failed to decrypt sesson, assume parse = null, returning to fallback URL /login");
+        return Response.redirect(new URL("/login", request.url));
     }
-    parsed.expires = new Date(Date.now() + 10 * 1000);
+
+    // Extend the session
+    parsed.expires = new Date(Date.now() + extendMins * 60 * 1000);
     const res = NextResponse.next();
     res.cookies.set({
         name: "session",
