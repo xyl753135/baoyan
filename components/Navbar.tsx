@@ -36,7 +36,10 @@ const Style: { [key: string]: React.CSSProperties } = {
   },
   signIn: {
     filter:"invert(1)",
-    marginLeft: "1em"
+    marginLeft: "1em",
+    border: "black 3px solid",
+    borderRadius: "50%",
+    padding: "3px"
   }
 };
 

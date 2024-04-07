@@ -45,7 +45,7 @@ export async function POST(request: Request) {
 
       // Create the session
       const expires = new Date(Date.now() + 60 * 60 * 1000); // 60 mins (in theory)
-      console.log("expires.ISO:", expires.toLocaleString());
+      // console.log("expires.ISO:", expires.toLocaleString());
       const session = await encrypt({ user: query.rows[0], expires });
       // Save the session in a cookie
       cookies().set("session", session, { expires, httpOnly: true });

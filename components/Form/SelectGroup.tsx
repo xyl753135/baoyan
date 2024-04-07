@@ -29,8 +29,9 @@ export const SelectGroup = ({
     )
 
     return (
-        <div style={{marginTop:"0.5em", 
-            marginBottom: "0.5em", 
+        <div style={{
+            // marginTop:"0.5em", 
+            // marginBottom: "0.5em", 
             display: "block"}}>
             <label 
                 htmlFor={idProp} 

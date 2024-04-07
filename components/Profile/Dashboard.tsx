@@ -35,7 +35,8 @@ const Style: { [key: string]: React.CSSProperties } = {
     borderRadius: "5px",
     background: "saddlebrown",
     cursor: "pointer",
-    transition: "all 200ms ease-out"
+    transition: "all 200ms ease-out",
+    color: "white"
   },
   img: {
     
@@ -69,10 +70,10 @@ export const Dashboard = ({
         }} 
         key={`item-${itemIndex}`}
         onClick={() => {
-          createNotification("施工中", "請稍後再回來關注", true, "WIP");
+          createNotification(`前往${item.btnLabel}`, "", false, "nav");
         }}>
         <Image width={45} height={45} 
-          alt={`Text${itemIndex+1}`} 
+          alt={`${item.btnLabel}${itemIndex+1}`} 
           src={item.imgPath}
           style={{
             ...Style.img,

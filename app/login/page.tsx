@@ -1,10 +1,10 @@
 'use client'
 
-import Image from "next/image";
 import { useState } from "react";
+import Image from "next/image";
+import { redirect } from "next/navigation"
 
 import { validateUsername, validatePassword } from "@/utils/Validator";
-import { redirect } from "next/navigation"
 
 const Style: { [key: string]: React.CSSProperties } = {
     main: {
@@ -16,8 +16,7 @@ const Style: { [key: string]: React.CSSProperties } = {
     },
 };
 
-export default function Home() {
-
+export default function Page() {
     // useState - change UI
     const [loginOrSignUp, setLoginOrSignUp] = useState<"login" | "signUp">("login");
     const [showPw, setShowPw] = useState<boolean>(false);

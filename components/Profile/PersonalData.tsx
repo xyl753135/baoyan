@@ -8,6 +8,7 @@ import { InputGroup } from "@/components/Form/InputGroup";
 import { SelectGroup } from "@/components/Form/SelectGroup";
 
 import { createNotification } from "@/utils/LocalNotificationsHelper"
+import { redirect } from "next/navigation";
 
 type Props = {
     userData: {
@@ -21,6 +22,7 @@ type Props = {
         country: string,
         locale: string,
         dob: string,
+        profilePicPath: string
     },
     w:string,
     h:string
@@ -38,17 +40,41 @@ export const PersonalData = ({
     const [email, setEmail] = useState(userData.email);
     const [phone, setPhone] = useState(userData.phone);
     const [dob, setDob] = useState(userData.dob);
+    const [errors, setErrors] = useState<{ 
+        name: string,
+        bname: string,
+        line: string,
+        whatsapp: string,
+        email: string,
+        phone: string,
+        dob: string,
+        country: string;
+        locale: string;
+    }>({
+        name: "",
+        bname: "",
+        line: "",
+        whatsapp: "",
+        email: "",
+        phone: "",
+        dob: "",
+        country: "",
+        locale: "",
+    });
+    const [saveError, setSaveError] = useState<string>("");
 
-    function savePersonalData(formData: FormData) {
-        const nameInput = formData.get("nameInput");
-        const bnameInput = formData.get("bnameInput");
-        const lineInput = formData.get("lineInput");
-        const whatsappInput = formData.get("whatsappInput");
-        const emailInput = formData.get("emailInput");
-        const phoneInput = formData.get("phoneInput");
-        const dobInput = formData.get("dobInput");
-        const countrySelect = formData.get("countrySelect");
-        const localeSelect = formData.get("localeSelect");
+    async function savePersonalData(formData: FormData) {
+
+        const usernameHidden = String(formData.get("usernameHidden"));
+        const nameInput = String(formData.get("nameInput"));
+        const bnameInput = String(formData.get("bnameInput"));
+        const lineInput = String(formData.get("lineInput"));
+        const whatsappInput = String(formData.get("whatsappInput"));
+        const emailInput = String(formData.get("emailInput"));
+        const phoneInput = String(formData.get("phoneInput"));
+        const dobInput = String(formData.get("dobInput"));
+        const countrySelect = String(formData.get("countrySelect"));
+        const localeSelect = String(formData.get("localeSelect"));
         console.log("user submitted ",
             nameInput, 
             bnameInput, 
@@ -62,18 +88,53 @@ export const PersonalData = ({
         );
         createNotification(
             "使用者儲存了個人資料", 
-            [
-                nameInput, 
-                bnameInput, 
-                lineInput,
-                whatsappInput,
-                emailInput,
-                phoneInput,
-                dobInput,
-                countrySelect,
-                localeSelect
-            ].join(","), 
-            false);
+            // [
+            //     nameInput, 
+            //     bnameInput, 
+            //     lineInput,
+            //     whatsappInput,
+            //     emailInput,
+            //     phoneInput,
+            //     dobInput,
+            //     countrySelect,
+            //     localeSelect
+            // ].join(","),
+            "", 
+            false
+        );
+
+        // Validate form data
+        let sendPOST = true;
+        // TODO
+
+        // Call database
+        if (sendPOST) {
+            const response = await fetch('/api/profile/update-user', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    usernameHidden,
+                    nameInput, 
+                    bnameInput,
+                    lineInput,
+                    whatsappInput,
+                    emailInput,
+                    phoneInput,
+                    dobInput,
+                    countrySelect,
+                    localeSelect
+                 }),
+            });
+            if (response.ok) {
+                setSaveError("個人資料儲存成功");
+            } else {
+                console.error("Update failed:", response);
+                // setErrors()
+                if (response.status == 500) { // Internal Server Error
+                    setSaveError("無法處理, 通知工程師");
+                }
+            }
+        }
     }
 
     return (
@@ -90,13 +151,13 @@ export const PersonalData = ({
                 // border: "#233142 2px solid",
                 background: "#455d7a"
         }}>
-            <Image src={"/icons/role_admin.png"} alt={"admin"} width={100} height={100}
+            <Image src={userData.profilePicPath} alt={"admin"} width={100} height={100}
                 style={{
                     borderRadius: "50%",
                     background: "#f95959",
-                    border: "black 1px solid",
+                    border: "black 3px solid",
                     filter: "invert(1)",
-                    margin: "2em"
+                    margin: "2em",
                 }}></Image>
             <label style={{
                 color:"white",
@@ -106,14 +167,17 @@ export const PersonalData = ({
             <form
                 action={savePersonalData}
                 style={{
-                    display: "flex", flexDirection: "column",
+                    display: "flex", flexDirection: "column", gap: "1em",
                     justifyContent: "space-around",
                 }}>
+                <input type="text" 
+                    name="usernameHidden" id="usernameHidden" 
+                    value={userData.username} readOnly hidden/>
                 <InputGroup
                     placeholder={userData.name}
                     id={"nameInput"}
                     maxLength={255}
-                    errorMsg={""}
+                    errorMsg={errors.name}
                     changeHandler={(event) => setName(event.target.value)}
                     width={155}
                     value={name} readOnly={false} label={"姓名"}></InputGroup>
@@ -121,23 +185,23 @@ export const PersonalData = ({
                     placeholder={userData.bname}
                     id={"bnameInput"}
                     maxLength={30}
-                    errorMsg={""}
+                    errorMsg={errors.bname}
                     changeHandler={(event) => setBname(event.target.value)}
                     width={155}
                     value={bname} readOnly={false} label={"法名"}></InputGroup>
                 <InputGroup
                     placeholder={userData.line}
                     id={"lineInput"}
-                    maxLength={30}
-                    errorMsg={""}
+                    maxLength={200}
+                    errorMsg={errors.line}
                     changeHandler={(event) => setLine(event.target.value)}
                     width={155}
                     value={line} readOnly={false} label={"LINE ID"}></InputGroup>
                 <InputGroup
                     placeholder={userData.whatsapp}
                     id={"whatsappInput"}
-                    maxLength={30}
-                    errorMsg={""}
+                    maxLength={200}
+                    errorMsg={errors.whatsapp}
                     changeHandler={(event) => setWhatsapp(event.target.value)}
                     width={155}
                     value={whatsapp} readOnly={false} label={"WhatsApp ID"}></InputGroup>
@@ -145,8 +209,8 @@ export const PersonalData = ({
                     placeholder={userData.email}
                     id={"emailInput"}
                     type={"email"}
-                    maxLength={30}
-                    errorMsg={""}
+                    maxLength={255}
+                    errorMsg={errors.email}
                     changeHandler={(event) => setEmail(event.target.value)}
                     width={155}
                     value={email} readOnly={false} label={"電子郵件地址"}></InputGroup>
@@ -155,7 +219,7 @@ export const PersonalData = ({
                     id={"phoneInput"}
                     type={"tel"}
                     maxLength={30}
-                    errorMsg={""}
+                    errorMsg={errors.phone}
                     changeHandler={(event) => setPhone(event.target.value)}
                     width={155}
                     value={phone} readOnly={false} label={"手機號碼"}></InputGroup>
@@ -164,7 +228,7 @@ export const PersonalData = ({
                     id={"dobInput"}
                     type={"date"}
                     maxLength={30}
-                    errorMsg={""}
+                    errorMsg={errors.dob}
                     changeHandler={(event) => {
                         setDob(event.target.value);
                         // console.log(event.target.value)
@@ -173,7 +237,7 @@ export const PersonalData = ({
                     value={dob} readOnly={false} label={"出生年月日"}></InputGroup>
                 <SelectGroup
                     width={155}
-                    errorMsg={""}
+                    errorMsg={errors.country}
                     options={[
                         {
                             value: "",
@@ -235,7 +299,7 @@ export const PersonalData = ({
                     label={"國家"} defaultValue={userData.country} id={"countrySelect"}></SelectGroup>
                 <SelectGroup
                     width={155}
-                    errorMsg={""}
+                    errorMsg={errors.locale}
                     options={[
                         {
                             value: "",
@@ -321,8 +385,12 @@ export const PersonalData = ({
                     label={"地區"} defaultValue={userData.locale} id={"localeSelect"}></SelectGroup>
 
                 {/* Save error */}
-                <div style={{ marginTop: "1em", fontSize: "20px", color: "rgb(255, 180, 68)", textAlign: "center" }}>
-                    {/* {saveError} */}
+                <div style={{
+                    fontSize: "20px", 
+                    color: "rgb(255, 180, 68)", 
+                    textAlign: "center",
+                    minHeight: "26.6px" }}>
+                    {saveError}
                 </div>
 
                 {/* 
@@ -350,7 +418,6 @@ export const PersonalData = ({
                 }}>
                     儲存
                 </button>
-                <br></br>
                 {/* Other buttons */}
                 <button style={{
                     // width: "80px",

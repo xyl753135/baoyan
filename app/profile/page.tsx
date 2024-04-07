@@ -1,16 +1,19 @@
 'use server'
 
-import Image from "next/image";
-import { getSession } from "@/utils/AuthHelper";
+// Components
 import { Dashboard } from "@/components/Profile/Dashboard";
 import { PersonalData } from "@/components/Profile/PersonalData";
-import { parseMonth, convertISO8601DateToYYYYMMDD } from "@/utils/TimeParser";
+
+// Utils
+import { convertISO8601DateToYYYYMMDD } from "@/utils/TimeParser";
 import { isNullUndefinedOrEmpty } from "@/utils/Validator";
+import { getSession } from "@/utils/AuthHelper";
 
 
 const Style: { [key: string]: React.CSSProperties } = {
     container: {
         marginTop: "1em",
+        marginBottom: "1em",
         display: "flex",
         // @ts-expect-error: This is valid and still works
         flexDirection: "var(--profileColumnsLayout)",
@@ -30,24 +33,27 @@ export default async function Page() {
 
     const session = await getSession();
     const userData = session.user;
-    console.log("userData", userData);
+    // console.log("userData", userData);
 
     const YYYYMMDD = convertISO8601DateToYYYYMMDD(userData.dob);
     
     return <main style={Style.container}>
-        <PersonalData userData={{
-            username: userData.username,
-            name: userData.name,
-            bname: isNullUndefinedOrEmpty(userData.bname) ? "" : userData.bname,
-            line: userData.line,
-            whatsapp: userData.whatsapp,
-            email: userData.email,
-            phone: userData.phone,
-            country: userData.country,
-            locale: userData.locale,
-            dob: YYYYMMDD
-        }} w={"100%"} h={"800"}></PersonalData>
-        <Dashboard h={800} w={"100%"}
+        <PersonalData w={"100%"} h={"800px"}
+            userData={{
+                profilePicPath: userData.profile_pic_path,
+                username: userData.username,
+                name: userData.name,
+                bname: isNullUndefinedOrEmpty(userData.bname) ? "" : userData.bname,
+                line: userData.line,
+                whatsapp: userData.whatsapp,
+                email: userData.email,
+                phone: userData.phone,
+                country: userData.country,
+                locale: userData.locale,
+                dob: YYYYMMDD
+            }} >
+        </PersonalData>
+        <Dashboard w={"100%"} h={"800px"}
             buttonDatas={[
                 [
                     {
@@ -105,10 +111,10 @@ export default async function Page() {
                         filter: ""
                     },
                     {
-                        imgPath: "/placeholders/wip.png",
-                        btnLabel: "施工中。",
-                        redirectPath: "/",
-                        filter: ""
+                        imgPath: "/icons/dashboard/logout.png",
+                        btnLabel: "登出",
+                        redirectPath: "/logout",
+                        filter: "invert(1)"
                     },
                 ],
             ]}>

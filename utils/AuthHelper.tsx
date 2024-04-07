@@ -37,11 +37,10 @@ export async function getSession() {
     let parsed = null;
     try {
         parsed = await decrypt(session);
-        return parsed;
     } catch (error) {
         console.error("AuthHelper.extendSession failed to decrypt sesson, assume parse = null");
-        return null;
     }
+    return parsed;
 }
 
 export async function extendSession(
@@ -77,4 +76,9 @@ export async function extendSession(
         expires: parsed.expires,
     });
     return res;
-  }
+}
+
+export async function deleteSession(request: NextRequest) {
+    request.cookies.delete("session");
+    return Response.redirect(new URL("/login", request.url));
+}
