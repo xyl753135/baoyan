@@ -1,18 +1,38 @@
 import { NextRequest } from 'next/server'
-import { extendSession } from "@/utils/AuthHelper";
+import { deleteSession, extendSession, getSession } from "@/utils/AuthHelper";
+import { redirect } from 'next/navigation';
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
-    console.log("middleware triggered!");
-    
+    console.log("current URL:", request.url)
     // Get session value
-    if (request.nextUrl.pathname.startsWith('/profile')) {
+    if (request.nextUrl.pathname == ('/profile')) {
+        
         
         // User doesn't have a session. Take them to login instead of profile.
         // Otherwise, renew session.expires value
-        const res = extendSession(request, 60); // If user doesnt have session or fail to parse, fallback to 
-        console.log("Middleware updated session")
+        const res = extendSession(request, 60); // If user doesnt have session or fail to parse, fallback to /login
+        console.log(`middleware triggered: handle /profile visit; extend session;`);
         return res;
+    }
+
+    // User does have a session. Take them to profile instead of login.
+    // if (request.nextUrl.pathname.startsWith('/login')) {
+        
+        
+    //     const session = await getSession();
+    //     if (session != null) {
+    //         const userData = session.user;
+    //         if (userData) {
+    //             return Response.redirect(new URL("/profile", request.url));
+    //         }
+    //     }
+    // }
+
+    if (request.nextUrl.pathname.startsWith('/logout')) {
+        console.log("middleware triggered: handle /logout visit");
+
+        return deleteSession(request);
     }
 
     // const session = request.cookies.get("session")?.value;
