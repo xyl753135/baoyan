@@ -8,10 +8,13 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await getSession();
-  const userData = session.user;
-  if (userData) {
-      redirect("/profile");
+  if (session) {
+    const userData = session.user;
+    if (userData) {
+        redirect("/profile");
+    }
   }
+  
   
   return (
     <>
