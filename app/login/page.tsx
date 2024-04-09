@@ -136,10 +136,12 @@ export default function Page() {
                     flexDirection: "column",
                     marginRight: "2em",
                     justifyContent: "space-around", }}>
-                    <form action={handleSubmit} style={{ 
-                        display: "flex", flexDirection: "column", 
-                        justifyContent: "center", 
-                        alignItems: "space-around" }}>
+                    <form action={handleSubmit} 
+                        style={{ 
+                            display: "flex", 
+                            flexDirection: "column", 
+                            justifyContent: "center", 
+                            alignItems: "space-around" }}>
                         {/* Input username */}
                         <div>
                             <input type="text" placeholder="輸入用戶名"

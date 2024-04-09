@@ -33,7 +33,6 @@ const Style: { [key: string]: React.CSSProperties } = {
     gap: "5px",
     border: "white 1px solid",
     borderRadius: "5px",
-    background: "saddlebrown",
     cursor: "pointer",
     transition: "all 200ms ease-out",
     color: "white"
@@ -47,10 +46,11 @@ type Props = {
     h: number | string,
     w: number | string,
     buttonDatas: Array<Array<{ 
-      imgPath:string, 
-      btnLabel:string, 
-      redirectPath:string, 
-      filter:string }>>,
+      imgPath: string, 
+      btnLabel: string, 
+      redirectPath: string, 
+      filter: string,
+      bgColor: string }>>,
 }
 
 export const Dashboard = ({
@@ -66,6 +66,7 @@ export const Dashboard = ({
         target="_self"
         style={{
           ...Style.btn,
+          background: item.bgColor,
           flexBasis: eachRow.length == 2 ? "40%" : eachRow.length == 1 ? "90%" : "24%",
         }} 
         key={`item-${itemIndex}`}

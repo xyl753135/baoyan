@@ -1,7 +1,9 @@
-'use client'
+'use server'
 
 import { Centerpiece } from "@/components/Centerpiece";
 import { MantraApp } from "@/components/MantraApp/MantraApp"
+import { getSession } from "@/utils/AuthHelper";
+import { redirect } from "next/navigation";
 
 const Style: { [key: string]: React.CSSProperties } = {
   main: {
@@ -11,11 +13,16 @@ const Style: { [key: string]: React.CSSProperties } = {
   },
 };
 
-export default function Home() {
+export default async function Page() {
+  const session = await getSession();
+  if (!session) {
+    redirect("/login");
+  }
+  let userData = session.user;
 
   return (
     <main style={Style.main}>
-      <MantraApp ></MantraApp>
+      <MantraApp username={String(userData.username)} showTransfer={true} showMemberCount={true} memberCount={0}></MantraApp>
       <div style={{
         display: "var(--applicationsMantraShurVisibility)"
       }}>

@@ -19,7 +19,7 @@
   --navbarHamburgerBarDiagonal: calc((var(--navbarHamburgerBarWidth) * 0.98));
   --navbarHamburgerBarHeight: calc((55px - (var(--navbarHamburgerBarGap) * 2)) / 3);
   --navbarHamburgerAnimation: 200ms ease-in-out;
-
+  --flexDirectionRWD: row;
 }
 
 @media (prefers-color-scheme: light) {
@@ -53,6 +53,7 @@
     --navbarHamburgerDisplay: flex;
     --profileColumnsLayout: column;
     --applicationsMantraShurVisibility: none;
+    --flexDirectionRWD: column;
   }
   /* .content {
     padding: 4rem;

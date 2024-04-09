@@ -1,6 +1,6 @@
+'use client'
 
-import { isNullUndefinedOrEmpty } from "@/utils/Validator";
-import { redirect } from "next/navigation";
+import { Dispatch, SetStateAction } from "react";
 
 const Style: { [key: string]: React.CSSProperties } = {
     container: {
@@ -37,7 +37,7 @@ const Style: { [key: string]: React.CSSProperties } = {
     },
     inputMerit: {
         padding: "0.2em",
-        fontSize: "18px", 
+        fontSize: "18px",
         fontWeight: "bold",
         height: "150px",
         width: "100%",
@@ -55,56 +55,44 @@ const Style: { [key: string]: React.CSSProperties } = {
         borderRadius: "5px",
         padding: "2px",
         color: "white"
+    },
+    disabledBtn: {
+        width: "100%",
+        fontSize: "24px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-around",
+        fontWeight: "bold",
+        background: "grey",
+        border: "white 1px solid",
+        borderRadius: "5px",
+        padding: "2px",
+        color: "white"
     }
 };
 
 type Props = {
-    username: string,
-    source: string,
-    yyyymmdd: string,
+    meritId: string,
+    meritText: string,
+    setMeritText: Dispatch<SetStateAction<string>>,
+    handleSubmit: string | ((formData: FormData) => void) | undefined,
+    disabledEditForm: boolean
 }
 
-export function MantraTransferOfMerit({
-    username,
-    source,
-    yyyymmdd,
+export function SubmitTransferOfMerit({
+    meritId,
+    meritText,
+    setMeritText,
+    handleSubmit,
+    disabledEditForm
 }: Props) {
 
-    async function handleSubmit(formData: FormData) {
-        
-        // Get form data
-        const text = formData.get("meritText");
-        
-        // Check if bad data
-        if(!isNullUndefinedOrEmpty(text)) {
-            try {
-                // Save to DB
-                let createdRows = 0;
-                await fetch('/api/transfer-of-merit/create', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        username: username,
-                        source: source,
-                        yyyymmdd: yyyymmdd,
-                        text: text,
-                    })
-                }).then(response => {
-                    return response.json();
-                }).then(data => { 
-                    createdRows = data.updatedRows;
-                });
-                console.log("createdRows", createdRows);
-            } catch (error) {
-                console.error(error);
-            }
-            // Redirect
-            redirect("/profile");
-        }   
-    }
 
     return (
-        <div style={Style.container}>
+
+        <div style={{
+            ...Style.container,
+        }}>
             {/* 回向 Transferance of Merit */}
             <section style={Style.col}>
                 <fieldset style={Style.config}>
@@ -112,33 +100,38 @@ export function MantraTransferOfMerit({
                         回向
                     </legend>
                     {
-                        true? // Expandible to add hide/show
-                            <form action={handleSubmit} 
+                        true ? // Expandible to add hide/show
+                            <form action={handleSubmit}
                                 style={{
-                                    display: "flex", 
+                                    display: "flex",
                                     flexDirection: "column",
                                     justifyContent: "center",
                                     alignItems: "space-around",
-                                    gap: "0.5em"}}>
-                                {/* Input merit username */}
+                                    gap: "0.5em"
+                                }}>
+                                {/* Input (hidden) id */}
                                 <input type="text"
-                                    name="meritUsername" id="meritUsername" 
-                                    defaultValue={username}
+                                    name="meritId" id="meritId" defaultValue={meritId}
                                     readOnly hidden />
-                                {/* Input merit text */}
-                                <textarea 
+                                {/* Input text */}
+                                <textarea
                                     style={Style.inputMerit}
-                                    name="meritText" id="meritText" 
-                                    maxLength={150}></textarea>
-                                <button type="submit" 
-                                    style={Style.submitBtn}>
+                                    name="meritText" id="meritText"
+                                    maxLength={150}
+                                    disabled={disabledEditForm ? true : false}
+                                    autoFocus={disabledEditForm ? false : true}
+                                    value={meritText}
+                                    onChange={(event) => setMeritText(event.target.value)}></textarea>
+                                <button type="submit"
+                                    disabled={disabledEditForm ? true : false}
+                                    style={disabledEditForm ? Style.disabledBtn : Style.submitBtn }>
                                     送出
                                 </button>
                             </form>
-                        :
-                        <></>
+                            :
+                            <></>
                     }
-                    
+
                 </fieldset>
             </section>
         </div>

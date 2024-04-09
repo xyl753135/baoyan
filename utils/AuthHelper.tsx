@@ -50,7 +50,8 @@ export async function extendSession(
     const session = request.cookies.get("session")?.value;
     if (!session) {
         // Redirect to fallback url
-        console.log("No session found, returning to fallback URL /login")
+        request.cookies.delete("session");
+        console.log("AuthHelper.extendSession(): No session found, returning to fallback URL /login");
         return Response.redirect(new URL("/login", request.url));
     }
     
@@ -62,7 +63,7 @@ export async function extendSession(
         // Delete invalid session
         request.cookies.delete("session");
         // Redirect to fallback url
-        console.error("AuthHelper.extendSession failed to decrypt sesson, assume parse = null, returning to fallback URL /login");
+        console.error("AuthHelper.extendSession(): Failed to decrypt sesson, assume parse = null, returning to fallback URL /login");
         return Response.redirect(new URL("/login", request.url));
     }
 

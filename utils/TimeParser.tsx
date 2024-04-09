@@ -6,7 +6,7 @@
  */
 export function convertISO8601DateToYYYYMMDD(iso8601date : string) {
     const date = new Date(iso8601date);
-    const YYYYMMDD = `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2, '0')}-${String(date.getDay()).padStart(2, '0')}`
+    const YYYYMMDD = `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2, '0')}-${String(date.getDay()+1).padStart(2, '0')}`
     return YYYYMMDD;
 }
 

@@ -1,3 +1,5 @@
+'use client'
+
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
@@ -71,8 +73,20 @@ const Style: { [key: string]: React.CSSProperties } = {
     }
 };
 
-export function MantraApp() {
+export function MantraApp({
+    showTransfer = false,
+    showMemberCount: showMemberCountProp = false,
+    memberCount: memberCountProp = 0,
+    username
+}: Props) {
 
+    // const values
+    const todayDate = new Date(Date.now());
+    const yyyy = todayDate.getFullYear();
+    const mm = String(todayDate.getMonth() + 1).padStart(2, "0");
+    const dd = String(todayDate.getDate()).padStart(2, "0");
+    const date = `${yyyy}-${mm}-${dd}`;
+    
     // useState
     const [showManual, setShowManual] = useState<boolean>(false);
     const [showSkip, setShowSkip] = useState<boolean>(true);
@@ -81,6 +95,7 @@ export function MantraApp() {
     const [sfxPath, setSfxPath] = useState<string>("/mantraWheel/audio/shurangama.mp3");
     const [lrcPath, setLrcPath] = useState<string>("/mantraWheel/lyrics/shurangama.lrc");
     const [localCount, setLocalCount] = useState<number>(0);
+    const [memberCount, setMemberCount] = useState<number>(memberCountProp);
     const [globalCount, setGlobalCount] = useState<number>(0);
 
     // useRef
@@ -102,8 +117,6 @@ export function MantraApp() {
     useEffect(() => {
         subtitles.current = parseLRCFile(lrcPath);
     }, [lrcPath]);
-
-    
 
     useEffect(() => {
         sfx.current = new Audio(sfxPath);
@@ -168,12 +181,12 @@ export function MantraApp() {
     return (
         <div style={Style.container}>
             <h3 style={{ 
-                marginTop: "1em", marginBottom: "0.5em", 
+                marginBottom: "0.5em", 
                 textAlign: "center", 
                 fontSize: "30px" }}>
                 大佛頂首楞嚴神咒
             </h3>
-            {/* Manual, Config sections */}
+            {/* Manual, Config, App, Transfer, Statistics sections */}
             <div style={Style.col}>
                 {/* Manual section */}
                 <section >
@@ -287,6 +300,8 @@ export function MantraApp() {
                                 wheelSize={320}
                                 localCount={localCount}
                                 setLocalCount={setLocalCount}
+                                memberCount={memberCount}
+                                setMemberCount={setMemberCount}
                                 globalCount={globalCount}
                                 setGlobalCount={setGlobalCount}></MantraPlayer>
                             :
@@ -295,16 +310,29 @@ export function MantraApp() {
                         
                     </div>
                 </section>
-                {/* 回向 Transferance of Merit */}
-                <MantraTransferOfMerit></MantraTransferOfMerit>
+                {/* 回向 Transfer of Merit */}
+                {
+                    showTransfer ? 
+                    <MantraTransferOfMerit 
+                        username={username} 
+                        source={`持誦楞嚴神咒 ${localCount}次`} 
+                        yyyymmdd={date}></MantraTransferOfMerit>
+                    :
+                    <></>
+                }
                 {/* Statistics */}
-                <MantraCounter localCount={localCount} showMemberCount={false} memberCount={0} globalCount={globalCount}></MantraCounter>
+                <MantraCounter localCount={localCount} showMemberCount={showMemberCountProp} memberCount={memberCount} globalCount={globalCount}></MantraCounter>
             </div>
         </div>
     );
 };
 
-
+type Props = {
+    showTransfer?: boolean,
+    showMemberCount?: boolean,
+    memberCount?: number,
+    username: string
+}
 
 
 

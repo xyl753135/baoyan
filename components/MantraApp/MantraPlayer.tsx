@@ -31,9 +31,11 @@ type Props = {
   audio: HTMLAudioElement,
   subtitles: LRCContent,
   wheelSize: number,
-  localCount: number
+  localCount: number,
   setLocalCount: Function,
-  globalCount: number
+  memberCount: number,
+  setMemberCount: Function,
+  globalCount: number,
   setGlobalCount: Function,
 }
 
@@ -45,6 +47,8 @@ export const MantraPlayer = ({
   wheelSize,
   localCount,
   setLocalCount,
+  memberCount,
+  setMemberCount,
   globalCount,
   setGlobalCount
 }: Props) => {
@@ -80,6 +84,7 @@ export const MantraPlayer = ({
             const json = await resp.json();
             console.log("fetch returned result: ", json.result.rows);
             console.log("update ui to display new global count:", json.result.rows[0].count);  
+            // setMemberCount(Number(json.result.rows[0].count));
             setGlobalCount(Number(json.result.rows[0].count));
           } else {
             console.error("status", resp.status, "statusText", resp.statusText);
@@ -90,6 +95,10 @@ export const MantraPlayer = ({
           console.error("MantraPlayer useEffect threw error:", error);
         }
       })();
+
+
+
+      
     }
   });
 

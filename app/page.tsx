@@ -1,51 +1,107 @@
-'use client'
+'use server'
 
 import Image from "next/image";
 // import styles from "./page.module.css";
 import LineAddFriendQR from "@/public/lineAddFriendQR.png"
 
-import { Video } from "@/components/Video"
-import { Centerpiece } from "@/components/Centerpiece";
 import { MantraApp } from "@/components/MantraApp/MantraApp"
-import { GeolocationAPI } from "@/components/GeolocationAPI";
 
-import { useEffect, useState } from "react";
+
+import { MeritCardRandomWrapper } from "@/components/TransferOfMerit/MeritCardRandomWrapper";
 
 
 const Style: { [key: string]: React.CSSProperties } = {
   main: {
     display: "flex",
-    flexDirection: "column",
-    // justifyContent: "center",
-    alignItems: "center",
-    // width: "100%",
+    justifyContent: "space-around",
   },
-  videoContainer: {
+  column: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "1em",
+    minWidth: "350px",
+    
+    // border: "2px black dashed"
+  },
+  colHeader: {
+    fontSize: "30px",
+  }, 
+  MeritCardRandomWrappers: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-around",
+    flexWrap: "wrap",
+    gap: "1em",
+  },
+};
+
+export default async function Home() {
+
+  return (
+    <main style={
+      {
+        ...Style.main,
+        // @ts-expect-error
+        flexDirection: "var(--flexDirectionRWD)",
+      }}>
+      <section>
+        <MantraApp></MantraApp>
+      </section>
+
+      <section>
+        <div style={Style.column}>
+          <section style={{ display: "flex", gap: "1em" }}>
+            <h3 style={Style.colHeader}>最新回向</h3>
+            <button>更新</button>
+          </section>
+          {/* Most-recent Merit cards */}
+          <section style={Style.MeritCardRandomWrappers}>
+            <MeritCardRandomWrapper
+              width={"350px"} height={"200px"}
+              author={"BestNun123"}
+              timestamp={"2024-01-01"}
+              meritSource="持誦楞嚴神咒 1次"
+              text={"Hello world, This is 40 characters! ♥♥♥♥"}>
+            </MeritCardRandomWrapper>
+            <MeritCardRandomWrapper
+              width={"350px"} height={"200px"}
+              author={"一二三四五六七八九十超級長用戶名的使用者範例..."}
+              timestamp={"2024-01-20"}
+              meritSource="持誦楞嚴神咒 7次"
+              text={"一二三四五六七八九十一二三四五這是二十字"}>
+            </MeritCardRandomWrapper>
+            <MeritCardRandomWrapper
+              width={"350px"} height={"200px"}
+              author={"寫滿了150字的大哥"}
+              timestamp={"2024-03-13"}
+              meritSource="持誦楞嚴神咒 10次"
+              text={`一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十
+                  一二三四五六七八九十一二三四五六七八九十
+                  一二三四五六七八九十一二三四五六七八九十
+                  一二三四五六七八九十一二三四五六七八九十
+                  一二三四五六七八九十一二三四五六七八九十
+                  一二三四五六七八九十一二三四五六七八九十
+                  一二三四五六七八九十一二三這是一百五十字`}>
+            </MeritCardRandomWrapper>
+            <MeritCardRandomWrapper
+              width={"350px"} height={"200px"}
+              author={"法德"}
+              timestamp={"2024-01-20"}
+              meritSource="持誦楞嚴神咒 4次"
+              text={"Segne den Schöpfer und sein Wasser. Segne das Kommen und Gehen von Ihm. Möge sein Durchgang die Welt reinigen. Möge Er die Welt für Sein Volk bewahren"}>
+            </MeritCardRandomWrapper>
+          </section>
+        </div>
+      </section>
+
+
+
+      {/* <div style={{
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-  },
-  videoSlogan: {
-    fontSize: "2em",
-    color: "white",
-    margin: "0.5em",
-  },
-  qrcode: {
-    display: "flex",
-    border: "pink 2px solid"
-  }
-};
-
-export default function Home() {
-
-  return (
-    <main style={Style.main}>
-        <Image src={"/placeholders/wip.png"} alt={"Work in Progress"} width={300} height={300}></Image>
-        <h1>以下部分為施工中</h1>
-      {/* <Centerpiece h={400} w={400*0.32} altText={"寶嚴山寶嚴禪寺"} link={"/centerpiece.png"}></Centerpiece> */}
-
-      {/* <div style={Style.videoContainer}>
+  }}>
         <Video 
           h={"auto"} 
           w={(0.609448 * screenWidth + 145.576).toString()} 
@@ -54,18 +110,29 @@ export default function Home() {
           link={"/meditationhall.mp4"}
           captions={{ lang: "zh-hant", src: "" }}>        
         </Video>
-        <h3 style={Style.videoSlogan}>聽風 聽海 聽自心</h3>
-        <h3 style={Style.videoSlogan}>觀山 觀海 觀自在</h3>
+        <h3 style={{
+    fontSize: "2em",
+    color: "white",
+    margin: "0.5em",
+  }}>聽風 聽海 聽自心</h3>
+        <h3 style={{
+    fontSize: "2em",
+    color: "white",
+    margin: "0.5em",
+  }}>觀山 觀海 觀自在</h3>
       </div> */}
 
 
-      {/* <MantraApp ></MantraApp> */}
+
 
 
 
       {/* <GeolocationAPI></GeolocationAPI> */}
 
-      {/* <div style={Style.qrcode}>
+      {/* <div style={{
+    display: "flex",
+    border: "pink 2px solid"
+  }}>
         <Image src={LineAddFriendQR} alt={"Scan QR Code (https://line.me/R/ti/p/@185tteka?from=page&accountId=185tteka) to Add Friend on LINE"}></Image>
         <p>
         Add LINE Friends via QR Code
