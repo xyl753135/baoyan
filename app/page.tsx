@@ -45,7 +45,7 @@ export default async function Home() {
         flexDirection: "var(--flexDirectionRWD)",
       }}>
       <section>
-        <MantraApp></MantraApp>
+        <MantraApp username={"guest"}></MantraApp>
       </section>
 
       <section>

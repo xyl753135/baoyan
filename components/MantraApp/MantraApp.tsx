@@ -73,6 +73,13 @@ const Style: { [key: string]: React.CSSProperties } = {
     }
 };
 
+type Props = {
+    showTransfer?: boolean,
+    showMemberCount?: boolean,
+    memberCount?: number,
+    username: string
+}
+
 export function MantraApp({
     showTransfer = false,
     showMemberCount: showMemberCountProp = false,
@@ -326,13 +333,6 @@ export function MantraApp({
         </div>
     );
 };
-
-type Props = {
-    showTransfer?: boolean,
-    showMemberCount?: boolean,
-    memberCount?: number,
-    username: string
-}
 
 
 
