@@ -40,16 +40,16 @@ export default async function Page() {
     return <main style={Style.container}>
         <PersonalData w={"100%"} h={"800px"}
             userData={{
-                profilePicPath: userData.profile_pic_path,
-                username: userData.username,
-                name: userData.name,
+                profilePicPath: isNullUndefinedOrEmpty(userData.profile_pic_path) ? "" : userData.profile_pic_path,
+                username: isNullUndefinedOrEmpty(userData.username) ? "" : userData.username,
+                name: isNullUndefinedOrEmpty(userData.name) ? "" : userData.name,
                 bname: isNullUndefinedOrEmpty(userData.bname) ? "" : userData.bname,
-                line: userData.line,
-                whatsapp: userData.whatsapp,
-                email: userData.email,
-                phone: userData.phone,
-                country: userData.country,
-                locale: userData.locale,
+                line: isNullUndefinedOrEmpty(userData.line) ? "" : userData.line,
+                whatsapp: isNullUndefinedOrEmpty(userData.whatsapp) ? "" : userData.whatsapp,
+                email: isNullUndefinedOrEmpty(userData.email) ? "" : userData.email,
+                phone: isNullUndefinedOrEmpty(userData.phone) ? "" : userData.phone,
+                country: isNullUndefinedOrEmpty(userData.country) ? "" : userData.country,
+                locale: isNullUndefinedOrEmpty(userData.locale) ? "" : userData.locale,
                 dob: YYYYMMDD
             }} >
         </PersonalData>
