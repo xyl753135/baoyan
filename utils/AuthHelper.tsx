@@ -80,6 +80,6 @@ export async function extendSession(
 }
 
 export async function deleteSession(request: NextRequest) {
-    request.cookies.delete("session");
+    cookies().set("session", "", { expires: new Date(0) });
     return Response.redirect(new URL("/login", request.url));
 }
