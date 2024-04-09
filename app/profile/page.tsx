@@ -54,75 +54,52 @@ export default async function Page() {
             }} >
         </PersonalData>
         <Dashboard w={"100%"} h={"800px"}
-        buttonDatas={[
-            [
-                {
-                    imgPath: "/icons/dashboard/mantrawheel.png",
-                    btnLabel: "大佛頂首楞嚴神咒",
-                    redirectPath: "/applications/mantra-shurangama",
-                    filter: "invert(1)",
-                    bgColor: "#8b4513"
-                },
-                {
-                    imgPath: "/icons/dashboard/transferofmerit.png",
-                    btnLabel: "個人回向",
-                    redirectPath: "/applications/transfer-of-merit",
-                    filter: "invert(1)",
-                    bgColor: "#d14e4e"
-                },
-            ],
-            [
-                // {
-                //     imgPath: "/placeholders/wip.png",
-                //     btnLabel: "施工中。",
-                //     redirectPath: "/",
-                //     filter: ""
-                // },
-                // {
-                //     imgPath: "/placeholders/wip.png",
-                //     btnLabel: "施工中。",
-                //     redirectPath: "/",
-                //     filter: ""
-                // },
-                // {
-                //     imgPath: "/placeholders/wip.png",
-                //     btnLabel: "施工中。",
-                //     redirectPath: "/",
-                //     filter: ""
-                // },
-            ],
-            [
-                // {
-                //     imgPath: "/placeholders/wip.png",
-                //     btnLabel: "施工中。。。",
-                //     redirectPath: "/",
-                //     filter: ""
-                // },
-            ],
-            [],
-            [],
-            [
-                // {
-                //     imgPath: "/placeholders/wip.png",
-                //     btnLabel: "施工中。",
-                //     redirectPath: "/",
-                //     filter: ""
-                // },
-                // {
-                //     imgPath: "/placeholders/wip.png",
-                //     btnLabel: "施工中。",
-                //     redirectPath: "/",
-                //     filter: ""
-                // },
-                {
-                    imgPath: "/icons/dashboard/logout.png",
-                    btnLabel: "登出",
-                    redirectPath: "/logout",
-                    filter: "invert(1)",
-                    bgColor: "#3b3b3b"
-                },
-            ],
-        ]}>
+            buttonDatas={[
+                [
+                    {
+                        imgPath: "/icons/dashboard/mantrawheel.png",
+                        btnLabel: "大佛頂首楞嚴神咒",
+                        redirectPath: "/applications/mantra-shurangama",
+                        filter: "invert(1)",
+                        bgColor: "#8b4513"
+                    },
+                    {
+                        imgPath: "/icons/dashboard/transferofmerit.png",
+                        btnLabel: "個人回向",
+                        redirectPath: "/applications/transfer-of-merit",
+                        filter: "invert(1)",
+                        bgColor: "#d14e4e"
+                    },
+                ],
+                [
+                    // {
+                    //     imgPath: "/placeholders/wip.png",
+                    //     btnLabel: "施工中。",
+                    //     redirectPath: "/",
+                    //     filter: ""
+                    // },
+                    // {
+                    //     imgPath: "/placeholders/wip.png",
+                    //     btnLabel: "施工中。",
+                    //     redirectPath: "/",
+                    //     filter: ""
+                    // },
+                    // {
+                    //     imgPath: "/placeholders/wip.png",
+                    //     btnLabel: "施工中。",
+                    //     redirectPath: "/",
+                    //     filter: ""
+                    // },
+                ],
+                [
+                    // {
+                    //     imgPath: "/placeholders/wip.png",
+                    //     btnLabel: "施工中。。。",
+                    //     redirectPath: "/",
+                    //     filter: ""
+                    // },
+                ],
+            ]}>
         </Dashboard>
 
 

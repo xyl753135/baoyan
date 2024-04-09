@@ -1,6 +1,5 @@
 import { NextRequest } from 'next/server'
-import { deleteSession, extendSession, getSession } from "@/utils/AuthHelper";
-import { redirect } from 'next/navigation';
+import { extendSession } from "@/utils/AuthHelper";
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
@@ -28,12 +27,6 @@ export async function middleware(request: NextRequest) {
     //         }
     //     }
     // }
-
-    if (request.nextUrl.pathname.startsWith('/logout')) {
-        console.log("middleware triggered: handle /logout visit");
-
-        return deleteSession(request);
-    }
 
     // const session = request.cookies.get("session")?.value;
     // if (session == undefined) {

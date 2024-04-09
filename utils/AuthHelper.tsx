@@ -78,8 +78,3 @@ export async function extendSession(
     });
     return res;
 }
-
-export async function deleteSession(request: NextRequest) {
-    cookies().set("session", "", { expires: new Date(0) });
-    return Response.redirect(new URL("/login", request.url));
-}
