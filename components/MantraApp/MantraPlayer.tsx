@@ -1,4 +1,4 @@
-import { MutableRefObject, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from 'next/image'
 // Components
 import { MantraWheel } from "./MantraWheel";
@@ -8,7 +8,6 @@ import overlay_shurangama_glow from "@/public/mantraWheel/images/mantra_text_shu
 import { GenericButton } from "../GenericButton";
 
 import { LRCContent } from "@/types/LRC"
-import { convertTimeToSeconds } from "@/utils/LyricsParser"
 
 function convertTimeToDegree(currentTime : number, totalTime : number) {
   return Math.round((currentTime / totalTime * 360 + Number.EPSILON) * 10000) / 10000;
@@ -70,53 +69,11 @@ export const MantraPlayer = ({
       setIntervalID(null);
       setLocalCount(localCount + 1);
       index.current = 0;
-
-      // Update global count
-
-      const name = audio.src.substring(audio.src.lastIndexOf("/")+1, audio.src.indexOf("."));
-      console.log("MantraPlayer useEffect calling ", `/api/counters/update-counter?app=mantraapp&name=${name}&count=${globalCount + 1}`);
-      (async () => {
-        try {
-          const resp = await fetch(`/api/counters/update-counter?app=mantraapp&name=${name}&count=${globalCount + 1}`, {
-            method: "GET",
-            cache: 'no-store' })
-          if (resp.status == 200) {
-            const json = await resp.json();
-            console.log("fetch returned result: ", json.result.rows);
-            console.log("update ui to display new global count:", json.result.rows[0].count);  
-            // setMemberCount(Number(json.result.rows[0].count));
-            setGlobalCount(Number(json.result.rows[0].count));
-          } else {
-            console.error("status", resp.status, "statusText", resp.statusText);
-              const json = await resp.json();
-              console.log("fetch returned counters: ", json.result.rows)
-          }
-        } catch (error) {
-          console.error("MantraPlayer useEffect threw error:", error);
-        }
-      })();
-
-
-
-      
     }
   });
 
   useEffect(() => {
-    // validate sfx and lrc match
     console.log("Loaded LRC file contents: ", subtitles);
-    // try {
-    //     // check if sfx duration matches metadata length
-    //     // in sss.mmmmmm (6 units for miliseconds)
-    //     const sfxDuration = sfx.duration;  
-    //     // metadata.length is in MM:ss
-    //     const subtitlesDuration = convertTimeToSeconds(subtitles.metadata.length); 
-    //     if (Math.floor(sfxDuration) != Math.floor(subtitlesDuration)) {
-    //       console.error("Warning: LRC file metadata length and SFX duration are mismatched, errors may occur during use.");
-    //     }
-    // } catch (error) {
-    //     alert(error);
-    // }
   }, []);
 
   const handleWheelClick = () => {
@@ -138,10 +95,6 @@ export const MantraPlayer = ({
       setIntervalID(null);
       audio.pause();
     }
-
-    // if (playing === false) {
-    // }
-    // setPlaying(!playing)
   }
 
   const skipToSection = (time: number, newIndex: number) => {
@@ -244,7 +197,6 @@ export const MantraPlayer = ({
           loading={"eager"}
           priority={true}>
         </Image>
-        {/* <MantraWheelCanvas degree={overlayRotationDegree} overlaySrc={overlay.src}></MantraWheelCanvas> */}
       </div>
 
       {/* Mantra Lyrics display */}
