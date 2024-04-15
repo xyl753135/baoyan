@@ -36,6 +36,8 @@ type Props = {
   border: string,
   borderRadius: string,
   background: string,
+  maxWidth?: string,
+  maxHeight?: string,
   minWidth: string,
   minHeight: string,
   labelFontSize: string,
@@ -48,7 +50,9 @@ export const GenericButton = ({
     border,
     borderRadius,
     background,
-    minWidth,
+    maxWidth,
+    maxHeight = "350px",
+    minWidth = "350px",
     minHeight,
     labelFontSize,
 }: Props) => {
@@ -63,7 +67,9 @@ export const GenericButton = ({
         borderRadius:borderRadius,
         background:background,
         minWidth:minWidth,
-        minHeight:minHeight
+        minHeight:minHeight,
+        maxWidth:maxWidth,
+        maxHeight:maxHeight
       }}
       onClick={() => handleClick()}
       // onMouseOver={() => setHovered(true)}

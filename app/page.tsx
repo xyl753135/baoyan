@@ -7,7 +7,7 @@ import LineAddFriendQR from "@/public/lineAddFriendQR.png"
 import { MantraApp } from "@/components/MantraApp/MantraApp"
 
 
-import { MeritCardRandomWrapper } from "@/components/TransferOfMerit/MeritCardRandomWrapper";
+import { MostRecentMerits } from "@/components/TransferOfMerit/MostRecentMerits";
 
 
 const Style: { [key: string]: React.CSSProperties } = {
@@ -37,6 +37,7 @@ const Style: { [key: string]: React.CSSProperties } = {
 
 export default async function Home() {
 
+
   return (
     <main style={
       {
@@ -45,53 +46,14 @@ export default async function Home() {
         flexDirection: "var(--flexDirectionRWD)",
       }}>
       <section>
-        <MantraApp username={"guest"}></MantraApp>
+        <MantraApp username={""}
+          showTransfer={false}
+          showMemberCount={false}
+          memberCount={0}></MantraApp>
       </section>
 
       <section>
-        <div style={Style.column}>
-          <section style={{ display: "flex", gap: "1em" }}>
-            <h3 style={Style.colHeader}>最新回向</h3>
-            <button>更新</button>
-          </section>
-          {/* Most-recent Merit cards */}
-          <section style={Style.MeritCardRandomWrappers}>
-            <MeritCardRandomWrapper
-              width={"350px"} height={"200px"}
-              author={"BestNun123"}
-              timestamp={"2024-01-01"}
-              meritSource="持誦楞嚴神咒 1次"
-              text={"Hello world, This is 40 characters! ♥♥♥♥"}>
-            </MeritCardRandomWrapper>
-            <MeritCardRandomWrapper
-              width={"350px"} height={"200px"}
-              author={"一二三四五六七八九十超級長用戶名的使用者範例..."}
-              timestamp={"2024-01-20"}
-              meritSource="持誦楞嚴神咒 7次"
-              text={"一二三四五六七八九十一二三四五這是二十字"}>
-            </MeritCardRandomWrapper>
-            <MeritCardRandomWrapper
-              width={"350px"} height={"200px"}
-              author={"寫滿了150字的大哥"}
-              timestamp={"2024-03-13"}
-              meritSource="持誦楞嚴神咒 10次"
-              text={`一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十
-                  一二三四五六七八九十一二三四五六七八九十
-                  一二三四五六七八九十一二三四五六七八九十
-                  一二三四五六七八九十一二三四五六七八九十
-                  一二三四五六七八九十一二三四五六七八九十
-                  一二三四五六七八九十一二三四五六七八九十
-                  一二三四五六七八九十一二三這是一百五十字`}>
-            </MeritCardRandomWrapper>
-            <MeritCardRandomWrapper
-              width={"350px"} height={"200px"}
-              author={"法德"}
-              timestamp={"2024-01-20"}
-              meritSource="持誦楞嚴神咒 4次"
-              text={"Segne den Schöpfer und sein Wasser. Segne das Kommen und Gehen von Ihm. Möge sein Durchgang die Welt reinigen. Möge Er die Welt für Sein Volk bewahren"}>
-            </MeritCardRandomWrapper>
-          </section>
-        </div>
+        <MostRecentMerits></MostRecentMerits>
       </section>
 
 

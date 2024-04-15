@@ -142,21 +142,25 @@ export function MantraApp({
         })();
         
         // Get member count data 
-        (async () => {
-            console.log("MantraApp useEffect calling ", `/api/counters/read-counter?app=mantraapp&name=shurangama&username=${username}`);
-            const resp = await fetch(`/api/counters/read-counter?app=mantraapp&name=shurangama&username=${username}`, { method: 'GET' })
-            if (resp.status == 200) {
-                const json = await resp.json();
-                console.log("fetch returned counters: ", json.counters.rows)
-                if (json.counters.rows.length !> 0) {
-                    setMemberCount(Number(json.counters.rows[0].count));
+        if (username == "") {
+            // This is guest version, on homepage, skip member count query
+        } else {
+            (async () => {
+                console.log("MantraApp useEffect calling ", `/api/counters/read-counter?app=mantraapp&name=shurangama&username=${username}`);
+                const resp = await fetch(`/api/counters/read-counter?app=mantraapp&name=shurangama&username=${username}`, { method: 'GET' })
+                if (resp.status == 200) {
+                    const json = await resp.json();
+                    console.log("fetch returned counters: ", json.counters.rows)
+                    if (json.counters.rows.length !> 0) {
+                        setMemberCount(Number(json.counters.rows[0].count));
+                    }
+                } else {
+                    const json = await resp.json();
+                    console.error("status", resp.status, "statusText", resp.statusText)
+                    console.log(`/api/counters/read-counter?app=mantraapp&name=shurangama&username=${username}` + " fetch returned counters: ", json.counters.rows)
                 }
-            } else {
-                const json = await resp.json();
-                console.error("status", resp.status, "statusText", resp.statusText)
-                console.log(`/api/counters/read-counter?app=mantraapp&name=shurangama&username=${username}` + " fetch returned counters: ", json.counters.rows)
-            }
-        })();
+            })();
+        }
     }, []);
 
     return (
