@@ -99,7 +99,7 @@ export function MantraTransferOfMerit({
                 console.error(error);
             }
             // Redirect
-            redirect("/profile");
+            redirect("/dashboard");
         }   
     }
 

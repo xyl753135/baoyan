@@ -11,7 +11,7 @@ export default async function RootLayout({
   if (session) {
     const userData = session.user;
     if (userData) {
-        redirect("/profile");
+        redirect("/dashboard");
     }
   }
   

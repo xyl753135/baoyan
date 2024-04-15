@@ -63,7 +63,7 @@ export default function Page() {
                 });
                 if (response.ok) {
                     console.log("/api/auth/login success");
-                    redirect("/profile");
+                    redirect("/dashboard");
                 } else {
                     console.error("/api/auth/login failed:", response);
                     if (response.status == 401) { // unauthorized， invalid creds
@@ -83,7 +83,7 @@ export default function Page() {
                 });
                 if (response.ok) {
                     console.log("/api/auth/signup success");
-                    redirect("/profile");
+                    redirect("/dashboard");
                 } else {
                     console.error("/api/auth/signup failed:", response);
                     if (response.status == 409) { // Username taken

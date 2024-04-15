@@ -1,7 +1,6 @@
 'use server'
 
 // Components
-import { Dashboard } from "@/components/Profile/Dashboard";
 import { PersonalData } from "@/components/Profile/PersonalData";
 
 // Utils
@@ -27,13 +26,10 @@ const Style: { [key: string]: React.CSSProperties } = {
 };
 
 export default async function Page() {
-    // const [role, setRole] = useState<string>("student");
-    // const [roleError, setRoleError] = useState<string>("");
-    // const [saveError, setSaveError] = useState<string>("");
 
     const session = await getSession();
     const userData = session.user;
-    // console.log("userData", userData);
+    console.log("userData", userData);
 
     const YYYYMMDD = convertISO8601DateToYYYYMMDD(userData.dob);
     
@@ -53,54 +49,6 @@ export default async function Page() {
                 dob: YYYYMMDD
             }} >
         </PersonalData>
-        <Dashboard w={"100%"} h={"800px"}
-            buttonDatas={[
-                [
-                    {
-                        imgPath: "/icons/dashboard/mantrawheel.png",
-                        btnLabel: "大佛頂首楞嚴神咒",
-                        redirectPath: "/applications/mantra-shurangama",
-                        filter: "invert(1)",
-                        bgColor: "#8b4513"
-                    },
-                    {
-                        imgPath: "/icons/dashboard/transferofmerit.png",
-                        btnLabel: "個人回向",
-                        redirectPath: "/applications/transfer-of-merit",
-                        filter: "invert(1)",
-                        bgColor: "#d14e4e"
-                    },
-                ],
-                [
-                    // {
-                    //     imgPath: "/placeholders/wip.png",
-                    //     btnLabel: "施工中。",
-                    //     redirectPath: "/",
-                    //     filter: ""
-                    // },
-                    // {
-                    //     imgPath: "/placeholders/wip.png",
-                    //     btnLabel: "施工中。",
-                    //     redirectPath: "/",
-                    //     filter: ""
-                    // },
-                    // {
-                    //     imgPath: "/placeholders/wip.png",
-                    //     btnLabel: "施工中。",
-                    //     redirectPath: "/",
-                    //     filter: ""
-                    // },
-                ],
-                [
-                    // {
-                    //     imgPath: "/placeholders/wip.png",
-                    //     btnLabel: "施工中。。。",
-                    //     redirectPath: "/",
-                    //     filter: ""
-                    // },
-                ],
-            ]}>
-        </Dashboard>
     </main>
 }
 

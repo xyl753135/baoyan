@@ -25,8 +25,7 @@ export const Logo = ({
             alt={altText} 
             height={h} 
             width={w} 
-            loading={"eager"}
-            priority>
+            loading={"lazy"}>
         </Image>
     </a>
   );
