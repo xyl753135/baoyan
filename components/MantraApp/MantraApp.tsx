@@ -203,7 +203,7 @@ export function MantraApp({
                                 <li style={{ fontSize: "20px" }}>點擊轉經輪或是點擊以下 “完整版” 按鈕來開始[▶]播放神咒</li>
                                 <li style={{ fontSize: "20px" }}>點擊以下其他咖啡色按鈕來跳到神咒的其他會</li>
                                 <li style={{ fontSize: "20px" }}>播放神咒時，可以隨時再次點擊轉經輪來暫停[◼]播放</li>
-                                <li style={{ fontSize: "20px" }}>點擊右上角的使用者按鈕來注冊、登入會員</li>
+                                <li style={{ fontSize: "20px" }}>點擊右上角的使用者按鈕來註冊、登入會員</li>
                                 <li style={{ fontSize: "20px" }}>登入後，使用者可使用 APP (會員版), 會員版有多以下功能：</li>
                                 <ul style={{ marginLeft: "30px" }}>
                                     <li style={{ fontSize: "20px" }}>統計個人累計持咒次數</li>
