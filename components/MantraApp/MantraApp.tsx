@@ -199,16 +199,19 @@ export function MantraApp({
                         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                             <br></br>
                             <h4 style={{ marginBottom: "0.2em", fontSize: "24px" }}>操作指示</h4>
-                            <ol>
-                                <li style={{ fontSize: "20px" }}>設定 APP:</li>
-                                <ol>
-                                    <li style={{ fontSize: "20px" }}>從下拉式選單裏面，選擇神咒</li>
-                                    <li style={{ fontSize: "20px" }}>選擇是否顯示字幕</li>
-                                    <li style={{ fontSize: "20px" }}>點擊 [確認] 按鈕</li>
-                                </ol>
-                                <li style={{ fontSize: "20px" }}>開始[▶], 點擊轉經輪</li>
-                                <li style={{ fontSize: "20px" }}>暫停[◼], 再次點擊轉經輪</li>
-                            </ol>
+                            <ul>
+                                <li style={{ fontSize: "20px" }}>點擊轉經輪或是點擊以下 “完整版” 按鈕來開始[▶]播放神咒</li>
+                                <li style={{ fontSize: "20px" }}>點擊以下其他咖啡色按鈕來跳到神咒的其他會</li>
+                                <li style={{ fontSize: "20px" }}>播放神咒時，可以隨時再次點擊轉經輪來暫停[◼]播放</li>
+                                <li style={{ fontSize: "20px" }}>點擊右上角的使用者按鈕來注冊、登入會員</li>
+                                <li style={{ fontSize: "20px" }}>登入後，使用者可使用 APP (會員版), 會員版有多以下功能：</li>
+                                <ul style={{ marginLeft: "30px" }}>
+                                    <li style={{ fontSize: "20px" }}>統計個人累計持咒次數</li>
+                                    <li style={{ fontSize: "20px" }}>送出個人回向</li>
+                                </ul>
+                                <li style={{ fontSize: "20px" }}>登入後，使用者可操作查詢過去的個人回向</li>
+                                <li style={{ fontSize: "20px" }}>登入後，使用者可跟寳嚴留資料協助公共宣傳</li>
+                            </ul>
                             <br></br>
                         </div>
                         :
