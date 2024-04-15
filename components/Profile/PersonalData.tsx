@@ -151,7 +151,22 @@ export const PersonalData = ({
                 // border: "#233142 2px solid",
                 background: "#455d7a"
         }}>
-            <Image src={userData.profilePicPath} alt={"admin"} width={100} height={100}
+        { 
+            userData.profilePicPath == undefined || userData.profilePicPath == null || userData.profilePicPath == ''?
+            <div style={{
+                    borderRadius: "50%",
+                    background: "#f95959",
+                    border: "black 3px solid",
+                    filter: "invert(1)",
+                    margin: "2em",
+                    width: "100px",
+                    height: "100px"
+                    }}>
+                {/* placeholder for undefined image */}
+            </div>
+            :
+            <Image src={userData.profilePicPath} alt={"admin"} 
+                width={100} height={100}
                 style={{
                     borderRadius: "50%",
                     background: "#f95959",
@@ -159,6 +174,8 @@ export const PersonalData = ({
                     filter: "invert(1)",
                     margin: "2em",
                 }}></Image>
+        }
+            
             <label style={{
                 color:"white",
                 fontSize: "24px"
