@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 
-import { Inter } from "next/font/google";
+// import { Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
 
-const inter = Inter({ subsets: ["latin"] });
+// const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://baoyan.org"),
@@ -74,7 +74,8 @@ export default function RootLayout({
             link: "/news", 
             key: "2",
           },
-        ]}>
+          ]}
+          userSystemLabel="使用者">
         </Navbar>
         <main style={Style.main}>
           {children}

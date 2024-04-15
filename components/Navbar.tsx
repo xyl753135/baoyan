@@ -44,12 +44,14 @@ const Style: { [key: string]: React.CSSProperties } = {
 };
 
 type Props = {
+  userSystemLabel: string,
   buttonDatas: Array<{ label: string, link: string, key: string}>,
 }
 
 
 
 export const Navbar = ({
+  userSystemLabel,
   buttonDatas
 }: Props) => {
   const navbarItems = buttonDatas.map((eachButtonData) => <NavbarButton key={eachButtonData.key} label={eachButtonData.label} link={eachButtonData.link} hoverStyle="dark"></NavbarButton>);
@@ -63,12 +65,8 @@ export const Navbar = ({
       {/* hidden under width 700px*/}
       <nav style={Style.fullMode}>
         {navbarItems}
-        <a href={"/login"}
-          style={{
-            
-          }}
-          target="_self">
-          <Image src={loginIcon} alt={"Sign In"} width={50} height={50} style={Style.signIn}></Image>
+        <a href={"/login"} target="_self">
+          {userSystemLabel}
         </a>
       </nav>
       {/* hidden over width 700px*/}
@@ -76,12 +74,9 @@ export const Navbar = ({
         <Hamburger>
           {hamburgerItems}
         </Hamburger>
-        <a href={"/login"}
-          style={{
-            
-          }}
-          target="_self">
-          <Image src={loginIcon} alt={"Sign In"} width={50} height={50} style={Style.signIn}></Image>
+        {/* Login / Profile */}
+        <a href={"/login"} target="_self">
+          {userSystemLabel}
         </a>
       </nav>
     </div>

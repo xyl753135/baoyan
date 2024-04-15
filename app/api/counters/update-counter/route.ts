@@ -7,13 +7,15 @@ export async function GET(request: Request) {
   const app = searchParams.get('app');
   const name = searchParams.get('name');
   const count = searchParams.get('count');
+  const username = searchParams.get('username');
  
   try {
     if (!app || !name || !count) throw new Error('app, name, and count required');
     await sql`UPDATE Counters 
       SET count = ${count}
       WHERE app = ${app} 
-      AND name = ${name};`;
+      AND name = ${name}
+      AND username = ${username};`;
   } catch (error) {
     return NextResponse.json(
       { 
@@ -28,7 +30,8 @@ export async function GET(request: Request) {
   const result = await sql`SELECT * 
     FROM Counters
     WHERE app = ${app}
-    AND name = ${name};`;
+    AND name = ${name}
+    AND username = ${username};`;
   return NextResponse.json(
     { 
       result 

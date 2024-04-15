@@ -1,7 +1,7 @@
 import { sql } from '@vercel/postgres';
 import { NextResponse } from 'next/server';
 
-// eg. http://localhost:3001/api/counters/read-counter?app=mantraapp&name=shurangama
+// eg. http://localhost:3001/api/transfer-of-merit/
 export async function POST(request: Request) {
     try {
         // Get POST variables
