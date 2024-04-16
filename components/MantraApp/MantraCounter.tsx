@@ -137,7 +137,7 @@ export function MantraCounter({
                     }}>{localCount}</span>
                     
                 
-                    <Image src={ editable? "/icons/save.png" : "/icons/dashboard/pencil.png" } alt={"Edit button"} width={30} height={30}
+                    {/* <Image src={ editable? "/icons/save.png" : "/icons/dashboard/pencil.png" } alt={"Edit button"} width={30} height={30}
                         style={{
                             filter: "invert(1)",
                             // border: "black 1px solid",
@@ -167,34 +167,51 @@ export function MantraCounter({
                                     setEditable(true);
                                 }
                             }
-                        }></Image>
-                {/* <GenericButton
-                    label={"人工輸入"}
-                    handleClick={() => {
-                        alert("wip");
-                        const el = document.getElementById("skip-nav")
-                        if (el) {
-                            el?.focus()
+                        }></Image> */}
+                    <GenericButton
+                        label={ !editable ? "手動輸入次數" : "暫存"}
+                        handleClick={() => {
+                                if (editable) {
+                                    const input  = document.getElementById("editLocalCount");
+                                    if (input) {
+                                        if (input instanceof HTMLInputElement) {
+                                            const value = Number(input.value)
+                                            
+                                            if (value >= 0 && value < 100) {
+                                                setLocalCount(value);
+                                                setEditable(false);
+                                            } else {
+                                                input.value = String(localCount)
+                                                input.focus();
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    setEditable(true);
+                                }
+                            }
                         }
-                    }}
-                    border={"white 1px solid"} borderRadius={"5px"} background={"saddlebrown"}
-                    maxWidth={"300px"} maxHeight={"38px"}
-                    minWidth={""} minHeight={""}
-                    labelFontSize={"16px"}></GenericButton> */}
+                        border={"white 1px solid"} borderRadius={"5px"} background={"saddlebrown"}
+                        maxWidth={"300px"} maxHeight={"38px"}
+                        minWidth={""} minHeight={""}
+                        labelFontSize={"16px"}>
+                        
+                    </GenericButton>
                 
                 
                 </p>
-                {usernameProp != '' ?
-                <div style={{ display: "flex", justifyContent: "space-between"}}>
-                    <p style={Style.statisticsItem}>個人累計持咒次數: {memberCount}</p>
-                </div>
+                {
+                    usernameProp != '' ?
+                    <div style={{ display: "flex", justifyContent: "space-between"}}>
+                        <p style={Style.statisticsItem}>個人累計持咒次數: {memberCount}</p>
+                    </div>
                     :
                     <></>
                 }
                 
                 <p style={Style.statisticsItem}>全球總計持咒次數: {globalCount}</p>
                 <GenericButton
-                    label={"回報"}
+                    label={"送出"}
                     handleClick={() => {
                         if (localCount > 0) {
                             submitIncrements(localCount);
@@ -205,7 +222,8 @@ export function MantraCounter({
                     border={"white 1px solid"} borderRadius={"5px"} background={localCount > 0 ? "saddlebrown" : "grey"}
                     // maxWidth={"80px"} maxHeight={"39px"}
                     minWidth={"300px"} minHeight={"38px"}
-                    labelFontSize={"24px"}></GenericButton>
+                    labelFontSize={"24px"}>    
+                </GenericButton>
 
             </fieldset>
         </section>
