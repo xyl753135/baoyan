@@ -256,7 +256,7 @@ export function MantraApp({
                     <></>
                 }
                 {/* Statistics */}
-                <MantraCounter localCount={localCount} username={username? username : ''} memberCount={memberCount} globalCount={globalCount}></MantraCounter>
+                <MantraCounter localCount={localCount} setLocalCount={setLocalCount} username={username? username : ''} memberCount={memberCount} globalCount={globalCount}></MantraCounter>
             </div>
         </div>
     );
