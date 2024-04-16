@@ -6,7 +6,7 @@ const Style: { [key: string]: React.CSSProperties } = {
         display: "flex",
         flexDirection: "column",
     },
-    config: {
+    counterFieldset: {
         // height: "100%",
         paddingTop: "0.5em",
         paddingBottom: "0.5em",
@@ -55,38 +55,42 @@ export function MantraCounter({
                         })
                     }).then(resp => {
                         if (resp.status != 200) {
-                            console.error("status", resp.status, "statusText", resp.statusText);
+                            throw new Error(`Error code: ${resp.status}, Error message: ${resp.statusText}`);
                         }
                         return resp.json();
                     }).then(json => {
-                        console.log("fetch returned result: ", json.result.rows);
+                        // console.log("fetch incrementing global count returns JSON: ", json.result.rows);
                     });
             } catch (error) {
                 console.error("MantraPlayer useEffect threw error:", error);
             }
             // Update member counter
-            try {
-                await fetch(`/api/counters/increment-counter`,
-                    {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            app: "mantraapp",
-                            name: "shurangama",
-                            count: localCount,
-                            username: usernameProp 
-                        })
-                    }).then(resp => {
-                        if (resp.status != 200) {
-                            console.error("status", resp.status, "statusText", resp.statusText);
-                        }
-                        return resp.json();
-                    }).then(json => {
-                        console.log("fetch returned result: ", json.result.rows);
-                        router.push("/dashboard");
-                    });
-            } catch (error) {
-                console.error("MantraPlayer useEffect threw error:", error);
+            if (usernameProp != '') {
+                try {
+                    await fetch(`/api/counters/increment-counter`,
+                        {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                app: "mantraapp",
+                                name: "shurangama",
+                                count: localCount,
+                                username: usernameProp 
+                            })
+                        }).then(resp => {
+                            if (resp.status != 200) {
+                                throw new Error(`Error code: ${resp.status}, Error message: ${resp.statusText}`);
+                            }
+                            return resp.json();
+                        }).then(json => {
+                            // console.log("fetch incrementing global count returns JSON: ", json.result.rows);
+                            router.push("/dashboard");
+                        });
+                } catch (error) {
+                    console.error("MantraPlayer useEffect threw error:", error);
+                }
+            } else {
+                router.push("/");
             }
         } else {
             // localcount is 0 or less than 0
@@ -97,7 +101,7 @@ export function MantraCounter({
 
     return (
         <section style={{ ...Style.col, ...{ alignItems: "center" } }}>
-            <fieldset style={{ ...Style.config, ...{ paddingBottom: "0.8em" } }}>
+            <fieldset style={{ ...Style.counterFieldset }}>
                 <legend style={{
                     paddingLeft: "0.5em",
                     paddingRight: "0.5em",
@@ -113,8 +117,8 @@ export function MantraCounter({
                     handleClick={() => {
                         alert("wip");
                     }}
-                    border={"white 2px solid"} borderRadius={"5px"} background={"saddlebrown"}
-                    maxWidth={"80px"} maxHeight={"39px"}
+                    border={"white 1px solid"} borderRadius={"5px"} background={"saddlebrown"}
+                    maxWidth={"300px"} maxHeight={"38px"}
                     minWidth={""} minHeight={""}
                     labelFontSize={"16px"}></GenericButton>
                 </div>
@@ -126,11 +130,15 @@ export function MantraCounter({
                 <GenericButton
                     label={"回報"}
                     handleClick={() => {
-                        submitIncrements(localCount);
+                        if (localCount > 0) {
+                            submitIncrements(localCount);
+                        } else {
+                            alert("本次次數為 0, 沒有資料可更新");
+                        }
                     }}
-                    border={"white 2px solid"} borderRadius={"5px"} background={"saddlebrown"}
+                    border={"white 1px solid"} borderRadius={"5px"} background={localCount > 0 ? "saddlebrown" : "grey"}
                     // maxWidth={"80px"} maxHeight={"39px"}
-                    minWidth={""} minHeight={""}
+                    minWidth={"300px"} minHeight={"38px"}
                     labelFontSize={"24px"}></GenericButton>
 
             </fieldset>
