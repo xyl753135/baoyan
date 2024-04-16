@@ -168,37 +168,39 @@ export function MantraCounter({
                                 }
                             }
                         }></Image> */}
-                    <GenericButton
-                        label={ !editable ? "手動輸入次數" : "暫存"}
-                        handleClick={() => {
-                                if (editable) {
-                                    const input  = document.getElementById("editLocalCount");
-                                    if (input) {
-                                        if (input instanceof HTMLInputElement) {
-                                            const value = Number(input.value)
-                                            
-                                            if (value >= 0 && value < 100) {
-                                                setLocalCount(value);
-                                                setEditable(false);
-                                            } else {
-                                                input.value = String(localCount)
-                                                input.focus();
+                    {
+                        usernameProp != '' ?
+                        <GenericButton
+                            label={ !editable ? "手動輸入次數" : "暫存"}
+                            handleClick={() => {
+                                    if (editable) {
+                                        const input  = document.getElementById("editLocalCount");
+                                        if (input) {
+                                            if (input instanceof HTMLInputElement) {
+                                                const value = Number(input.value)
+                                                
+                                                if (value >= 0 && value < 100) {
+                                                    setLocalCount(value);
+                                                    setEditable(false);
+                                                } else {
+                                                    input.value = String(localCount)
+                                                    input.focus();
+                                                }
                                             }
                                         }
+                                    } else {
+                                        setEditable(true);
                                     }
-                                } else {
-                                    setEditable(true);
                                 }
                             }
-                        }
-                        border={"white 1px solid"} borderRadius={"5px"} background={"saddlebrown"}
-                        maxWidth={"300px"} maxHeight={"38px"}
-                        minWidth={""} minHeight={""}
-                        labelFontSize={"16px"}>
-                        
-                    </GenericButton>
-                
-                
+                            border={"white 1px solid"} borderRadius={"5px"} background={"saddlebrown"}
+                            maxWidth={"300px"} maxHeight={"38px"}
+                            minWidth={""} minHeight={""}
+                            labelFontSize={"16px"}>
+                        </GenericButton>
+                            :
+                            <></>
+                    }
                 </p>
                 {
                     usernameProp != '' ?
