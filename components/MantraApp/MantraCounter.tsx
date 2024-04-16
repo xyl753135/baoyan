@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { GenericButton } from "../GenericButton";
 
 const Style: { [key: string]: React.CSSProperties } = {
@@ -37,63 +37,61 @@ export function MantraCounter({
     globalCount = 0,
     username: usernameProp,
 }: Props) {
+    const router = useRouter();
 
-    async function submitCounts(localCount: number, memberCount: number, globalCount: number) {
-        if (localCount == 0) {
-            
+    async function submitIncrements(localCount: number) {
+        if (localCount > 0) {
+            // Update global counter
+            try {
+                await fetch(`/api/counters/increment-counter`,
+                    {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            app: "mantraapp",
+                            name: "shurangama",
+                            count: localCount,
+                            username: '' // reminder, global count has no username
+                        })
+                    }).then(resp => {
+                        if (resp.status != 200) {
+                            console.error("status", resp.status, "statusText", resp.statusText);
+                        }
+                        return resp.json();
+                    }).then(json => {
+                        console.log("fetch returned result: ", json.result.rows);
+                    });
+            } catch (error) {
+                console.error("MantraPlayer useEffect threw error:", error);
+            }
+            // Update member counter
+            try {
+                await fetch(`/api/counters/increment-counter`,
+                    {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            app: "mantraapp",
+                            name: "shurangama",
+                            count: localCount,
+                            username: usernameProp 
+                        })
+                    }).then(resp => {
+                        if (resp.status != 200) {
+                            console.error("status", resp.status, "statusText", resp.statusText);
+                        }
+                        return resp.json();
+                    }).then(json => {
+                        console.log("fetch returned result: ", json.result.rows);
+                        router.push("/dashboard");
+                    });
+            } catch (error) {
+                console.error("MantraPlayer useEffect threw error:", error);
+            }
+        } else {
+            // localcount is 0 or less than 0
+            alert("本次次數為 0, 沒有資料可更新");
         }
-        
-        // Update global counter
-        try {
-            await fetch(`/api/counters/update-counter`,
-                {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        app: "mantraapp",
-                        name: "shurangama",
-                        count: globalCount + localCount,
-                        username: '' // reminder, global count has no username
-                    })
-                }).then(resp => {
-                    if (resp.status != 200) {
-                        console.error("status", resp.status, "statusText", resp.statusText);
-                    }
-                    return resp.json();
-                }).then(json => {
-                    console.log("fetch returned result: ", json.result.rows);
-
-                });
-        } catch (error) {
-            console.error("MantraPlayer useEffect threw error:", error);
-        }
-
-        // Update member counter
-        try {
-            await fetch(`/api/counters/update-counter`,
-                {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        app: "mantraapp",
-                        name: "shurangama",
-                        count: memberCount + localCount,
-                        username: usernameProp 
-                    })
-                }).then(resp => {
-                    if (resp.status != 200) {
-                        console.error("status", resp.status, "statusText", resp.statusText);
-                    }
-                    return resp.json();
-                }).then(json => {
-                    console.log("fetch returned result: ", json.result.rows);
-
-                });
-        } catch (error) {
-            console.error("MantraPlayer useEffect threw error:", error);
-        }
-
-        // TODO
     }
 
 
@@ -128,7 +126,7 @@ export function MantraCounter({
                 <GenericButton
                     label={"回報"}
                     handleClick={() => {
-                        submitCounts(localCount, memberCount, globalCount);
+                        submitIncrements(localCount);
                     }}
                     border={"white 2px solid"} borderRadius={"5px"} background={"saddlebrown"}
                     // maxWidth={"80px"} maxHeight={"39px"}
