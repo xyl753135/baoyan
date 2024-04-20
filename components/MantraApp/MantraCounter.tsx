@@ -24,7 +24,8 @@ const Style: { [key: string]: React.CSSProperties } = {
         paddingLeft: "0.5em",
         paddingBottom: "0.5em",
         display: "flex",
-        alignItems: "center"
+        alignItems: "center",
+        color: "white"
     }
 };
 
@@ -114,7 +115,8 @@ export function MantraCounter({
                     paddingLeft: "0.5em",
                     paddingRight: "0.5em",
                     fontWeight: "bolder",
-                    fontSize: "24px"
+                    fontSize: "24px",
+                    color: "white"
                 }}>統計</legend>
                 <p style={Style.statisticsItem}>本次持咒次數:
                     <input type="number"

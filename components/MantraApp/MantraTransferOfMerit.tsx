@@ -21,7 +21,8 @@ const Style: { [key: string]: React.CSSProperties } = {
         paddingLeft: "0.5em",
         paddingRight: "0.5em",
         fontWeight: "bolder",
-        fontSize: "24px"
+        fontSize: "24px",
+        color: "white"
     },
     config: {
         // height: "100%",

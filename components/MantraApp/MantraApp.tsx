@@ -168,7 +168,9 @@ export function MantraApp({
             <h3 style={{ 
                 marginBottom: "0.5em", 
                 textAlign: "center", 
-                fontSize: "30px" }}>
+                fontSize: "30px",
+                color: "white"
+            }}>
                 大佛頂首楞嚴神咒
             </h3>
             {/* Manual, Config, App, Transfer, Statistics sections */}
@@ -180,7 +182,11 @@ export function MantraApp({
                         marginLeft: "13px",
                         marginRight: showManual ? "13px" : "16px" }}>
                         <div style={{ display: "flex"}}>
-                            <p style={{ cursor: "pointer", verticalAlign: "middle", fontSize: "20px" }} onClick={() => { setShowManual(!showManual); }}>使用手冊</p>
+                            <p style={{
+                                cursor: "pointer", verticalAlign: "middle",
+                                fontSize: "20px",
+                                color: "white"
+                            }} onClick={() => { setShowManual(!showManual); }}>使用手冊</p>
                             <Image width={showManual ? 25 : 22} height={25}
                                 src={showManual ? "/icons/icon_manual_open.png" : "/icons/icon_manual.png"}
                                 alt={"使用手冊"}
@@ -198,7 +204,10 @@ export function MantraApp({
                         showManual ?
                         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                             <br></br>
-                            <h4 style={{ marginBottom: "0.2em", fontSize: "24px" }}>操作指示</h4>
+                                <h4 style={{
+                                    marginBottom: "0.2em",
+                                    fontSize: "24px",
+                                    color: "white" }}>操作指示</h4>
                             <ul>
                                 <li style={{ fontSize: "20px" }}>點擊轉經輪或是點擊以下 “完整版” 按鈕來開始[▶]播放神咒</li>
                                 <li style={{ fontSize: "20px" }}>點擊以下其他咖啡色按鈕來跳到神咒的其他會</li>
