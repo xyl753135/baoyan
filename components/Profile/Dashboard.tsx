@@ -10,7 +10,8 @@ const Style: { [key: string]: React.CSSProperties } = {
     flexDirection: "column",
     justifyContent: "center",
     // border: "red 2px dotted",
-    background: "#455d7a"
+    background: "#455d7a",
+    maxWidth: "700px"
   },
   btnRow: {
     display: "flex",
