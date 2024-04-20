@@ -5,6 +5,8 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
+import { redirect } from "next/navigation"
+import { getSession } from "@/utils/AuthHelper";
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -52,30 +54,34 @@ const Style: { [key: string]: React.CSSProperties } = {
   }
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
 
-  
+  let userData = undefined;
+  const session = await getSession();
+  if (session) {
+    userData = session.user;
+  }
 
   return (
     <html lang="zh-Hant" style={Style.html}>
       <body style={Style.body}>
         <Navbar buttonDatas={[
-          {
-            label: "認識寶嚴", 
-            link: "/about",
-            key: "1",
-          }, 
-          {
-            label: "最新消息", 
-            link: "/news", 
-            key: "2",
-          },
-          ]}
-          userSystemLabel="使用者">
+          // {
+          //   label: "認識寶嚴", 
+          //   link: "/about",
+          //   key: "1",
+          // }, 
+          // {
+          //   label: "最新消息", 
+          //   link: "/news", 
+          //   key: "2",
+          // },
+        ]}
+          userSystemLabel= { session ? userData.username : "登入" }>
         </Navbar>
         <main style={Style.main}>
           {children}

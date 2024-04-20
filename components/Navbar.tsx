@@ -35,11 +35,11 @@ const Style: { [key: string]: React.CSSProperties } = {
     alignItems: "center"
   },
   signIn: {
-    filter:"invert(1)",
     marginLeft: "1em",
-    border: "black 3px solid",
-    borderRadius: "50%",
-    padding: "3px"
+    border: "white 3px solid",
+    borderRadius: "5px",
+    padding: "3px",
+    color: "white"
   }
 };
 
@@ -65,7 +65,7 @@ export const Navbar = ({
       {/* hidden under width 700px*/}
       <nav style={Style.fullMode}>
         {navbarItems}
-        <a href={"/login"} target="_self">
+        <a href={"/login"} target="_self" style={Style.signIn}>
           {userSystemLabel}
         </a>
       </nav>
@@ -75,7 +75,7 @@ export const Navbar = ({
           {hamburgerItems}
         </Hamburger>
         {/* Login / Profile */}
-        <a href={"/login"} target="_self">
+        <a href={"/login"} target="_self" style={Style.signIn}>
           {userSystemLabel}
         </a>
       </nav>
