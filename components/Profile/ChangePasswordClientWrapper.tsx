@@ -124,7 +124,7 @@ export const ChangePasswordClientWrapper = ({
                     if (json.error) {
                         setMsg(json.error);
                     } else {
-                        setMsg("密碼更新成功! 三秒鈡後自動回去使用者個人資料。。。");
+                        setMsg("密碼更新成功! \r\n三秒鈡後自動回去使用者個人資料。。。");
                         setBtnDisable(true);
                         setTimeout(() => {
                             router.push("/profile");
