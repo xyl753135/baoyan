@@ -479,7 +479,8 @@ export const PersonalData = ({
                         background: "saddlebrown",
                         border: "white 1px solid",
                         borderRadius: "5px",
-                        padding: "2px"
+                        padding: "2px",
+                        color: "white"
                     }}>
                     儲存
                 </button>
@@ -493,7 +494,8 @@ export const PersonalData = ({
                         background: "#4863A0",
                         border: "white 1px solid",
                         borderRadius: "5px",
-                        padding: "2px"
+                        padding: "2px",
+                        color: "white"
                     }}
                     onClick={changePassword}>
                     變更密碼
@@ -507,7 +509,8 @@ export const PersonalData = ({
                         background: "#3EA99F",
                         border: "white 1px solid",
                         borderRadius: "5px",
-                        padding: "2px"
+                        padding: "2px",
+                        color: "white"
                     }}
                     onClick={() => {
                         createNotification("授權成功", "使用者授予了显示通知的权限", false);
@@ -523,7 +526,8 @@ export const PersonalData = ({
                         background: "#C24641",
                         border: "white 1px solid",
                         borderRadius: "5px",
-                        padding: "2px"
+                        padding: "2px",
+                        color: "white"
                     }}
                     onClick={() => {
                         alert("wip");
