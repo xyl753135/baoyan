@@ -8,7 +8,7 @@ import { InputGroup } from "@/components/Form/InputGroup";
 import { SelectGroup } from "@/components/Form/SelectGroup";
 
 import { createNotification } from "@/utils/LocalNotificationsHelper"
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 type Props = {
     userData: {
@@ -35,6 +35,7 @@ export const PersonalData = ({
     w,
     h
 }: Props) => {
+    // useState
     const [name, setName] = useState(userData.name);
     const [bname, setBname] = useState(userData.bname);
     const [line, setLine] = useState(userData.line);
@@ -69,9 +70,11 @@ export const PersonalData = ({
         locale: "",
     });
     const [saveError, setSaveError] = useState<string>("");
+    
+    const router = useRouter();
 
     async function savePersonalData(formData: FormData) {
-
+        // Get form inputs
         const usernameHidden = String(formData.get("usernameHidden"));
         const nameInput = String(formData.get("nameInput"));
         const bnameInput = String(formData.get("bnameInput"));
@@ -148,6 +151,11 @@ export const PersonalData = ({
                 }
             }
         }
+    }
+
+
+    function changePassword(): void {
+        router.push("/profile/changePassword")
     }
 
     return (
@@ -462,59 +470,67 @@ export const PersonalData = ({
 
 
                 {/* Form submit */}
-                <button type="submit" style={{
-                    // width: "80px",
-                    fontSize: "24px",
-                    display: "flex", alignItems: "center", justifyContent: "space-around",
-                    fontWeight: "bold",
-                    background: "saddlebrown",
-                    border: "white 1px solid",
-                    borderRadius: "5px",
-                    padding: "2px"
-                }}>
+                <button type="submit"
+                    style={{
+                        // width: "80px",
+                        fontSize: "24px",
+                        display: "flex", alignItems: "center", justifyContent: "space-around",
+                        fontWeight: "bold",
+                        background: "saddlebrown",
+                        border: "white 1px solid",
+                        borderRadius: "5px",
+                        padding: "2px"
+                    }}>
                     儲存
                 </button>
                 {/* Other buttons */}
-                <button style={{
-                    // width: "80px",
-                    fontSize: "24px",
-                    display: "flex", alignItems: "center", justifyContent: "space-around",
-                    fontWeight: "bold",
-                    background: "#3EA99F",
-                    border: "white 1px solid",
-                    borderRadius: "5px",
-                    padding: "2px"}}
-                    onClick={() => createNotification("授權成功", "使用者授予了显示通知的权限", false)}
-                >我想收到網站的通知</button>
-                {/* <button style={{
-            // width: "80px",
-            fontSize: "24px",
-            display: "flex", alignItems: "center", justifyContent: "space-around",
-            fontWeight: "bold",
-            background: "#4863A0",
-            border: "white 1px solid",
-            borderRadius: "5px",
-            padding: "2px"
-          }}>
-            變更密碼
-          </button>
-          <br></br>
-          <button style={{
-            // width: "80px",
-            fontSize: "24px",
-            display: "flex", alignItems: "center", justifyContent: "space-around",
-            fontWeight: "bold",
-            background: "#C24641",
-            border: "white 1px solid",
-            borderRadius: "5px",
-            padding: "2px"
-          }}>刪除賬戶</button> */}
-
+                <button type="button"
+                    style={{
+                        // width: "80px",
+                        fontSize: "24px",
+                        display: "flex", alignItems: "center", justifyContent: "space-around",
+                        fontWeight: "bold",
+                        background: "#4863A0",
+                        border: "white 1px solid",
+                        borderRadius: "5px",
+                        padding: "2px"
+                    }}
+                    onClick={changePassword}>
+                    變更密碼
+                </button>
+                <button type="button"
+                    style={{
+                        // width: "80px",
+                        fontSize: "24px",
+                        display: "flex", alignItems: "center", justifyContent: "space-around",
+                        fontWeight: "bold",
+                        background: "#3EA99F",
+                        border: "white 1px solid",
+                        borderRadius: "5px",
+                        padding: "2px"
+                    }}
+                    onClick={() => {
+                        createNotification("授權成功", "使用者授予了显示通知的权限", false);
+                    }}>
+                    我想收到網站的通知
+                </button>
+                <button type="button"
+                    style={{
+                        // width: "80px",
+                        fontSize: "24px",
+                        display: "flex", alignItems: "center", justifyContent: "space-around",
+                        fontWeight: "bold",
+                        background: "#C24641",
+                        border: "white 1px solid",
+                        borderRadius: "5px",
+                        padding: "2px"
+                    }}
+                    onClick={() => {
+                        alert("wip");
+                    }}>
+                    刪除賬戶
+                </button>
             </form>
-
-
-
-
         </section>
     )
 }

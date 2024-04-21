@@ -32,32 +32,42 @@ export const InputGroup = ({
         <div style={{
             // marginTop:"0.5em", 
             // marginBottom: "0.5em", 
-            display: "block"}}>
-            <label htmlFor={idProp} style={{
-                display: "inline-block",
-                fontSize:"18px",
-                color:"white",
-                fontWeight:"bolder",
-                paddingRight:"0.5em",
-                textAlign: "center"
-            }}>
-                {label}
-            </label>
-            <input type={typeProp}
-                placeholder={placeholder}
-                name={idProp} id={idProp}
-                style={{ 
-                    paddingLeft: "0.1em",
-                    fontSize: "18px", 
-                    fontWeight: "bold",
-                    height: "25px",
-                    float: "right",
-                    width:width}}
-                maxLength={maxLength} 
-                readOnly={readOnlyProp}
-                onChange={changeHandler}
-                value={valueProp} />
-                <p style={{textAlign:"right", color: "rgb(255, 180, 68)"}}>{errorMsg}</p>
+            display: "flex",
+            flexDirection: "column"
+        }}>
+            <div>
+                <label htmlFor={idProp} style={{
+                    display: "inline-block",
+                    fontSize:"18px",
+                    color:"white",
+                    fontWeight:"bolder",
+                    paddingRight:"0.5em",
+                    textAlign: "center"
+                }}>
+                    {label}
+                </label>
+                <input type={typeProp}
+                    placeholder={placeholder}
+                    name={idProp} id={idProp}
+                    style={{ 
+                        paddingLeft: "0.1em",
+                        fontSize: "18px", 
+                        fontWeight: "bold",
+                        height: "25px",
+                        float: "right",
+                        width:width}}
+                    maxLength={maxLength} 
+                    readOnly={readOnlyProp}
+                    onChange={changeHandler}
+                    value={valueProp} />
+            </div>
+            {
+                errorMsg ? 
+                    <span style={{ textAlign: "right", color: "rgb(255, 180, 68)" }}>{errorMsg}</span>
+                    :
+                    <br></br>
+                    
+            }
         </div>
     );
 

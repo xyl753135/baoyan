@@ -34,7 +34,7 @@ export default async function Page() {
     const YYYYMMDD = convertISO8601DateToYYYYMMDD(userData.dob);
     
     return <main style={Style.container}>
-        <PersonalData w={"100%"} h={"800px"}
+        <PersonalData w={"100%"} h={"1000px"}
             userData={{
                 profilePicPath: isNullUndefinedOrEmpty(userData.profile_pic_path) ? "" : userData.profile_pic_path,
                 username: isNullUndefinedOrEmpty(userData.username) ? "" : userData.username,

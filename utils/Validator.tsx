@@ -68,7 +68,7 @@ export function validateUsername(username : string) {
 /**
  * Given a string, check if it is a valid password
  * Return an object with two keys: isValid (bool), message (string)
- * If valid, then isValid is true and message is not empty ("").
+ * If valid, then isValid is true and message is empty ("").
  * @param pw string
  * @returns 
  */
