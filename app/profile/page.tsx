@@ -42,8 +42,10 @@ export default async function Page() {
                 bname: isNullUndefinedOrEmpty(userData.bname) ? "" : userData.bname,
                 line: isNullUndefinedOrEmpty(userData.line) ? "" : userData.line,
                 whatsapp: isNullUndefinedOrEmpty(userData.whatsapp) ? "" : userData.whatsapp,
+                wechat: isNullUndefinedOrEmpty(userData.wechat) ? "" : userData.wechat,
                 email: isNullUndefinedOrEmpty(userData.email) ? "" : userData.email,
                 phone: isNullUndefinedOrEmpty(userData.phone) ? "" : userData.phone,
+                gender: isNullUndefinedOrEmpty(userData.gender) ? "" : userData.gender,
                 country: isNullUndefinedOrEmpty(userData.country) ? "" : userData.country,
                 locale: isNullUndefinedOrEmpty(userData.locale) ? "" : userData.locale,
                 dob: YYYYMMDD

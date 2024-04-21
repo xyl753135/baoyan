@@ -23,6 +23,7 @@ type Props = {
         country: string,
         locale: string,
         dob: string,
+        gender: string,
         profilePicPath: string
     },
     w:string,
@@ -51,6 +52,7 @@ export const PersonalData = ({
         email: string,
         phone: string,
         dob: string,
+        gender: string,
         country: string;
         locale: string;
     }>({
@@ -62,6 +64,7 @@ export const PersonalData = ({
         email: "",
         phone: "",
         dob: "",
+        gender: "",
         country: "",
         locale: "",
     });
@@ -78,6 +81,7 @@ export const PersonalData = ({
         const emailInput = String(formData.get("emailInput"));
         const phoneInput = String(formData.get("phoneInput"));
         const dobInput = String(formData.get("dobInput"));
+        const genderSelect = String(formData.get("genderSelect"));
         const countrySelect = String(formData.get("countrySelect"));
         const localeSelect = String(formData.get("localeSelect"));
         console.log("user submitted ",
@@ -89,6 +93,7 @@ export const PersonalData = ({
             emailInput,
             phoneInput,
             dobInput,
+            genderSelect,
             countrySelect,
             localeSelect
         );
@@ -128,6 +133,7 @@ export const PersonalData = ({
                     emailInput,
                     phoneInput,
                     dobInput,
+                    genderSelect,
                     countrySelect,
                     localeSelect
                  }),
@@ -236,7 +242,7 @@ export const PersonalData = ({
                     errorMsg={errors.wechat}
                     changeHandler={(event) => setWechat(event.target.value)}
                     width={155}
-                    value={name} readOnly={false} label={"WeChat ID"}></InputGroup>
+                    value={wechat} readOnly={false} label={"WeChat ID"}></InputGroup>
                 <InputGroup
                     placeholder={userData.email}
                     id={"emailInput"}
@@ -267,6 +273,24 @@ export const PersonalData = ({
                     }}
                     width={155}
                     value={dob} readOnly={false} label={"出生年月日"}></InputGroup>
+                <SelectGroup
+                    width={155}
+                    errorMsg={errors.gender}
+                    options={[
+                        {
+                            value: "",
+                            label: "請選擇"
+                        },
+                        {
+                            value: "man",
+                            label: "男"
+                        },
+                        {
+                            value: "woman",
+                            label: "女"
+                        },
+                    ]}
+                    label={"性別"} defaultValue={userData.gender} id={"genderSelect"}></SelectGroup>
                 <SelectGroup
                     width={155}
                     errorMsg={errors.country}

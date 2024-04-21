@@ -8,17 +8,18 @@ export async function POST(request: Request) {
   try {
     // Get POST variables
     const { 
-        usernameHidden,
-        nameInput, 
-        bnameInput,
-        lineInput,
-        whatsappInput,
-        wechatInput,
-        emailInput,
-        phoneInput,
-        dobInput,
-        countrySelect,
-        localeSelect
+      usernameHidden,
+      nameInput, 
+      bnameInput,
+      lineInput,
+      whatsappInput,
+      wechatInput,
+      emailInput,
+      phoneInput,
+      dobInput,
+      genderSelect,
+      countrySelect,
+      localeSelect
     } = await request.json();
     
     // Validate variables
@@ -29,18 +30,19 @@ export async function POST(request: Request) {
     
     // Update table
     let updateResult =
-        await sql`UPDATE users
-          SET name = ${nameInput},
-          bname = ${bnameInput},
-          line = ${lineInput},
-          whatsapp = ${whatsappInput},
-          wesapp = ${wechatInput},
-          email = ${emailInput},
-          phone = ${phoneInput},
-          dob = ${dobInput},
-          country = ${countrySelect},
-          locale = ${localeSelect}
-          WHERE username = ${usernameHidden}`;
+      await sql`UPDATE users
+        SET name = ${nameInput},
+        bname = ${bnameInput},
+        line = ${lineInput},
+        whatsapp = ${whatsappInput},
+        wechat = ${wechatInput},
+        email = ${emailInput},
+        phone = ${phoneInput},
+        dob = ${dobInput},
+        gender = ${genderSelect},
+        country = ${countrySelect},
+        locale = ${localeSelect}
+        WHERE username = ${usernameHidden}`;
     console.log(`Updated ${updateResult.rowCount} rows`);
 
     const query =
