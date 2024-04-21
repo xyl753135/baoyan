@@ -17,6 +17,7 @@ type Props = {
         bname: string,
         line: string,
         whatsapp: string,
+        wechat: string,
         email: string,
         phone: string,
         country: string,
@@ -37,6 +38,7 @@ export const PersonalData = ({
     const [bname, setBname] = useState(userData.bname);
     const [line, setLine] = useState(userData.line);
     const [whatsapp, setWhatsapp] = useState(userData.whatsapp);
+    const [wechat, setWechat] = useState(userData.wechat);
     const [email, setEmail] = useState(userData.email);
     const [phone, setPhone] = useState(userData.phone);
     const [dob, setDob] = useState(userData.dob);
@@ -45,6 +47,7 @@ export const PersonalData = ({
         bname: string,
         line: string,
         whatsapp: string,
+        wechat: string,
         email: string,
         phone: string,
         dob: string,
@@ -55,6 +58,7 @@ export const PersonalData = ({
         bname: "",
         line: "",
         whatsapp: "",
+        wechat: "",
         email: "",
         phone: "",
         dob: "",
@@ -70,6 +74,7 @@ export const PersonalData = ({
         const bnameInput = String(formData.get("bnameInput"));
         const lineInput = String(formData.get("lineInput"));
         const whatsappInput = String(formData.get("whatsappInput"));
+        const wechatInput = String(formData.get("wechatInput"));
         const emailInput = String(formData.get("emailInput"));
         const phoneInput = String(formData.get("phoneInput"));
         const dobInput = String(formData.get("dobInput"));
@@ -80,6 +85,7 @@ export const PersonalData = ({
             bnameInput, 
             lineInput,
             whatsappInput,
+            wechatInput,
             emailInput,
             phoneInput,
             dobInput,
@@ -118,6 +124,7 @@ export const PersonalData = ({
                     bnameInput,
                     lineInput,
                     whatsappInput,
+                    wechatInput,
                     emailInput,
                     phoneInput,
                     dobInput,
@@ -222,6 +229,14 @@ export const PersonalData = ({
                     changeHandler={(event) => setWhatsapp(event.target.value)}
                     width={155}
                     value={whatsapp} readOnly={false} label={"WhatsApp ID"}></InputGroup>
+                <InputGroup
+                    placeholder={userData.wechat}
+                    id={"wechatInput"}
+                    maxLength={255}
+                    errorMsg={errors.wechat}
+                    changeHandler={(event) => setWechat(event.target.value)}
+                    width={155}
+                    value={name} readOnly={false} label={"WeChat ID"}></InputGroup>
                 <InputGroup
                     placeholder={userData.email}
                     id={"emailInput"}
@@ -388,7 +403,7 @@ export const PersonalData = ({
                         },
                         {
                             value: "taitung",
-                            label: "屏東縣"
+                            label: "臺東縣"
                         },
                         {
                             value: "hualien",
