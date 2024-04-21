@@ -37,7 +37,7 @@ export default async function Page() {
     console.log("userData", userData);
 
     return <main style={Style.container}>
-        <h1>改變密碼</h1>
+        <h1 style={{color: "white"}}>改變密碼</h1>
         <div style={Style.contents}>
             <Image style={Style.img} src={"/lock.gif"} alt={"Banner"} width={260} height={260}></Image>
             <section>

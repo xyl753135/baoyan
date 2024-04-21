@@ -151,6 +151,7 @@ export const ChangePasswordClientWrapper = ({
             alignItems: "center"
         }}>
             <h2 style={{
+                color: "white",
                 minWidth: "75px",
                 display: "flex", justifyContent: "center", alignItems: "center"
             }}>
