@@ -8,6 +8,7 @@ type Props = {
     id: string,
     maxLength: number,
     errorMsg: string,
+    keepErrorMsgNegativeSpace: boolean,
     readOnly?: boolean,
     width?: number | undefined,
     changeHandler?: ChangeEventHandler<HTMLInputElement> | undefined,
@@ -21,6 +22,7 @@ export const InputGroup = ({
     id: idProp,
     maxLength,
     errorMsg,
+    keepErrorMsgNegativeSpace,
     readOnly: readOnlyProp = false,
     width,
     changeHandler,
@@ -61,13 +63,15 @@ export const InputGroup = ({
                     onChange={changeHandler}
                     value={valueProp} />
             </div>
-            {
-                errorMsg ? 
-                    <span style={{ textAlign: "right", color: "rgb(255, 180, 68)" }}>{errorMsg}</span>
-                    :
-                    <br></br>
-                    
-            }
+            <span style={{ textAlign: "right", color: "rgb(255, 180, 68)" }}>
+                {errorMsg}
+                {
+                    keepErrorMsgNegativeSpace ?
+                        <br></br>
+                        :
+                        <></>
+                }
+            </span>
         </div>
     );
 

@@ -9,6 +9,7 @@ import { SelectGroup } from "@/components/Form/SelectGroup";
 
 import { createNotification } from "@/utils/LocalNotificationsHelper"
 import { useRouter } from "next/navigation";
+// import { validateEmail } from "@/utils/Validator";
 
 type Props = {
     userData: {
@@ -45,8 +46,6 @@ export const PersonalData = ({
     const [phone, setPhone] = useState(userData.phone);
     const [dob, setDob] = useState(userData.dob);
     const [errors, setErrors] = useState<{ 
-        name: string,
-        bname: string,
         line: string,
         whatsapp: string,
         wechat: string,
@@ -57,8 +56,6 @@ export const PersonalData = ({
         country: string;
         locale: string;
     }>({
-        name: "",
-        bname: "",
         line: "",
         whatsapp: "",
         wechat: "",
@@ -119,7 +116,14 @@ export const PersonalData = ({
 
         // Validate form data
         let sendPOST = true;
-        // TODO
+        // const vEmail = validateEmail(emailInput);
+        // if (!vEmail.isValid) {
+        //     setErrors({
+        //         ...errors,
+        //         email: vEmail.message
+        //     });
+        //     sendPOST = false;
+        // }
 
         // Call database
         if (sendPOST) {
@@ -215,7 +219,8 @@ export const PersonalData = ({
                     placeholder={userData.name}
                     id={"nameInput"}
                     maxLength={255}
-                    errorMsg={errors.name}
+                    errorMsg={""}
+                    keepErrorMsgNegativeSpace={false}
                     changeHandler={(event) => setName(event.target.value)}
                     width={155}
                     value={name} readOnly={false} label={"姓名"}></InputGroup>
@@ -223,7 +228,8 @@ export const PersonalData = ({
                     placeholder={userData.bname}
                     id={"bnameInput"}
                     maxLength={30}
-                    errorMsg={errors.bname}
+                    errorMsg={""}
+                    keepErrorMsgNegativeSpace={false}
                     changeHandler={(event) => setBname(event.target.value)}
                     width={155}
                     value={bname} readOnly={false} label={"法名"}></InputGroup>
@@ -231,7 +237,8 @@ export const PersonalData = ({
                     placeholder={userData.line}
                     id={"lineInput"}
                     maxLength={200}
-                    errorMsg={errors.line}
+                    errorMsg={""}
+                    keepErrorMsgNegativeSpace={false}
                     changeHandler={(event) => setLine(event.target.value)}
                     width={155}
                     value={line} readOnly={false} label={"LINE ID"}></InputGroup>
@@ -239,7 +246,8 @@ export const PersonalData = ({
                     placeholder={userData.whatsapp}
                     id={"whatsappInput"}
                     maxLength={200}
-                    errorMsg={errors.whatsapp}
+                    errorMsg={""}
+                    keepErrorMsgNegativeSpace={false}
                     changeHandler={(event) => setWhatsapp(event.target.value)}
                     width={155}
                     value={whatsapp} readOnly={false} label={"WhatsApp ID"}></InputGroup>
@@ -247,7 +255,8 @@ export const PersonalData = ({
                     placeholder={userData.wechat}
                     id={"wechatInput"}
                     maxLength={255}
-                    errorMsg={errors.wechat}
+                    errorMsg={""}
+                    keepErrorMsgNegativeSpace={false}
                     changeHandler={(event) => setWechat(event.target.value)}
                     width={155}
                     value={wechat} readOnly={false} label={"WeChat ID"}></InputGroup>
@@ -257,6 +266,7 @@ export const PersonalData = ({
                     type={"email"}
                     maxLength={255}
                     errorMsg={errors.email}
+                    keepErrorMsgNegativeSpace={false}
                     changeHandler={(event) => setEmail(event.target.value)}
                     width={155}
                     value={email} readOnly={false} label={"電子郵件地址"}></InputGroup>
@@ -266,6 +276,7 @@ export const PersonalData = ({
                     type={"tel"}
                     maxLength={30}
                     errorMsg={errors.phone}
+                    keepErrorMsgNegativeSpace={false}
                     changeHandler={(event) => setPhone(event.target.value)}
                     width={155}
                     value={phone} readOnly={false} label={"手機號碼"}></InputGroup>
@@ -275,9 +286,9 @@ export const PersonalData = ({
                     type={"date"}
                     maxLength={30}
                     errorMsg={errors.dob}
+                    keepErrorMsgNegativeSpace={false}
                     changeHandler={(event) => {
                         setDob(event.target.value);
-                        // console.log(event.target.value)
                     }}
                     width={155}
                     value={dob} readOnly={false} label={"出生年月日"}></InputGroup>
@@ -532,7 +543,7 @@ export const PersonalData = ({
                     onClick={() => {
                         alert("wip");
                     }}>
-                    刪除賬戶
+                    刪除帳戶
                 </button>
             </form>
         </section>

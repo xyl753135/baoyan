@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { InputGroup } from "../Form/InputGroup";
+import { InputGroup } from "@/components/Form/InputGroup";
 
 import { validatePassword } from "../../utils/Validator";
 import { useRouter } from "next/navigation";
@@ -70,6 +70,7 @@ export const ChangePasswordClientWrapper = ({
     // useState
     // const [username, setUsername] = useState(userData.username);
     const [pw, setPw] = useState("");
+    const [reenterPw, setReenterPw] = useState("");
     const [pwDisable, setPwDisable] = useState(false);
     const [btnDisable, setBtnDisable] = useState(false);
     const [step, setStep] = useState(1);
@@ -105,10 +106,20 @@ export const ChangePasswordClientWrapper = ({
 
     async function save(formData: FormData) {
         const pw = String(formData.get("pwInput"));
-        const checkedResult = validatePassword(pw);
-        if (!checkedResult.isValid) {
-            setMsg(checkedResult.message); 
-        } else {
+        const reenterPw = String(formData.get("reenterPwInput"));
+
+        const checkedPwResult = validatePassword(pw);
+
+        let sendPOST = true;
+        if (pw != reenterPw) {
+            setMsg("兩個密碼不一樣");
+            sendPOST = false;
+        }
+        if (!checkedPwResult.isValid) {
+            setMsg(checkedPwResult.message);
+            sendPOST = false;
+        }
+        if (sendPOST) {
             if (!btnDisable) {
                 const response = await fetch('/api/profile/change-password', {
                     method: 'POST',
@@ -118,14 +129,15 @@ export const ChangePasswordClientWrapper = ({
                         password: pw,
                     }),
                 }).then((response) => {
-                    console.log(response.status, response.statusText);
+                    // console.log(response.status, response.statusText);
                     return response.json();
                 }).then((json) => {
                     if (json.error) {
                         setMsg(json.error);
                     } else {
-                        setMsg("密碼更新成功! \r\n三秒鈡後自動回去使用者個人資料。。。");
+                        setMsg("密碼更新成功! 三秒鈡後自動回去個人資料。");
                         setBtnDisable(true);
+                        setPwDisable(true);
                         setTimeout(() => {
                             router.push("/profile");
                         }, 3000);
@@ -177,7 +189,8 @@ export const ChangePasswordClientWrapper = ({
                             id={"pwInput"}
                             value={pw}
                             changeHandler={(event) => { setPw(event.target.value) }}
-                            errorMsg={msg}
+                            errorMsg={""}
+                            keepErrorMsgNegativeSpace={false}
                             maxLength={255}
                             width={155}
                             readOnly={pwDisable ? true : false} label={"目前密碼"}>
@@ -185,14 +198,16 @@ export const ChangePasswordClientWrapper = ({
 
                         {/* msg */}
                         {
-                            // msg != "" ?
-                                // <div style={Style.msg}>
-                                //     {msg}
-                                // </div>
-                                // :
-                                // <div>
-                                //     <br></br>
-                                // </div>
+                            msg != "" ?
+                                <div style={Style.msg}>
+                                    {msg}<br />
+                                    <br />
+                                </div>
+                                :
+                                <div>
+                                    <br />
+                                    <br />
+                                </div>
                         }
 
                         {/* bottom buttons */}
@@ -217,9 +232,11 @@ export const ChangePasswordClientWrapper = ({
                 step == 2 ?
                     <form action={save}
                         style={Style.form}>
+                        
                         <p style={Style.instructions}>
                             請輸入新密碼。
                         </p>
+
                         {/* username (hidden) */}
                         <input type="text"
                             name="usernameHidden" id="usernameHidden"
@@ -231,22 +248,38 @@ export const ChangePasswordClientWrapper = ({
                             id={"pwInput"}
                             value={pw}
                             changeHandler={(event) => { setPw(event.target.value) }}
-                            errorMsg={msg}
+                            errorMsg={""}
+                            keepErrorMsgNegativeSpace={false}
                             maxLength={255}
                             width={155}
                             readOnly={pwDisable ? true : false} label={"新密碼"}>
                         </InputGroup>
 
+                        {/* Re-enter password */}
+                        <InputGroup
+                            placeholder={""}
+                            id={"reenterPwInput"}
+                            value={reenterPw}
+                            changeHandler={(event) => { setReenterPw(event.target.value) }}
+                            errorMsg={""}
+                            keepErrorMsgNegativeSpace={false}
+                            maxLength={255}
+                            width={155}
+                            readOnly={pwDisable ? true : false} label={"重新輸入"}>
+                        </InputGroup>
+
                         {/* msg */}
                         {
-                            // msg != "" ?
-                            //     <div style={Style.msg}>
-                            //         {msg}
-                            //     </div>
-                            //     :
-                            //     <div>
-                            //         <br></br>
-                            //     </div>
+                            msg != "" ?
+                                <div style={Style.msg}>
+                                    {msg}<br />
+                                    <br />
+                                </div>
+                                :
+                                <div>
+                                    <br />
+                                    <br />
+                                </div>
                         }
 
                         {/* bottom buttons */}

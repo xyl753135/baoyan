@@ -34,13 +34,6 @@ export default async function Page() {
             buttonDatas={[
                 [
                     {
-                        imgPath: "/icons/dashboard/pencil.png",
-                        btnLabel: "個人基本資料",
-                        redirectPath: "/profile",
-                        filter: "invert(1)",
-                        bgColor: "rgb(50, 140, 110)"
-                    },
-                    {
                         imgPath: "/icons/dashboard/mantrawheel.png",
                         btnLabel: "大佛頂首楞嚴神咒",
                         redirectPath: "/applications/mantra-shurangama",
@@ -53,24 +46,32 @@ export default async function Page() {
                         redirectPath: "/applications/transfer-of-merit",
                         filter: "invert(1)",
                         bgColor: "#d14e4e"
+                    }, 
+                ],
+                [
+                    {
+                        imgPath: "/icons/dashboard/pencil.png",
+                        btnLabel: "個人基本資料",
+                        redirectPath: "/profile",
+                        filter: "invert(1)",
+                        bgColor: "rgb(50, 140, 110)"
                     },
-                ]
-                ,[
-                    
-                    // {
-                    //     imgPath: "/icons/dashboard/mantrawheel.png",
-                    //     btnLabel: "大佛頂首楞嚴神咒",
-                    //     redirectPath: "/applications/mantra-shurangama",
-                    //     filter: "invert(1)",
-                    //     bgColor: "#8b4513"
-                    // },
-                    // {
-                    //     imgPath: "/icons/dashboard/transferofmerit.png",
-                    //     btnLabel: "個人回向查詢修改",
-                    //     redirectPath: "/applications/transfer-of-merit",
-                    //     filter: "invert(1)",
-                    //     bgColor: "#d14e4e"
-                    // },
+                ],
+                [
+                    {
+                        imgPath: "/icons/dashboard/trophy.png",
+                        btnLabel: "Achievements",
+                        redirectPath: "/achievements/user",
+                        filter: "invert(1)",
+                        bgColor: "#005792"
+                    },
+                    {
+                        imgPath: "/icons/dashboard/leaderboard.png",
+                        btnLabel: "排行榜 Leaderboard",
+                        redirectPath: "/achievements/leaderboard",
+                        filter: "invert(1)",
+                        bgColor: "#e8751a"
+                    },
                 ],
             ]}>
         </Dashboard>
