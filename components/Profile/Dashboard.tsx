@@ -9,13 +9,13 @@ const Style: { [key: string]: React.CSSProperties } = {
     flexDirection: "column",
     justifyContent: "center",
     gap: "20px",
-    border: "white 2px solid",
-    borderRadius: "5px",
+    // border: "white 2px solid",
+    // borderRadius: "5px",
     // background: "#455d7a",
     maxWidth: "700px",
 
-    paddingLeft: "20px",
-    paddingRight: "20px",
+    paddingLeft: "10px",
+    paddingRight: "10px",
   },
   btnRow: {
     display: "flex",
