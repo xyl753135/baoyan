@@ -67,7 +67,7 @@ export default async function Page() {
                     },
                     {
                         imgPath: "/icons/dashboard/leaderboard.png",
-                        btnLabel: "排行榜 Leaderboard",
+                        btnLabel: "排行榜",
                         redirectPath: "/achievements/leaderboard",
                         filter: "invert(1)",
                         bgColor: "#e8751a"
