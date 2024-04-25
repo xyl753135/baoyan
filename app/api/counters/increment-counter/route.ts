@@ -1,14 +1,14 @@
 import { sql } from '@vercel/postgres';
 import { NextResponse } from 'next/server';
 
-// eg. http://localhost:3001/api/counters/update-counter?app=mantraapp&name=shurangama&count=2
+// eg. http://localhost:3001/api/counters/increment-counter
 export async function POST(request: Request) {
   const { app, name, count, username } = await request.json();
 
   // Validate params
   try {
-    if (!app || !name || !count) {
-      throw new Error('app, name, and count required');
+    if (!app || !name || count == undefined || count == null) {
+      throw new Error(`api/counters/increment-counter: app, name, and count required - received ${app}, ${name}, ${count}`);
     }
   } catch (error) {
     return NextResponse.json(

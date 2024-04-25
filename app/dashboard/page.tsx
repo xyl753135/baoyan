@@ -14,8 +14,6 @@ const Style: { [key: string]: React.CSSProperties } = {
         display: "flex",
         // @ts-expect-error: This is valid and still works
         flexDirection: "var(--profileColumnsLayout)",
-        // flexBasis: "600px",
-        // flexGrow: "1",
         justifyContent: "space-around"
     },
     inputGroup: {
@@ -42,12 +40,21 @@ export default async function Page() {
                         filter: "invert(1)",
                         bgColor: "#8b4513"
                     },
+                ],
+                [
                     {
                         imgPath: "/icons/dashboard/transferofmerit.png",
                         btnLabel: "個人回向查詢修改",
                         redirectPath: "/applications/transfer-of-merit",
                         filter: "invert(1)",
                         bgColor: "#d14e4e"
+                    },
+                    {
+                        imgPath: "/icons/dashboard/counter.png",
+                        btnLabel: "個人總計查詢修改",
+                        redirectPath: "/applications/counters",
+                        filter: "invert(1)",
+                        bgColor: "rgb(50, 140, 110)"
                     },
                 ],
                 [
@@ -56,7 +63,7 @@ export default async function Page() {
                         btnLabel: "個人基本資料",
                         redirectPath: "/profile",
                         filter: "invert(1)",
-                        bgColor: "rgb(50, 140, 110)"
+                        bgColor: "purple"
                     },
                 ],
                 [
