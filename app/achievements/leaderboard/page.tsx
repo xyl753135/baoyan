@@ -82,7 +82,10 @@ const Style: { [key: string]: React.CSSProperties } = {
     },
     rowLeft: {
         display: "flex",
-        gap: "20px"
+        gap: "20px",
+    },
+    rowRight: {
+        color: "white"
     },
     medal: {
         
@@ -123,14 +126,14 @@ export default function Page() {
 
             {/* tab body 1 */}
             <section style={{ ...Style.tabBody, display: activeTab == 1 ? "flex" : "none"}}>
-                <h2>大佛頂首楞嚴神咒 次數排行榜</h2>
+                <h2 style={{color: "white"}}>大佛頂首楞嚴神咒 次數排行榜</h2>
                 
                 {/* First 5 places */}
                 <div style={Style.row}>
                     <div style={Style.rowLeft}>
                         <Image src={"/icons/leaderboard/firstPlace.png"} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
                         <Image src={"/icons/role_user_m.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
-                        <p>omgitskuei</p>
+                        <p style={{color: "white"}}>omgitskuei</p>
                     </div>
                     <div style={Style.rowRight}>
                         49 次
@@ -140,7 +143,7 @@ export default function Page() {
                     <div style={Style.rowLeft}>
                         <Image src={"/icons/leaderboard/secondPlace.png"} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
                         <Image src={"/icons/role_user_f.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
-                        <p>Rachel</p>
+                        <p style={{color: "white"}}>Rachel</p>
                     </div>
                     <div style={Style.rowRight}>
                         42 次
@@ -150,7 +153,7 @@ export default function Page() {
                     <div style={Style.rowLeft}>
                         <Image src={"/icons/leaderboard/thirdPlace.png"} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
                         <Image src={"/icons/role_user_m.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
-                        <p>Vincent</p>
+                        <p style={{color: "white"}}>Vincent</p>
                     </div>
                     <div style={Style.rowRight}>
                         38 次
@@ -160,7 +163,7 @@ export default function Page() {
                     <div style={Style.rowLeft}>
                         <Image src={"/icons/leaderboard/fourthPlace.png"} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
                         <Image src={"/icons/role_user_m.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
-                        <p>查理王</p>
+                        <p style={{color: "white"}}>查理王</p>
                     </div>
                     <div style={Style.rowRight}>
                         32 次
@@ -170,7 +173,7 @@ export default function Page() {
                     <div style={Style.rowLeft}>
                         <Image src={"/icons/leaderboard/fifthPlace.png"} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
                         <Image src={"/icons/role_user_f.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
-                        <p>釋星曦</p>
+                        <p style={{color: "white"}}>釋星曦</p>
                     </div>
                     <div style={Style.rowRight}>
                         22 次
@@ -182,7 +185,7 @@ export default function Page() {
                     <div style={Style.rowLeft}>
                         <Image src={"/icons/leaderboard/medal.png"} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
                         <Image src={"/icons/role_user_m.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
-                        <p>user1</p>
+                        <p style={{color: "white"}}>user1</p>
                     </div>
                     <div style={Style.rowRight}>
                         21 次
@@ -192,7 +195,7 @@ export default function Page() {
                     <div style={Style.rowLeft}>
                         <Image src={"/icons/leaderboard/medal.png"} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
                         <Image src={"/icons/role_user_m.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
-                        <p>user2</p>
+                        <p style={{color: "white"}}>user2</p>
                     </div>
                     <div style={Style.rowRight}>
                         19 次
@@ -202,7 +205,7 @@ export default function Page() {
                     <div style={Style.rowLeft}>
                         <Image src={"/icons/leaderboard/medal.png"} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
                         <Image src={"/icons/role_user_m.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
-                        <p>user3</p>
+                        <p style={{color: "white"}}>user3</p>
                     </div>
                     <div style={Style.rowRight}>
                         11 次
@@ -212,7 +215,7 @@ export default function Page() {
                     <div style={Style.rowLeft}>
                         <Image src={"/icons/leaderboard/medal.png"} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
                         <Image src={"/icons/role_user_m.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
-                        <p>user4</p>
+                        <p style={{color: "white"}}>user4</p>
                     </div>
                     <div style={Style.rowRight}>
                         8 次
@@ -222,7 +225,7 @@ export default function Page() {
                     <div style={Style.rowLeft}>
                         <Image src={"/icons/leaderboard/medal.png"} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
                         <Image src={"/icons/role_user_m.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
-                        <p>user5</p>
+                        <p style={{color: "white"}}>user5</p>
                     </div>
                     <div style={Style.rowRight}>
                         3 次
