@@ -28,9 +28,11 @@ export default async function Page() {
     const session = await getSession();
     const userData = session.user;
     console.log("userData", userData);
-    
+
     return <main style={Style.container}>
+        
         <Dashboard w={"100%"} h={"800px"}
+            userData={userData}
             buttonDatas={[
                 [
                     {
@@ -46,7 +48,7 @@ export default async function Page() {
                         redirectPath: "/applications/transfer-of-merit",
                         filter: "invert(1)",
                         bgColor: "#d14e4e"
-                    }, 
+                    },
                 ],
                 [
                     {
@@ -60,7 +62,7 @@ export default async function Page() {
                 [
                     {
                         imgPath: "/icons/dashboard/trophy.png",
-                        btnLabel: "Achievements",
+                        btnLabel: "成就",
                         redirectPath: "/achievements/user",
                         filter: "invert(1)",
                         bgColor: "#005792"

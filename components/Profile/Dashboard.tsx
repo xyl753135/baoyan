@@ -1,7 +1,8 @@
 'use client'
 
 import Image from "next/image";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import { Modal } from "../Modals/Modal";
 
 const Style: { [key: string]: React.CSSProperties } = {
   container: {
@@ -22,7 +23,7 @@ const Style: { [key: string]: React.CSSProperties } = {
     justifyContent: "space-around",
     gap: "20px",
 
-    
+
   },
   btn: {
     width: "140px",
@@ -51,6 +52,7 @@ const Style: { [key: string]: React.CSSProperties } = {
 type Props = {
   h: number | string,
   w: number | string,
+  userData: any,
   buttonDatas: Array<Array<{
     imgPath: string,
     btnLabel: string,
@@ -63,8 +65,11 @@ type Props = {
 export const Dashboard = ({
   h,
   w,
+  userData,
   buttonDatas,
 }: Props) => {
+
+  const router = useRouter();
 
   const items = buttonDatas.map((eachRow, rowIndex) => (
     <div style={Style.btnRow} key={`row-${rowIndex}`}>
@@ -102,9 +107,24 @@ export const Dashboard = ({
 
   return (
     <section style={{ height: h, width: w, ...Style.container }}>
+      {
+        userData.email == "" || userData.email == undefined || userData.email == null ?
+          <Modal showCloseBtn={true}
+            title={"警告"} body={"目前帳號沒要電子郵件地址，如果忘記密碼系統會無法協助找回帳號"}
+            showBtnLeft={true} btnLeftLabel={"立即處理"} btnLeftOnClick={() => {
+              router.push("/profile");
+            }}
+            showBtnRight={false} btnRightLabel={"暫時不處理"} btnRightOnClick={() => {
+              console.log('clicked!');
+            }}>
+          </Modal>
+          :
+          <></>
+      }
+
       {items}
       <div >
-        <form 
+        <form
           style={Style.btnRow}
           action={save}>
           <button
