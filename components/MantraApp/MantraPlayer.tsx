@@ -202,7 +202,7 @@ export const MantraPlayer = ({
       {/* Mantra Lyrics display */}
       {
         showSubtitles ?
-          <section style={{fontSize: "19px", textAlign: "center"}}>
+          <section style={{fontSize: "19px", textAlign: "center", color: "rgb(60, 60, 30)", marginTop: "10px", fontWeight: "bolder"}}>
             {subtitle}
           </section> :
           <></>
