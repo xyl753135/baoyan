@@ -39,7 +39,8 @@ const Style: { [key: string]: React.CSSProperties } = {
     border: "white 3px solid",
     borderRadius: "5px",
     padding: "3px",
-    color: "white"
+    color: "white",
+    fontSize: "21px"
   }
 };
 
@@ -64,16 +65,16 @@ export const Navbar = ({
     <div style={Style.rightColumn}>
       {/* hidden under width 700px*/}
       <nav style={Style.fullMode}>
-        {navbarItems}
+        {/* {navbarItems} */}
         <a href={"/login"} target="_self" style={Style.signIn}>
           {userSystemLabel}
         </a>
       </nav>
       {/* hidden over width 700px*/}
       <nav style={Style.hamburgerMode}>
-        <Hamburger>
+        {/* <Hamburger>
           {hamburgerItems}
-        </Hamburger>
+        </Hamburger> */}
         {/* Login / Profile */}
         <a href={"/login"} target="_self" style={Style.signIn}>
           {userSystemLabel}

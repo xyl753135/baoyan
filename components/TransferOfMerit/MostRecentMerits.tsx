@@ -33,6 +33,7 @@ const Style: { [key: string]: React.CSSProperties } = {
     },
     colHeader: {
         fontSize: "30px",
+        color: "white"
     }, 
     MeritCardRandomWrappers: {
         display: "flex",
