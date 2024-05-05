@@ -1,10 +1,8 @@
-'use client'
+'use server'
 
-import Image, { StaticImageData } from "next/image";
+import { getSession } from "@/utils/AuthHelper";
 
-import expand from "@/public/icons/expand.png"
-
-import { useState } from "react";
+import { AchievementsUserClientWrapper } from "@/components/Achievements/User/AchievementsUserClientWrapper";
 
 const Style: { [key: string]: React.CSSProperties } = {
     container: {
@@ -13,28 +11,13 @@ const Style: { [key: string]: React.CSSProperties } = {
     }
 };
 
-export default function Page() {
-
-
-
+export default async function Page() {
+    const session = await getSession();
+    const userData = session.user;
+   
     return (
         <main style={Style.container}>
-            <h1>Achievements</h1>
-            {/*  */}
-            <section>
-                <h2>Watchlist</h2>
-                
-            </section>
-            {/*  */}
-            <section>
-                <h2>All Achievements</h2>
-                
-            </section>
-            {/*  */}
-            <section>
-                <h2></h2>
-                
-            </section>
+            <AchievementsUserClientWrapper username={ userData.username }></AchievementsUserClientWrapper>
         </main>
     );
 }
