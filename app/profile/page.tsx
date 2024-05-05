@@ -1,7 +1,7 @@
 'use server'
 
 // Components
-import { PersonalData } from "@/components/Profile/PersonalData";
+import { PersonalDataClientWrapper } from "@/components/Profile/PersonalData";
 
 // Utils
 import { convertISO8601DateToYYYYMMDD } from "@/utils/TimeParser";
@@ -34,7 +34,7 @@ export default async function Page() {
     const YYYYMMDD = convertISO8601DateToYYYYMMDD(userData.dob);
     
     return <main style={Style.container}>
-        <PersonalData w={"100%"} h={"1000px"}
+        <PersonalDataClientWrapper w={"100%"} h={"1000px"}
             userData={{
                 profilePicPath: isNullUndefinedOrEmpty(userData.profile_pic_path) ? "" : userData.profile_pic_path,
                 username: isNullUndefinedOrEmpty(userData.username) ? "" : userData.username,
@@ -50,7 +50,7 @@ export default async function Page() {
                 locale: isNullUndefinedOrEmpty(userData.locale) ? "" : userData.locale,
                 dob: YYYYMMDD
             }} >
-        </PersonalData>
+        </PersonalDataClientWrapper>
     </main>
 }
 

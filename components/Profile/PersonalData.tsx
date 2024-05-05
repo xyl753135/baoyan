@@ -6,6 +6,7 @@ import Image from "next/image";
 
 import { InputGroup } from "@/components/Form/InputGroup";
 import { SelectGroup } from "@/components/Form/SelectGroup";
+import { Modal } from "@/components/Modals/Modal";
 
 import { createNotification } from "@/utils/LocalNotificationsHelper"
 import { useRouter } from "next/navigation";
@@ -31,12 +32,13 @@ type Props = {
     h:string
 }
 
-export const PersonalData = ({
+export const PersonalDataClientWrapper = ({
     userData,
     w,
     h
 }: Props) => {
     // useState
+    const [username, setUsername] = useState(userData.username);
     const [name, setName] = useState(userData.name);
     const [bname, setBname] = useState(userData.bname);
     const [line, setLine] = useState(userData.line);
@@ -45,6 +47,7 @@ export const PersonalData = ({
     const [email, setEmail] = useState(userData.email);
     const [phone, setPhone] = useState(userData.phone);
     const [dob, setDob] = useState(userData.dob);
+    const [saveError, setSaveError] = useState<string>("");
     const [errors, setErrors] = useState<{ 
         line: string,
         whatsapp: string,
@@ -66,7 +69,8 @@ export const PersonalData = ({
         country: "",
         locale: "",
     });
-    const [saveError, setSaveError] = useState<string>("");
+    const [allBtnDisabled, setAllBtnDisabled] = useState<boolean>(false);
+    const [showModal, setShowModal] = useState<boolean>(false);
     
     const router = useRouter();
 
@@ -84,19 +88,19 @@ export const PersonalData = ({
         const genderSelect = String(formData.get("genderSelect"));
         const countrySelect = String(formData.get("countrySelect"));
         const localeSelect = String(formData.get("localeSelect"));
-        console.log("user submitted ",
-            nameInput, 
-            bnameInput, 
-            lineInput,
-            whatsappInput,
-            wechatInput,
-            emailInput,
-            phoneInput,
-            dobInput,
-            genderSelect,
-            countrySelect,
-            localeSelect
-        );
+        // console.log("user submitted ",
+        //     nameInput, 
+        //     bnameInput, 
+        //     lineInput,
+        //     whatsappInput,
+        //     wechatInput,
+        //     emailInput,
+        //     phoneInput,
+        //     dobInput,
+        //     genderSelect,
+        //     countrySelect,
+        //     localeSelect
+        // );
         createNotification(
             "使用者儲存了個人資料", 
             // [
@@ -157,6 +161,28 @@ export const PersonalData = ({
         }
     }
 
+    async function handleDelete() {
+        const response = await fetch('/api/profile/delete-user', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                usernameInput: username,
+             }),
+        }).then((resp) => {
+            if (resp.status == 200) {
+                setSaveError("刪除賬號成功, 稍後自動回登入");
+                setAllBtnDisabled(true);
+                setTimeout(() => {
+                    router.push("/login");
+                }, 3000);
+            }
+
+            return resp.json();
+        }).then((json) => {
+            console.log("json", json);
+            
+        });
+    }
 
     function changePassword(): void {
         router.push("/profile/changePassword")
@@ -491,8 +517,9 @@ export const PersonalData = ({
                         border: "white 1px solid",
                         borderRadius: "5px",
                         padding: "2px",
-                        color: "white"
-                    }}>
+                        color: "white",
+                    }}
+                    disabled={allBtnDisabled}>
                     儲存
                 </button>
                 {/* Other buttons */}
@@ -508,7 +535,8 @@ export const PersonalData = ({
                         padding: "2px",
                         color: "white"
                     }}
-                    onClick={changePassword}>
+                    onClick={changePassword}
+                    disabled={allBtnDisabled}>
                     變更密碼
                 </button>
                 <button type="button"
@@ -525,7 +553,8 @@ export const PersonalData = ({
                     }}
                     onClick={() => {
                         createNotification("授權成功", "使用者授予了显示通知的权限", false);
-                    }}>
+                    }}
+                    disabled={allBtnDisabled}>
                     我想收到網站的通知
                 </button>
                 <button type="button"
@@ -540,11 +569,21 @@ export const PersonalData = ({
                         padding: "2px",
                         color: "white"
                     }}
-                    onClick={() => {
-                        alert("wip");
-                    }}>
+                    onClick={() => setShowModal(true)}
+                    disabled={allBtnDisabled}>
                     刪除帳戶
                 </button>
+                {
+                    showModal ?
+                        <Modal
+                            showCloseBtn={false}
+                            title={"警告"} body={"請使用者確認是否要進行刪除帳號。如果以後想找回帳號得透過客服專綫來辦理帳號還原，但還原也無法找回以前的個人持咒次數。"}
+                            showBtnLeft={true} btnLeftLabel={"進行刪除"} btnLeftOnClick={handleDelete}
+                            showBtnRight={true} btnRightLabel={"取消刪除"} btnRightOnClick={() => { setShowModal(false); }}>
+                        </Modal>
+                        :
+                        <></>
+                }
             </form>
         </section>
     )

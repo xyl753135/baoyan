@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { redirect } from "next/navigation"
+import { useRouter } from "next/navigation"
 
 import { validateUsername, validatePassword } from "@/utils/Validator";
 
@@ -26,6 +26,8 @@ export default function Page() {
 
     // useState - track value
     const [username, setUsername] = useState<string>("");
+
+    const router = useRouter();
 
     /**
      * Form submit to /app/api/auth/login or /app/api/auth/signup
@@ -60,50 +62,54 @@ export default function Page() {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ usernameInput, pwInput }), // TODO JWT sign it
-                });
-                if (response.ok) {
-                    console.log("/api/auth/login success");
-                    redirect("/dashboard");
-                } else {
-                    console.error("/api/auth/login failed:", response);
-                    if (response.status == 401) { // unauthorized， invalid creds
-                        setAuthError("用户名或密码不正确");
-                    } else if (response.status == 500) { // Internal Server Error
-                        setAuthError("無法處理, 通知工程師");
+                }).then(response => {
+                    if (response.status == 200) {
+                        console.log("/api/auth/login success");
+                        router.push("/dashboard");
                     } else {
-                        setAuthError("無法處理, 通知工程師");
+                        console.error("/api/auth/login failed:", response);
+                        if (response.status == 401) { // unauthorized， invalid creds
+                            setAuthError("用户名或密码不正确");
+                        } else if (response.status == 500) { // Internal Server Error
+                            setAuthError("無法處理, 通知工程師");
+                        } else {
+                            setAuthError("無法處理, 通知工程師");
+                        }
                     }
-                }
+                });
             } else {
                 // Sign Up
-                const response = await fetch('/api/auth/signup', {
+                await fetch('/api/auth/signup', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ usernameInput, pwInput }),
-                });
-                if (response.ok) {
-                    console.log("/api/auth/signup success");
-                    redirect("/dashboard");
-                } else {
-                    console.error("/api/auth/signup failed:", response);
-                    if (response.status == 409) { // Username taken
-                        setAuthError("此用戶名已被註冊");
-                    } else if (response.status == 400) { // Params missing
-                        setAuthError("不可少必要參數");
-                    } else if (response.status == 500) { // Internal Server Error
-                        setAuthError("無法處理, 通知工程師");
-                    } else if (response.status == 401) { // Unauthorized
-                        setAuthError("無權限, 通知客服");
-                    }else {
-                        setAuthError("無法處理, 通知工程師");
+                }).then(response => {
+                    if (response.status == 200) {
+                        console.log("/api/auth/signup success");
+                        setAuthError("註冊成功, 請點選“前往登入”")
+                    } else {
+                        console.error("/api/auth/signup failed:", response);
+                        if (response.status == 409) { // Username taken
+                            setAuthError("此用戶名已被註冊");
+                        } else if (response.status == 400) { // Params missing
+                            setAuthError("不可少必要參數");
+                        } else if (response.status == 500) { // Internal Server Error
+                            setAuthError("無法處理, 通知工程師");
+                        } else if (response.status == 401) { // Unauthorized
+                            setAuthError("無權限, 通知客服");
+                        }else {
+                            setAuthError("無法處理, 通知工程師");
+                        }
                     }
-                }
+                });
+                
             }
         }
     }
 
     function handleReset() {
-        alert("請打寳嚴客服專綫 (07) 522-4676, \r\n或寫信到寳嚴客服電子郵件 yuandaochanmonastery@gmail.com");
+        
+        router.push("/login/recover-password");
     }
 
     return (
