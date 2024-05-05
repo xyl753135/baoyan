@@ -1,13 +1,16 @@
-'use client'
+'use server'
 
+import { sql } from "@vercel/postgres";
 import Image from "next/image";
 
-import { useState } from "react";
 
 const Style: { [key: string]: React.CSSProperties } = {
     container: {
         display: "flex",
         flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: "20px"
     },
     tabs: {
         display: "flex",
@@ -66,7 +69,7 @@ const Style: { [key: string]: React.CSSProperties } = {
     tabBody: {
         background: "#222831",
         border: "white 1px solid",
-        
+
         padding: "10px",
 
         minWidth: "350px",
@@ -88,7 +91,7 @@ const Style: { [key: string]: React.CSSProperties } = {
         color: "white"
     },
     medal: {
-        
+
     },
     avatar: {
         borderRadius: "50%",
@@ -97,146 +100,159 @@ const Style: { [key: string]: React.CSSProperties } = {
     }
 };
 
-export default function Page() {
+export default async function Page() {
 
-    const [activeTab, setActiveTab] = useState(1);
+    // const [activeTab, setActiveTab] = useState(1);
 
+    const orderedCounters = await sql`SELECT * 
+            FROM Counters 
+            WHERE app = 'mantraapp'
+            AND name = 'shurangama'
+            ORDER BY CAST(count AS Numeric(10,0)) desc;`;
+    const counters = orderedCounters.rows.slice(1);
+    console.log(counters);
+
+    let top5 = counters.slice(0, 5);
+    let after5 = counters.slice(5);
 
     return (
         <main style={Style.container}>
-            <br />
-            <h1>排行榜</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas iste quo perferendis voluptas quod, impedit, tenetur accusamus eum facere nam ipsum eos ipsam dicta tempora provident fugit. Dolorum, similique aperiam!</p>
-            <br />
-            {/* Tabs */}
-            <section style={Style.tabs}>
-                <div>
-                    <button type="button" style={activeTab == 1? Style.tabActive : Style.tab} onClick={() => setActiveTab(1)}>
-                        <Image src={"/icons/dashboard/mantrawheel.png"} alt={"Tab 1"} width={45} height={45} style={Style.tabImg}></Image>
-                        <span style={Style.tabLabel}>持咒 APP</span>
-                    </button>
-                </div>
-                <div>
-                    <button type="button" style={activeTab == 2? Style.tabActive : Style.tab} onClick={() => setActiveTab(2)}>
-                        <Image src={"/icons/expand.png"} alt={"Tab 2"} width={45} height={45} style={Style.tabImg}></Image>
-                        <span style={Style.tabLabel}>開發中</span>
-                    </button>
-                </div>
-            </section>
+            <h1>全球排行榜</h1>
+            <p></p>
+            
+            <section>
+                {/* Tabs */}
+                <section style={Style.tabs}>
+                    <div>
+                        <button type="button" style={
+                            //    activeTab == 1 ? 
+                            Style.tabActive
+                            // : Style.tab
+                        }
+                        // onClick={() => setActiveTab(1)}
+                        >
+                            <Image src={"/icons/dashboard/mantrawheel.png"} alt={"Tab 1"} width={45} height={45} style={Style.tabImg}></Image>
+                            <span style={Style.tabLabel}>持咒 APP</span>
+                        </button>
+                    </div>
+                    {/* <div>
+                        <button type="button" style={activeTab == 2? Style.tabActive : Style.tab} onClick={() => setActiveTab(2)}>
+                            <Image src={"/icons/expand.png"} alt={"Tab 2"} width={45} height={45} style={Style.tabImg}></Image>
+                            <span style={Style.tabLabel}>開發中</span>
+                        </button>
+                    </div> */}
+                </section>
 
-            {/* tab body 1 */}
-            <section style={{ ...Style.tabBody, display: activeTab == 1 ? "flex" : "none"}}>
-                <h2 style={{color: "white"}}>大佛頂首楞嚴神咒 次數排行榜</h2>
-                
-                {/* First 5 places */}
-                <div style={Style.row}>
-                    <div style={Style.rowLeft}>
-                        <Image src={"/icons/leaderboard/firstPlace.png"} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
-                        <Image src={"/icons/role_user_m.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
-                        <p style={{color: "white"}}>omgitskuei</p>
-                    </div>
-                    <div style={Style.rowRight}>
-                        49 次
-                    </div>
-                </div>
-                <div style={Style.row}>
-                    <div style={Style.rowLeft}>
-                        <Image src={"/icons/leaderboard/secondPlace.png"} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
-                        <Image src={"/icons/role_user_f.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
-                        <p style={{color: "white"}}>Rachel</p>
-                    </div>
-                    <div style={Style.rowRight}>
-                        42 次
-                    </div>
-                </div>
-                <div style={Style.row}>
-                    <div style={Style.rowLeft}>
-                        <Image src={"/icons/leaderboard/thirdPlace.png"} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
-                        <Image src={"/icons/role_user_m.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
-                        <p style={{color: "white"}}>Vincent</p>
-                    </div>
-                    <div style={Style.rowRight}>
-                        38 次
-                    </div>
-                </div>
-                <div style={Style.row}>
-                    <div style={Style.rowLeft}>
-                        <Image src={"/icons/leaderboard/fourthPlace.png"} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
-                        <Image src={"/icons/role_user_m.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
-                        <p style={{color: "white"}}>查理王</p>
-                    </div>
-                    <div style={Style.rowRight}>
-                        32 次
-                    </div>
-                </div>
-                <div style={Style.row}>
-                    <div style={Style.rowLeft}>
-                        <Image src={"/icons/leaderboard/fifthPlace.png"} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
-                        <Image src={"/icons/role_user_f.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
-                        <p style={{color: "white"}}>釋星曦</p>
-                    </div>
-                    <div style={Style.rowRight}>
-                        22 次
-                    </div>
-                </div>
+                {/* tab body 1 */}
+                <section style={{
+                    ...Style.tabBody,
+                    // display: activeTab == 1 ? "flex" : "none"
+                    display:"flex"
+                }}>
+                    <h2 style={{ color: "white" }}>大佛頂首楞嚴神咒 次數排行榜</h2>
 
-                {/* After 5th place */}
-                <div style={Style.row}>
-                    <div style={Style.rowLeft}>
-                        <Image src={"/icons/leaderboard/medal.png"} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
-                        <Image src={"/icons/role_user_m.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
-                        <p style={{color: "white"}}>user1</p>
-                    </div>
-                    <div style={Style.rowRight}>
-                        21 次
-                    </div>
-                </div>
-                <div style={Style.row}>
-                    <div style={Style.rowLeft}>
-                        <Image src={"/icons/leaderboard/medal.png"} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
-                        <Image src={"/icons/role_user_m.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
-                        <p style={{color: "white"}}>user2</p>
-                    </div>
-                    <div style={Style.rowRight}>
-                        19 次
-                    </div>
-                </div>
-                <div style={Style.row}>
-                    <div style={Style.rowLeft}>
-                        <Image src={"/icons/leaderboard/medal.png"} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
-                        <Image src={"/icons/role_user_m.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
-                        <p style={{color: "white"}}>user3</p>
-                    </div>
-                    <div style={Style.rowRight}>
-                        11 次
-                    </div>
-                </div>
-                <div style={Style.row}>
-                    <div style={Style.rowLeft}>
-                        <Image src={"/icons/leaderboard/medal.png"} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
-                        <Image src={"/icons/role_user_m.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
-                        <p style={{color: "white"}}>user4</p>
-                    </div>
-                    <div style={Style.rowRight}>
-                        8 次
-                    </div>
-                </div>
-                <div style={Style.row}>
-                    <div style={Style.rowLeft}>
-                        <Image src={"/icons/leaderboard/medal.png"} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
-                        <Image src={"/icons/role_user_m.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
-                        <p style={{color: "white"}}>user5</p>
-                    </div>
-                    <div style={Style.rowRight}>
-                        3 次
-                    </div>
-                </div>
+                    {/* First 5 places */}
+                    {
+                        top5[0] != undefined? 
+                            <div style={Style.row}>
+                                <div style={Style.rowLeft}>
+                                    <Image src={`/icons/leaderboard/1.png`} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
+                                    <Image src={"/icons/role_user_m.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
+                                    <p style={{ color: "white" }}>{top5[0].username}</p>
+                                </div>
+                                <div style={Style.rowRight}>
+                                    {top5[0].count} 次
+                                </div>
+                            </div>
+                            :
+                            <></>
+                    }
+                    {
+                        top5[1] != undefined? 
+                            <div style={Style.row}>
+                                <div style={Style.rowLeft}>
+                                    <Image src={`/icons/leaderboard/2.png`} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
+                                    <Image src={"/icons/role_user_m.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
+                                    <p style={{ color: "white" }}>{top5[1].username}</p>
+                                </div>
+                                <div style={Style.rowRight}>
+                                    {top5[1].count} 次
+                                </div>
+                            </div>
+                            :
+                            <></>
+                    }
+                    {
+                        top5[2] != undefined? 
+                            <div style={Style.row}>
+                                <div style={Style.rowLeft}>
+                                    <Image src={`/icons/leaderboard/3.png`} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
+                                    <Image src={"/icons/role_user_m.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
+                                    <p style={{ color: "white" }}>{top5[2].username}</p>
+                                </div>
+                                <div style={Style.rowRight}>
+                                    {top5[2].count} 次
+                                </div>
+                            </div>
+                            :
+                            <></>
+                    }
+                    {
+                        top5[3] != undefined? 
+                            <div style={Style.row}>
+                                <div style={Style.rowLeft}>
+                                    <Image src={`/icons/leaderboard/4.png`} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
+                                    <Image src={"/icons/role_user_m.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
+                                    <p style={{ color: "white" }}>{top5[3].username}</p>
+                                </div>
+                                <div style={Style.rowRight}>
+                                    {top5[3].count} 次
+                                </div>
+                            </div>
+                            :
+                            <></>
+                    }
+                    {
+                        top5[4] != undefined? 
+                            <div style={Style.row}>
+                                <div style={Style.rowLeft}>
+                                    <Image src={`/icons/leaderboard/5.png`} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
+                                    <Image src={"/icons/role_user_m.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
+                                    <p style={{ color: "white" }}>{top5[4].username}</p>
+                                </div>
+                                <div style={Style.rowRight}>
+                                    {top5[4].count} 次
+                                </div>
+                            </div>
+                            :
+                            <></>
+                    }
+
+                    {/* Placements after 5 */}
+                    {
+                        after5.map(each => {
+                            return (
+                                <div style={Style.row}>
+                                    <div style={Style.rowLeft}>
+                                        <Image src={"/icons/leaderboard/medal.png"} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
+                                        <Image src={"/icons/role_user_m.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
+                                        <p style={{ color: "white" }}>{each.username}</p>
+                                    </div>
+                                    <div style={Style.rowRight}>
+                                    {each.count} 次
+                                    </div>
+                                </div>
+                            );
+                        })
+                    }
+                </section>
             </section>
+            
 
 
 
             {/* tab body 2 */}
-            <section style={{ ...Style.tabBody, display: activeTab == 2 ? "flex" : "none"}}>
+            {/* <section style={{ ...Style.tabBody, display: activeTab == 2 ? "flex" : "none"}}>
                 <h2>開發中</h2>
                 <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -244,7 +260,7 @@ export default function Page() {
                     laudantium accusamus qui eius? Temporibus, qui fugiat sunt porro quas esse beatae.
                     Fuga tempore ducimus minima corporis, aliquam consequuntur a inventore atque ratione ipsa exercitationem in!
                 </p>
-            </section>
+            </section> */}
         </main>
     );
 }
