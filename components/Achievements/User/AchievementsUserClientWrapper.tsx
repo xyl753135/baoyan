@@ -90,10 +90,10 @@ export const AchievementsUserClientWrapper = ({
                         <label htmlFor="">平均每日持咒次數：</label>
                         <span>{averageCount}</span>
                     </div>
-                    <div style={Style.statsGroup}>
+                    {/* <div style={Style.statsGroup}>
                         <label htmlFor="">同天最高持咒次數：</label>
                         <span>{maxCount}</span>
-                    </div>
+                    </div> */}
                     <div style={Style.statsGroup}>
                         <label htmlFor="">個人累計持咒次數：</label>
                         <span>{currCount}</span>
