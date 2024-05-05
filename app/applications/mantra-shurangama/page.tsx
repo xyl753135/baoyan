@@ -27,8 +27,11 @@ export default async function Page() {
       flexDirection: "var(--flexDirectionRWD)",
     }} >
       <div style={{
+        marginTop: "20px",
+        marginBottom: "20px",
         display: "flex",
-        flexDirection: "column"
+        flexDirection: "column",
+        alignItems: "center"
       }}>
         <div style={{
           display: "var(--applicationsMantraShurVisibility)"

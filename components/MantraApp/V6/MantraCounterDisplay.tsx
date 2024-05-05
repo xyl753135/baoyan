@@ -64,15 +64,17 @@ export default function MantraCounterDisplay({
     }, []);
 
   return (
-    <section>
+        <>
             {/* Personal count */}
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <p style={Style.statisticsItem}>個人累計持咒次數: {memberCount}</p>
+            <div style={{ display: "flex", justifyContent: "space-around", fontSize: "24px", width: "340px" }}>
+                <p style={Style.statisticsItem}>個人累計持咒次數:</p>
+                <p>{memberCount}</p>
             </div>
             {/* Global count */}
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <p style={Style.statisticsItem}>全球總計持咒次數: {globalCount}</p>
+            <div style={{ display: "flex", justifyContent: "space-around", fontSize: "24px", width: "340px" }}>
+                <p style={Style.statisticsItem}>全球總計持咒次數:</p>
+                <p>{globalCount}</p>
             </div>
-        </section>
+        </>
   );
 }

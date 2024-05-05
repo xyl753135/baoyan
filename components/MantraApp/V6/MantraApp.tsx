@@ -491,8 +491,8 @@ export function MantraApp({
                                         <label htmlFor="meritText" style={{ color: "white", fontSize: "20px", fontWeight: "bolder" }}>
                                             回向
                                         </label>
-                                        <textarea
-                                            name="meritText" id="meritText"
+                                        <textarea name="meritText" id="meritText"
+                                            rows={5}
                                             style={Style.inputMerit} maxLength={150}>
                                         </textarea>
                                     </div>
