@@ -86,7 +86,7 @@ export default function Page() {
                 }).then(response => {
                     if (response.status == 200) {
                         console.log("/api/auth/signup success");
-                        setAuthError("註冊成功, 請點選“前往登入”")
+                        setAuthError("成功, 請前往登入");
                     } else {
                         console.error("/api/auth/signup failed:", response);
                         if (response.status == 409) { // Username taken

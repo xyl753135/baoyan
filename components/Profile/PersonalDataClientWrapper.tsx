@@ -162,6 +162,7 @@ export const PersonalDataClientWrapper = ({
     }
 
     async function handleDelete() {
+        setShowModal(false);
         const response = await fetch('/api/profile/delete-user', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -513,7 +514,7 @@ export const PersonalDataClientWrapper = ({
                         fontSize: "24px",
                         display: "flex", alignItems: "center", justifyContent: "space-around",
                         fontWeight: "bold",
-                        background: "saddlebrown",
+                        background: allBtnDisabled? "rgb(60,60,60)" : "saddlebrown",
                         border: "white 1px solid",
                         borderRadius: "5px",
                         padding: "2px",
@@ -529,7 +530,7 @@ export const PersonalDataClientWrapper = ({
                         fontSize: "24px",
                         display: "flex", alignItems: "center", justifyContent: "space-around",
                         fontWeight: "bold",
-                        background: "#4863A0",
+                        background: allBtnDisabled? "rgb(60,60,60)" : "#4863A0",
                         border: "white 1px solid",
                         borderRadius: "5px",
                         padding: "2px",
@@ -545,7 +546,7 @@ export const PersonalDataClientWrapper = ({
                         fontSize: "24px",
                         display: "flex", alignItems: "center", justifyContent: "space-around",
                         fontWeight: "bold",
-                        background: "#3EA99F",
+                        background: allBtnDisabled? "rgb(60,60,60)" : "#3EA99F",
                         border: "white 1px solid",
                         borderRadius: "5px",
                         padding: "2px",
@@ -563,7 +564,7 @@ export const PersonalDataClientWrapper = ({
                         fontSize: "24px",
                         display: "flex", alignItems: "center", justifyContent: "space-around",
                         fontWeight: "bold",
-                        background: "#C24641",
+                        background: allBtnDisabled? "rgb(60,60,60)" : "#C24641",
                         border: "white 1px solid",
                         borderRadius: "5px",
                         padding: "2px",

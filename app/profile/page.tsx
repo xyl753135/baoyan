@@ -1,7 +1,7 @@
 'use server'
 
 // Components
-import { PersonalDataClientWrapper } from "@/components/Profile/PersonalData";
+import { PersonalDataClientWrapper } from "@/components/Profile/PersonalDataClientWrapper";
 
 // Utils
 import { convertISO8601DateToYYYYMMDD } from "@/utils/TimeParser";
