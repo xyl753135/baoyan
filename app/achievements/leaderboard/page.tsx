@@ -156,7 +156,7 @@ export default async function Page() {
                         top5[0] != undefined? 
                             <div style={Style.row}>
                                 <div style={Style.rowLeft}>
-                                    <Image src={`/icons/leaderboard/1.png`} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
+                                    <Image src={`/icons/leaderboard/firstPlace.png`} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
                                     <Image src={"/icons/role_user_m.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
                                     <p style={{ color: "white" }}>{top5[0].username}</p>
                                 </div>
@@ -171,7 +171,7 @@ export default async function Page() {
                         top5[1] != undefined? 
                             <div style={Style.row}>
                                 <div style={Style.rowLeft}>
-                                    <Image src={`/icons/leaderboard/2.png`} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
+                                    <Image src={`/icons/leaderboard/secondPlace.png`} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
                                     <Image src={"/icons/role_user_m.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
                                     <p style={{ color: "white" }}>{top5[1].username}</p>
                                 </div>
@@ -186,7 +186,7 @@ export default async function Page() {
                         top5[2] != undefined? 
                             <div style={Style.row}>
                                 <div style={Style.rowLeft}>
-                                    <Image src={`/icons/leaderboard/3.png`} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
+                                    <Image src={`/icons/leaderboard/thirdPlace.png`} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
                                     <Image src={"/icons/role_user_m.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
                                     <p style={{ color: "white" }}>{top5[2].username}</p>
                                 </div>
@@ -201,7 +201,7 @@ export default async function Page() {
                         top5[3] != undefined? 
                             <div style={Style.row}>
                                 <div style={Style.rowLeft}>
-                                    <Image src={`/icons/leaderboard/4.png`} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
+                                    <Image src={`/icons/leaderboard/fourthPlace.png`} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
                                     <Image src={"/icons/role_user_m.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
                                     <p style={{ color: "white" }}>{top5[3].username}</p>
                                 </div>
@@ -216,7 +216,7 @@ export default async function Page() {
                         top5[4] != undefined? 
                             <div style={Style.row}>
                                 <div style={Style.rowLeft}>
-                                    <Image src={`/icons/leaderboard/5.png`} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
+                                    <Image src={`/icons/leaderboard/fifthPlace.png`} alt={"Tab"} width={35} height={35} style={Style.medal}></Image>
                                     <Image src={"/icons/role_user_m.png"} alt={"Tab"} width={35} height={35} style={Style.avatar}></Image>
                                     <p style={{ color: "white" }}>{top5[4].username}</p>
                                 </div>
