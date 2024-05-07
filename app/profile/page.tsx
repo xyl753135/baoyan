@@ -1,7 +1,7 @@
 'use server'
 
 // Components
-import { PersonalDataClientWrapper } from "@/components/Profile/PersonalDataClientWrapper";
+import { PersonalDataClientWrapper } from "@/components/PageSpecific/Profile/PersonalDataClientWrapper";
 
 // Utils
 import { convertISO8601DateToYYYYMMDD } from "@/utils/TimeParser";
@@ -11,18 +11,13 @@ import { getSession } from "@/utils/AuthHelper";
 
 const Style: { [key: string]: React.CSSProperties } = {
     container: {
-        marginTop: "1em",
-        marginBottom: "1em",
+        // marginTop: "1em",
+        // marginBottom: "1em",
         display: "flex",
         // @ts-expect-error: This is valid and still works
         flexDirection: "var(--profileColumnsLayout)",
-        // flexBasis: "600px",
-        // flexGrow: "1",
         justifyContent: "space-around"
     },
-    inputGroup: {
-        display: "flex"
-    }
 };
 
 export default async function Page() {

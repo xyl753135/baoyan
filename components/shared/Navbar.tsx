@@ -1,7 +1,7 @@
-import { NavbarButton } from "@/components/NavbarButton";
-import { NavbarHamburgerButton } from "@/components/NavbarHamburgerButton";
-import { Hamburger } from "@/components/Hamburger";
-import { Logo } from "./Logo";
+import { NavbarButton } from "@/components/shared/NavbarButton";
+import { NavbarHamburgerButton } from "@/components/shared/NavbarHamburgerButton";
+import { Hamburger } from "@/components/shared/Hamburger";
+import { Logo } from "../shared/Logo";
 import Image from "next/image";
 import loginIcon from "@/public/icons/login.png";
 

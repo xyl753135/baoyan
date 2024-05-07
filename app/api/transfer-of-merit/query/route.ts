@@ -12,7 +12,7 @@ export async function POST(request: Request) {
             WHERE username = ${username}
             AND yyyymmdd = ${date}
             LIMIT ${limit};`;
-    console.log("query.rows", query.rows);
+    // console.log("query.rows", query.rows);
     const results = query.rows;
 
     return NextResponse.json(

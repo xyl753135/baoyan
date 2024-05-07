@@ -4,7 +4,7 @@
 import { getSession } from "@/utils/AuthHelper";
 
 // Components
-import { ChangePasswordClientWrapper } from "@/components/Profile/ChangePasswordClientWrapper";
+import { ChangePasswordClientWrapper } from "@/components/PageSpecific/Profile/ChangePasswordClientWrapper";
 import { redirect } from "next/navigation";
 import Image from "next/image";
 

@@ -79,7 +79,7 @@ export function MostRecentMerits({
                     setQueryResults(json.results.map(((each: Merit) =>
                         <MeritCardRandomWrapper
                             key={each.pk}
-                            width={"350px"} height={"200px"}
+                            width={"350px"} height={"150px"}
                             author={each.author}
                             timestamp={each.yyyymmdd}
                             meritSource={each.source}

@@ -39,6 +39,18 @@ export function getDistinctRandomIntegers(min: number, max: number, howMany: num
     return result;
 }
 
+export function getRandomInt(startInclusive: number, endInclusive: number) {
+    return Math.floor(Math.random() * (endInclusive - startInclusive + 1) + startInclusive);
+}
+
+export function getRandomChar() {
+    const alpha = ["a", "b", "c", "d", "e", "f",
+        "g", "h", "i", "j", "k", "l", "m", "n",
+        "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+    const r = getRandomInt(0, 25);
+    return alpha[r].toUpperCase();
+}
+
 export function getRandomColors(
     lightColors: boolean,
     darkColors: boolean,

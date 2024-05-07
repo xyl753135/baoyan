@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 
 // Components
 import { MantraPlayer } from "../MantraPlayer";
-import { GenericButton } from "@/components/GenericButton";
 
 // Utils
 import { parseLRCFile } from "@/utils/LyricsParser";
@@ -81,7 +80,7 @@ const Style: { [key: string]: React.CSSProperties } = {
         gap: "10px",
 
         width: "320px",
-        border: "white 2px solid", 
+        border: "white 2px solid",
         borderRadius: "5px",
     },
     manaulEditBtn: {
@@ -155,79 +154,14 @@ export function MantraApp({
         console.log("subtitles", subtitles);
     }, []);
 
-
-    async function submitIncrements(localCount: number) {
-        if (localCount > 0) {
-            // Update global counter
-            try {
-                await fetch(`/api/counters/increment-counter`,
-                    {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            app: "mantraapp",
-                            name: "shurangama",
-                            count: localCount,
-                            username: '' // reminder, global count has no username
-                        })
-                    }).then(resp => {
-                        if (resp.status != 200) {
-                            throw new Error(`Error code: ${resp.status}, Error message: ${resp.statusText}`);
-                        }
-                        return resp.json();
-                    }).then(json => {
-                        // console.log("fetch incrementing global count returns JSON: ", json.result.rows);
-                    });
-            } catch (error) {
-                console.error("MantraPlayer useEffect threw error:", error);
-            }
-            // Update member counter
-            if (username != '') {
-                try {
-                    await fetch(`/api/counters/increment-counter`,
-                        {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                app: "mantraapp",
-                                name: "shurangama",
-                                count: localCount,
-                                username: username
-                            })
-                        }).then(resp => {
-                            if (resp.status != 200) {
-                                throw new Error(`Error code: ${resp.status}, Error message: ${resp.statusText}`);
-                            }
-                            return resp.json();
-                        }).then(json => {
-                            // console.log("fetch incrementing global count returns JSON: ", json.result.rows);
-                            router.push("/dashboard");
-                        });
-                } catch (error) {
-                    console.error("MantraPlayer useEffect threw error:", error);
-                }
-            } else {
-                router.push("/");
-            }
-        } else {
-            // localcount is 0 or less than 0
-            alert("本次次數為 0, 沒有資料可更新");
-        }
-    }
-
-
-
     async function submit(formData: FormData) {
 
         let sendPOST = true;
-
-
 
         // Get form data
         // 回向内容
         const meritText = formData.get("meritText");
         const editLocalCount = formData.get("editLocalCount");
-
 
         // if (isNullUndefinedOrEmpty(meritText)) {
         //     setMsg("回向字不可空");
@@ -241,6 +175,15 @@ export function MantraApp({
         if (localCount < 0) {
             setMsg("本次次數小於 0, 沒有資料可更新");
             sendPOST = false;
+        }
+        const localCountInput = document.getElementById("editLocalCount");
+        if (localCountInput) {
+            if (localCountInput instanceof HTMLInputElement) {
+                if (localCountInput.value == "0") {
+                    setMsg("本次次數為 0, 沒有資料可更新");
+                    sendPOST = false;
+                }
+            }
         }
 
         if (sendPOST) {
@@ -307,13 +250,12 @@ export function MantraApp({
                 console.error(error);
             }
 
-
             // Redirect
             setMsg("持咒次數統計成功! 五秒鈡後自動回去個人資料。");
             setTimeout(() => {
                 router.push("/dashboard");
             }, 5000);
-            
+
         }
     }
 
@@ -435,71 +377,77 @@ export function MantraApp({
                 {/* Statistics (Write) & 回向 Transfer of Merit form */}
                 <section style={{}}>
                     <form action={submit}>
-
-
-
                         <fieldset style={Style.counterFieldset}>
                             <legend style={{ paddingLeft: "0.5em", paddingRight: "0.5em", fontWeight: "bolder", fontSize: "24px", color: "white" }}>
                                 更新個人次數
                             </legend>
-                            <p style={{ fontSize: "17px", color: "white"}}>
+                            <p style={{ fontSize: "17px", color: "white" }}>
                                 持咒完後，請記得填以下表格，點 [送出] 按鈕，系統會累計您最新的個人持咒次數。注意，“本次持咒次數” 不可為 0 或小於 0 次。<br />
                                 回向内容可填可不填，如果您決定填回向，系統會自動標注回向者名，日期，回向來源 “持誦楞嚴神咒 #次” (# 為 “本次持咒次數” 的次數)。
                             </p>
                             <br></br>
                             {/* Local count */}
-                            
-                                    <div style={{
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        // gap: "10px",
-                                    }}>
-                                        <label htmlFor="meritText" style={{ color: "white", fontSize: "20px", fontWeight: "bolder" }}>
-                                            統計
-                                        </label>
-                                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center",}}>
-                                            <label htmlFor="editLocalCount" style={{ color: "white", fontSize: "20px", display: "flex", alignItems: "center" }}>
-                                                本次持咒次數:
-                                                <input type="number"
-                                                    name="editLocalCount" id="editLocalCount"
-                                                    defaultValue={localCount}
-                                                    style={{
-                                                        display: editable ? "inline-block" : "none",
-                                                        width: "70px",
-                                                        height: "28px",
-                                                        fontSize: "21px",
-                                                        // paddingLeft: "5px",
-                                                        color: "black"
-                                                    }} />
-                                                {
-                                                editable ? "" : localCount}
-                                            </label>
-                                            <button type="button" style={Style.manaulEditBtn} onClick={() => { validateManualEdit(); }}>
-                                                {!editable ? "手動輸入次數" : "暫存"}
-                                            </button>
-                                        </div>
-                                        
-                                    </div>
-                                
+
+                            <div style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                // gap: "10px",
+                            }}>
+                                <label htmlFor="meritText" style={{ color: "white", fontSize: "20px", fontWeight: "bolder" }}>
+                                    統計
+                                </label>
+                                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", }}>
+                                    <label htmlFor="editLocalCount" style={{ color: "white", fontSize: "20px", display: "flex", alignItems: "center" }}>
+                                        本次持咒次數:
+                                        <input type="number"
+                                            name="editLocalCount" id="editLocalCount"
+                                            defaultValue={localCount}
+                                            style={{
+                                                display: editable ? "inline-block" : "none",
+                                                width: "70px",
+                                                height: "28px",
+                                                fontSize: "21px",
+                                                paddingLeft: "5px",
+                                                color: "black",
+                                                backgroundColor: "white"
+                                            }} />
+                                        {
+                                            editable ? "" : localCount}
+                                    </label>
+                                    <button type="button" style={Style.manaulEditBtn}
+                                        onClick={() => { validateManualEdit(); }}>
+                                        {!editable ? "手動輸入次數" : "暫存"}
+                                    </button>
+                                </div>
+
+                            </div>
+
                             {/* Merit */}
-                           
-                                    <div style={{
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        gap: "10px"
-                                    }}>
-                                        <label htmlFor="meritText" style={{ color: "white", fontSize: "20px", fontWeight: "bolder" }}>
-                                            回向
-                                        </label>
-                                        <textarea name="meritText" id="meritText"
-                                            rows={5}
-                                            style={Style.inputMerit} maxLength={150}>
-                                        </textarea>
-                                    </div>
-                             
-                            
+
+                            <div style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: "10px"
+                            }}>
+                                <label htmlFor="meritText" style={{ color: "white", fontSize: "20px", fontWeight: "bolder" }}>
+                                    回向
+                                </label>
+                                <textarea name="meritText" id="meritText"
+                                    rows={5}
+                                    style={{
+                                        backgroundColor: "white",
+                                        color: "black",
+                                        fontFamily: "sans-serif"
+                                    }} maxLength={150}>
+                                </textarea>
+                            </div>
+
+
                             {/* Submit msg */}
-                            <p style={{ display: "flex", justifyContent: "center", color: "rgb(60, 60, 30)", fontSize: "18px", fontWeight: "bolder", }}>
+                            <p style={{
+                                display: "flex", justifyContent: "center",
+                                color: "orange", fontSize: "18px", fontWeight: "bolder",
+                            }}>
                                 {msg}
                             </p>
                             {/* Submit button */}

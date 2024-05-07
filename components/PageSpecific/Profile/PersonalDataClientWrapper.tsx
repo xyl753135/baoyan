@@ -4,9 +4,9 @@ import { useState } from "react";
 import Image from "next/image";
 
 
-import { InputGroup } from "@/components/Form/InputGroup";
-import { SelectGroup } from "@/components/Form/SelectGroup";
-import { Modal } from "@/components/Modals/Modal";
+import { InputGroup } from "@/components/shared/Form/InputGroup";
+import { SelectGroup } from "@/components/shared/Form/SelectGroup";
+import { Modal } from "@/components/shared/Modals/Modal";
 
 import { createNotification } from "@/utils/LocalNotificationsHelper"
 import { useRouter } from "next/navigation";
@@ -38,7 +38,7 @@ export const PersonalDataClientWrapper = ({
     h
 }: Props) => {
     // useState
-    const [username, setUsername] = useState(userData.username);
+    // const [username, setUsername] = useState(userData.username);
     const [name, setName] = useState(userData.name);
     const [bname, setBname] = useState(userData.bname);
     const [line, setLine] = useState(userData.line);
@@ -88,67 +88,28 @@ export const PersonalDataClientWrapper = ({
         const genderSelect = String(formData.get("genderSelect"));
         const countrySelect = String(formData.get("countrySelect"));
         const localeSelect = String(formData.get("localeSelect"));
-        // console.log("user submitted ",
-        //     nameInput, 
-        //     bnameInput, 
-        //     lineInput,
-        //     whatsappInput,
-        //     wechatInput,
-        //     emailInput,
-        //     phoneInput,
-        //     dobInput,
-        //     genderSelect,
-        //     countrySelect,
-        //     localeSelect
-        // );
-        createNotification(
-            "使用者儲存了個人資料", 
-            // [
-            //     nameInput, 
-            //     bnameInput, 
-            //     lineInput,
-            //     whatsappInput,
-            //     emailInput,
-            //     phoneInput,
-            //     dobInput,
-            //     countrySelect,
-            //     localeSelect
-            // ].join(","),
-            "", 
-            false
-        );
-
-        // Validate form data
-        let sendPOST = true;
-        // const vEmail = validateEmail(emailInput);
-        // if (!vEmail.isValid) {
-        //     setErrors({
-        //         ...errors,
-        //         email: vEmail.message
-        //     });
-        //     sendPOST = false;
-        // }
-
-        // Call database
-        if (sendPOST) {
-            const response = await fetch('/api/profile/update-user', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    usernameHidden,
-                    nameInput, 
-                    bnameInput,
-                    lineInput,
-                    whatsappInput,
-                    wechatInput,
-                    emailInput,
-                    phoneInput,
-                    dobInput,
-                    genderSelect,
-                    countrySelect,
-                    localeSelect
-                 }),
-            });
+        
+        setSaveError("儲存中。。。");
+        setTimeout(async () => {
+            // Call database
+        await fetch('/api/profile/update-user', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                usernameHidden,
+                nameInput, 
+                bnameInput,
+                lineInput,
+                whatsappInput,
+                wechatInput,
+                emailInput,
+                phoneInput,
+                dobInput,
+                genderSelect,
+                countrySelect,
+                localeSelect
+                }),
+        }).then(response => {
             if (response.ok) {
                 setSaveError("個人資料儲存成功");
             } else {
@@ -158,16 +119,17 @@ export const PersonalDataClientWrapper = ({
                     setSaveError("無法處理, 通知工程師");
                 }
             }
-        }
+        });
+        }, 2000);
     }
-
+    
     async function handleDelete() {
         setShowModal(false);
-        const response = await fetch('/api/profile/delete-user', {
+        await fetch('/api/profile/delete-user', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
-                usernameInput: username,
+                usernameInput: userData.username,
              }),
         }).then((resp) => {
             if (resp.status == 200) {
@@ -177,7 +139,6 @@ export const PersonalDataClientWrapper = ({
                     router.push("/login");
                 }, 3000);
             }
-
             return resp.json();
         }).then((json) => {
             console.log("json", json);
@@ -198,10 +159,10 @@ export const PersonalDataClientWrapper = ({
                 alignItems: "center",
                 height: h,
                 width: w,
-                paddingLeft: "0.5em",
-                paddingRight: "0.5em",
+                // paddingLeft: "0.5em",
+                // paddingRight: "0.5em",
                 // border: "#233142 2px solid",
-                background: "#455d7a"
+                // background: "#455d7a"
         }}>
         { 
             userData.profilePicPath == undefined || userData.profilePicPath == null || userData.profilePicPath == ''?
@@ -245,11 +206,11 @@ export const PersonalDataClientWrapper = ({
                 <InputGroup
                     placeholder={userData.name}
                     id={"nameInput"}
-                    maxLength={255}
+                    maxLength={250}
                     errorMsg={""}
                     keepErrorMsgNegativeSpace={false}
                     changeHandler={(event) => setName(event.target.value)}
-                    width={155}
+                    width={215}
                     value={name} readOnly={false} label={"姓名"}></InputGroup>
                 <InputGroup
                     placeholder={userData.bname}
@@ -258,25 +219,25 @@ export const PersonalDataClientWrapper = ({
                     errorMsg={""}
                     keepErrorMsgNegativeSpace={false}
                     changeHandler={(event) => setBname(event.target.value)}
-                    width={155}
+                    width={215}
                     value={bname} readOnly={false} label={"法名"}></InputGroup>
                 <InputGroup
                     placeholder={userData.line}
                     id={"lineInput"}
-                    maxLength={200}
+                    maxLength={250}
                     errorMsg={""}
                     keepErrorMsgNegativeSpace={false}
                     changeHandler={(event) => setLine(event.target.value)}
-                    width={155}
+                    width={215}
                     value={line} readOnly={false} label={"LINE ID"}></InputGroup>
                 <InputGroup
                     placeholder={userData.whatsapp}
                     id={"whatsappInput"}
-                    maxLength={200}
+                    maxLength={250}
                     errorMsg={""}
                     keepErrorMsgNegativeSpace={false}
                     changeHandler={(event) => setWhatsapp(event.target.value)}
-                    width={155}
+                    width={215}
                     value={whatsapp} readOnly={false} label={"WhatsApp ID"}></InputGroup>
                 <InputGroup
                     placeholder={userData.wechat}
@@ -285,7 +246,7 @@ export const PersonalDataClientWrapper = ({
                     errorMsg={""}
                     keepErrorMsgNegativeSpace={false}
                     changeHandler={(event) => setWechat(event.target.value)}
-                    width={155}
+                    width={215}
                     value={wechat} readOnly={false} label={"WeChat ID"}></InputGroup>
                 <InputGroup
                     placeholder={userData.email}
@@ -295,7 +256,7 @@ export const PersonalDataClientWrapper = ({
                     errorMsg={errors.email}
                     keepErrorMsgNegativeSpace={false}
                     changeHandler={(event) => setEmail(event.target.value)}
-                    width={155}
+                    width={215}
                     value={email} readOnly={false} label={"電子郵件地址"}></InputGroup>
                 <InputGroup
                     placeholder={userData.phone}
@@ -305,7 +266,7 @@ export const PersonalDataClientWrapper = ({
                     errorMsg={errors.phone}
                     keepErrorMsgNegativeSpace={false}
                     changeHandler={(event) => setPhone(event.target.value)}
-                    width={155}
+                    width={215}
                     value={phone} readOnly={false} label={"手機號碼"}></InputGroup>
                 <InputGroup
                     placeholder={userData.dob}
@@ -317,10 +278,10 @@ export const PersonalDataClientWrapper = ({
                     changeHandler={(event) => {
                         setDob(event.target.value);
                     }}
-                    width={155}
+                    width={215}
                     value={dob} readOnly={false} label={"出生年月日"}></InputGroup>
                 <SelectGroup
-                    width={155}
+                    width={215}
                     errorMsg={errors.gender}
                     options={[
                         {
@@ -338,7 +299,7 @@ export const PersonalDataClientWrapper = ({
                     ]}
                     label={"性別"} defaultValue={userData.gender} id={"genderSelect"}></SelectGroup>
                 <SelectGroup
-                    width={155}
+                    width={215}
                     errorMsg={errors.country}
                     options={[
                         {
@@ -400,7 +361,7 @@ export const PersonalDataClientWrapper = ({
                     ]}
                     label={"國家"} defaultValue={userData.country} id={"countrySelect"}></SelectGroup>
                 <SelectGroup
-                    width={155}
+                    width={215}
                     errorMsg={errors.locale}
                     options={[
                         {

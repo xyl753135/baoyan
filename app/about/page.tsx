@@ -9,7 +9,6 @@ import chuancheng from "@/public/about/taiwan/chuancheng2.jpg";
 
 import expand from "@/public/icons/expand.png"
 
-import taipeiVenue1 from "@/public/about/taiwan/tpc/taipeiVenue1.jpg";
 import useWindowSize from "@/utils/WindowResize";
 import { useState } from "react";
 

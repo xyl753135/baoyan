@@ -1,5 +1,5 @@
 import Image from "next/image";
-import logoSource from "../public/logo.webp"
+import logoSource from "@/public/logo.webp"
 
 const Style: { [key: string]: React.CSSProperties } = {
   container: {

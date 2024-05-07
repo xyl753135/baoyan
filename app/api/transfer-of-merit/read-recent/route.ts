@@ -11,7 +11,7 @@ export async function POST(request: Request) {
             FROM merits
             ORDER BY yyyymmdd desc
             LIMIT ${limit};`;
-    console.log("query.rows", query.rows);
+    // console.log("query.rows", query.rows);
     const results = query.rows;
 
     return NextResponse.json(

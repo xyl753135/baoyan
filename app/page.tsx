@@ -1,13 +1,8 @@
 'use server'
 
-import Image from "next/image";
-// import styles from "./page.module.css";
-import LineAddFriendQR from "@/public/lineAddFriendQR.png"
+import { MantraApp } from "@/components/shared/MantraApp/MantraApp"
 
-import { MantraApp } from "@/components/MantraApp/MantraApp"
-
-
-import { MostRecentMerits } from "@/components/TransferOfMerit/MostRecentMerits";
+import { MostRecentMerits } from "@/components/shared/TransferOfMerit/MostRecentMerits";
 
 
 const Style: { [key: string]: React.CSSProperties } = {

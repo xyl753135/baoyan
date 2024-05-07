@@ -9,7 +9,8 @@ const Style: { [key: string]: React.CSSProperties } = {
     main: {
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-around",
+        justifyContent: "center",
+        gap: "20px",
         flexWrap: "wrap"
     },
 };
@@ -28,11 +29,10 @@ export function MeritClientWrapper({
 
 
     // useState
-    const [disabledEditForm, setDisabledEditForm] = useState<boolean>(true);
+    const [hideEditForm, setHideEditForm] = useState<boolean>(true);
     const [queryResults, setQueryResults] = useState<JSX.Element[]>([]);
     const [meritId, setMeritId] = useState<string>("");
     const [meritText, setMeritText] = useState<string>("");
-
 
     async function handleSubmitEdit(formData: FormData) {
 
@@ -65,26 +65,32 @@ export function MeritClientWrapper({
             // Reset SubmitTransferOfMerit
             setMeritId("");
             setMeritText("");
-            setDisabledEditForm(true);
+            setHideEditForm(true);
             setQueryResults([])
         }
     }
 
     return (
         <main style={Style.main}>
-            <SubmitTransferOfMerit
-                meritId={meritId}
-                meritText={meritText}
-                setMeritText={setMeritText}
-                handleSubmit={handleSubmitEdit}
-                disabledEditForm={disabledEditForm}>
-            </SubmitTransferOfMerit>
+            {
+                hideEditForm ?
+                    <></>
+                    :
+                    <SubmitTransferOfMerit
+                        meritId={meritId}
+                        meritText={meritText}
+                        setMeritText={setMeritText}
+                        handleSubmit={handleSubmitEdit}
+                        disabledEditForm={hideEditForm}>
+                    </SubmitTransferOfMerit>
+            }
+            
             <MeritSearch
                 username={username}
                 queryResults={queryResults}
                 date={todayYYYYMMDD}
                 setQueryResults={setQueryResults}
-                setDisabledEditForm={setDisabledEditForm}
+                setDisabledEditForm={setHideEditForm}
                 setMeritId={setMeritId}
                 setMeritText={setMeritText}
                 privacyOn={privacyOn}>

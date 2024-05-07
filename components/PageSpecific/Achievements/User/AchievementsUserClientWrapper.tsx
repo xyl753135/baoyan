@@ -58,10 +58,10 @@ export const AchievementsUserClientWrapper = ({
                 justifyContent: "center",
                 alignItems: "center",
                 minHeight: "680px",
-                paddingLeft: "0.5em",
-                paddingRight: "0.5em",
+                // paddingLeft: "0.5em",
+                // paddingRight: "0.5em",
                 // border: "#233142 2px solid",
-                background: "#455d7a"
+                // background: "#455d7a"
             }}>
             
             <section style={{
@@ -88,7 +88,7 @@ export const AchievementsUserClientWrapper = ({
                     <h2>大佛頂首楞嚴神咒 - 個人表現</h2>
                     <div style={Style.statsGroup}>
                         <label htmlFor="">平均每日持咒次數：</label>
-                        <span>{averageCount}</span>
+                        <span>{Math.trunc(Number(averageCount)) +"次"}</span>
                     </div>
                     {/* <div style={Style.statsGroup}>
                         <label htmlFor="">同天最高持咒次數：</label>

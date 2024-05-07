@@ -1,4 +1,4 @@
-import { NewsItem } from "@/components/NewsItem";
+
 
 const Style: { [key: string]: React.CSSProperties } = {
     main: {

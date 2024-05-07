@@ -2,7 +2,7 @@
 
 import { getSession } from "@/utils/AuthHelper";
 
-import { AchievementsUserClientWrapper } from "@/components/Achievements/User/AchievementsUserClientWrapper";
+import { AchievementsUserClientWrapper } from "@/components/PageSpecific/Achievements/User/AchievementsUserClientWrapper";
 
 const Style: { [key: string]: React.CSSProperties } = {
     container: {

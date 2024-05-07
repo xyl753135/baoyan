@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 
-import { InputGroup } from "@/components/Form/InputGroup";
+import { InputGroup } from "@/components/shared/Form/InputGroup";
 
-import { validatePassword } from "../../utils/Validator";
+import { validatePassword } from "../../../utils/Validator";
 import { useRouter } from "next/navigation";
 
 const Style: { [key: string]: React.CSSProperties } = {

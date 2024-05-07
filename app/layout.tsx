@@ -1,14 +1,11 @@
 import type { Metadata } from "next";
 
-// import { Inter } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
 
-import { redirect } from "next/navigation"
+import { Navbar } from "@/components/shared/Navbar";
+import { Footer } from "@/components/shared/Footer";
+
 import { getSession } from "@/utils/AuthHelper";
-
-// const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://baoyan.org"),
@@ -39,13 +36,9 @@ const Style: { [key: string]: React.CSSProperties } = {
   body: {
     display: "flex",
     flexDirection: "column",
-    // height: "100%",
     width: "100%",
     padding: "1em",
     background: "linear-gradient(rgb(var(--background-end-rgb)), rgb(var(--background-start-rgb)))",
-    // border: "20px black solid"
-    // flexBasis: "min-content",
-    // width: "100vw",
   },
   main: {
     flexGrow: "1",

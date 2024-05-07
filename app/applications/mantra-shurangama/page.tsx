@@ -1,8 +1,8 @@
 'use server'
 
-import { Centerpiece } from "@/components/Centerpiece";
-import { MantraApp } from "@/components/MantraApp/V6/MantraApp"
-import MantraCounterDisplay from "@/components/MantraApp/V6/MantraCounterDisplay";
+import { Centerpiece } from "@/components/shared/Centerpiece";
+import { MantraApp } from "@/components/shared/MantraApp/V6/MantraApp"
+import MantraCounterDisplay from "@/components/shared/MantraApp/V6/MantraCounterDisplay";
 import { getSession } from "@/utils/AuthHelper";
 import { redirect } from "next/navigation";
 
