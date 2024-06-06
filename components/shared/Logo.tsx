@@ -4,6 +4,7 @@ import logoSource from "@/public/logo.webp"
 const Style: { [key: string]: React.CSSProperties } = {
   container: {
     display: "flex",
+    justifyContent: "center",
     alignItems: "center",
   },
 };

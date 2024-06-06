@@ -1,8 +1,8 @@
 'use client'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 
 import { validateUsername, validatePassword } from "@/utils/Validator";
 
@@ -28,6 +28,34 @@ export default function Page() {
     const [username, setUsername] = useState<string>("");
 
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const action = searchParams.get("action");
+
+    const getLoginOrSignUp = () => {
+        if (action == "register") {
+            return "signUp";
+        } else {
+            return "login";
+        }
+    };
+
+    /*
+    useEffect(() => {
+        if (action == "register") {
+            setLoginOrSignUp("signUp");
+        } else {
+            setLoginOrSignUp("login");
+        }
+    })
+    */
+    /*
+    if (action == "register") {
+        setLoginOrSignUp("signUp");
+    }
+    else {
+        setLoginOrSignUp("login");
+    }
+    */
 
     /**
      * Form submit to /app/api/auth/login or /app/api/auth/signup
@@ -136,7 +164,7 @@ export default function Page() {
                     <Image width={100} height={330} src={"/centerpiece.png"} alt={"寳嚴"} style={{ }}></Image>
                 </div>
             {
-                loginOrSignUp == "login" ?
+                getLoginOrSignUp() == "login" ?
                 <div style={{ 
                     display: "flex",
                     flexDirection: "column",
@@ -211,7 +239,7 @@ export default function Page() {
                             {authError}
                         </div>
                         {/* Go to Sign up */}
-                        <div style={{
+                        {/* <div style={{
                             marginTop: "50px", fontSize:"24px", 
                             display: "flex", alignItems:"center",
                             color: "white"}} onClick={() => {
@@ -220,7 +248,7 @@ export default function Page() {
                             }}>
                                 前往註冊
                                 <Image style={{filter:"invert(1)"}} src={"/icons/login3.png"} alt={"Login icon"} width={25} height={25}></Image>
-                        </div>
+                        </div> */}
                     </form>
                 </div>
                 : 
@@ -297,7 +325,7 @@ export default function Page() {
                             {authError}
                         </div>
                         {/* Go to login */}
-                        <div style={{
+                        {/* <div style={{
                                 marginTop: "50px", fontSize:"24px", display: "flex", 
                                 alignItems:"center", color: "white"}} 
                             onClick={() => {
@@ -306,7 +334,7 @@ export default function Page() {
                             }}>
                                 前往登入 
                                 <Image style={{filter:"invert(1)"}} src={"/icons/login2.png"} alt={"Login icon"} width={25} height={25}></Image>
-                        </div>
+                        </div> */}
                     </form>
                 </div>
             }

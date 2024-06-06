@@ -74,7 +74,7 @@ export default async function RootLayout({
           //   key: "2",
           // },
         ]}
-          userSystemLabel= { session ? userData.username : "登入" }>
+          userSystemLabel={session ? userData.username : null}>
         </Navbar>
         <main style={Style.main}>
           {children}
