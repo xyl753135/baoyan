@@ -34,7 +34,7 @@ export async function POST(request: Request) {
     }
     // console.log("isSame", foundMatch);
     
-    let updateResult = {};
+    let updateResult;
     if (foundMatch) {
       // Update last_login timestamp
       updateResult =
@@ -42,7 +42,7 @@ export async function POST(request: Request) {
           SET last_login = (to_timestamp(${Date.now()} / 1000.0))
           WHERE username = ${usernameInput}`;
       // console.log("updateResult", updateResult);
-
+      
       // Create the session
       const expires = new Date(Date.now() + 60 * 60 * 1000); // 60 mins (in theory)
       // console.log("expires.ISO:", expires.toLocaleString());
@@ -50,7 +50,7 @@ export async function POST(request: Request) {
       // Save the session in a cookie
       cookies().set("session", session, { expires, httpOnly: true });
     }
-    
+
     // Return result (credentials found or not-found)
     return NextResponse.json(
       { 
