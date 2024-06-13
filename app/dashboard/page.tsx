@@ -9,6 +9,7 @@ import { Modal } from "@/components/shared/Modals/Modal";
 // Utils
 import { getSession } from "@/utils/AuthHelper";
 import { LogoutButton } from "@/components/PageSpecific/Dashboard/LogoutButton";
+import { ModalWrapper } from "@/components/PageSpecific/Dashboard/ModalWrapper";
 
 const Style: { [key: string]: React.CSSProperties } = {
     container: {
@@ -66,7 +67,7 @@ export default async function Page() {
 
     const session = await getSession();
     const userData = session.user;
-    console.log("userData", userData);
+    // console.log("userData", userData);
 
     const buttonDatas = [
         [
@@ -151,15 +152,7 @@ export default async function Page() {
         <section style={{ height: "800px", width: "100%", ...Style.dashboard }}>
             {
                 userData.email == "" || userData.email == undefined || userData.email == null ?
-                    <Modal showCloseBtn={true}
-                        title={"警告"} body={"目前帳號沒要電子郵件地址，如果忘記密碼系統會無法協助找回帳號"}
-                        showBtnLeft={true} btnLeftLabel={"立即處理"} btnLeftOnClick={() => {
-                            redirect("/profile");
-                        }}
-                        showBtnRight={false} btnRightLabel={"暫時不處理"} btnRightOnClick={() => {
-                            console.log('clicked!');
-                        }}>
-                    </Modal>
+                    <ModalWrapper></ModalWrapper>
                     :
                     <></>
             }
